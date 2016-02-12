@@ -2,10 +2,10 @@
 /**
  * Common functions
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 /**

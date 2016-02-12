@@ -1,5 +1,11 @@
 	
-	#gwa-gopf-admin-icon { background:url(../images/icon_wp_header.png) 3px 0 no-repeat; }
+	#gwa-gopf-admin-icon { 
+		background: url(../images/icon_wp_header.png) 0 8px no-repeat;
+		width: 42px;
+		height: 50px;
+		display: block;
+		float: left;	
+	}
 	#gwa-gopf-admin-wrap .ajax-loading {
 		left:5px;
 		position:relative;

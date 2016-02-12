@@ -3,10 +3,10 @@
  * Main page for in admin area
  * Portfolio creator page
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 $screen = get_current_screen();
@@ -76,7 +76,6 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 			if ( !isset( $response['result'] ) || $response['result'] != 'error' ) {
 				if ( $new_portfolios != $portfolios ) { 
 					update_option ( self::$plugin_prefix . '_portfolios', $new_portfolios );
-					self::generate_styles();
 				}
 
 				/* Set the reponse message */
@@ -100,7 +99,6 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 			if ( !isset( $response['result'] ) || $response['result'] != 'error' ) {
 				if ( $new_portfolios != $portfolios ) { 
 					update_option ( self::$plugin_prefix . '_portfolios', $new_portfolios );
-					self::generate_styles();
 				}
 				
 				/* Set the reponse message */
@@ -230,7 +228,7 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 		if ( !isset( $response['result'] ) || $response['result'] != 'error' ) {
 			$new_portfolios[$uniqid]=$new_portfolio;
 			update_option ( self::$plugin_prefix . '_portfolios', $new_portfolios );
-			self::generate_styles();
+			
 			if ( !isset( $portfolios[$uniqid] ) ) { $referrer = preg_replace( '/&edit=new/', '&edit='. $uniqid, $referrer ); }
 
 			$response['result'] = 'success';
@@ -375,7 +373,7 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 
 	?>
 	<!-- form -->
-	<form id="gwa-gopf-form" name="gwa-gopf-form" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>&noheader=true" data-ajax="<?php echo ( isset( $general_settings['disable-ajax'] ) ? 'false' : 'true' );  ?>" data-ajaxerrormsg="<?php _e( 'Oops, AJAX error! If you keep getting this message, please set "Disable AJAX in admin?" option under General Settings plugin page. ', 'go_portfolio_textdomain' ); ?>">
+	<form id="gwa-gopf-form" name="gwa-gopf-form" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>&noheader=true" data-ajax="<?php echo ( isset( $general_settings['disable-ajax'] ) ? 'false' : 'true' );  ?>" data-ajaxerrormsg="<?php _e( 'Oops, AJAX error! If you keep getting this message, please set \"Disable AJAX in admin?\" option under General Settings plugin page. ', 'go_portfolio_textdomain' ); ?>">
 		<input type="hidden" name="uniqid" value="<?php echo esc_attr( $item_id ); ?>" />
 		<?php wp_nonce_field( $this->plugin_slug . basename( __FILE__ ), $this->plugin_slug . '-nonce' ); ?>
 
@@ -534,7 +532,7 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 									?>
 									<div class="inside postbox gwa-gopf-thumb">
 										<input type="hidden" name="inquery-items[attachment][<?php echo esc_attr( $portfolio_item_key  ); ?>]" value="<?php echo esc_url( $portfolio_item ); ?>">
-										<div class="gwa-gopf-thumb-inner"><a href="#"><img src="<?php echo esc_url( $portfolio_item ); ?>"></a></div>
+										<div class="gwa-gopf-thumb-inner"><a href="#"><?php echo wp_get_attachment_image( $portfolio_item_key, array(120, 120) ); ?></a></div>
 									</div>
 									<?php 
 									endif;
@@ -552,6 +550,31 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 							</div>
 						</td>
 					</tr>
+					<tr>
+						<th class="gwa-gopf-w150"><?php _e( 'Order', 'go_portfolio_textdomain' ); ?></th>
+						<td class="gwa-gopf-w300">
+							<select name="order-vb" class="gwa-gopf-w250">
+								<option value="ASC"<?php echo ( isset( $portfolio['order-vb'] ) && $portfolio['order-vb'] == 'ASC' ? ' selected="selected"' : '' ); ?>><?php _e( 'Asccending order', 'go_portfolio_textdomain' ); ?></option>							
+								<option value="DESC"<?php echo ( isset( $portfolio['order-vb'] ) && $portfolio['order-vb'] == 'DESC' ? ' selected="selected"' : '' ); ?>><?php _e( 'Descending order', 'go_portfolio_textdomain' ); ?></option>
+							</select>
+						</td>
+						<td><p class="description"><?php _e( 'Ascending order from lowest to highest values (1, 2, 3; a, b, c) or descending order from highest to lowest values.', 'go_portfolio_textdomain' ); ?></p></td>
+					</tr>				
+					<tr>
+						<th class="gwa-gopf-w150"><?php _e( 'Order parameter', 'go_portfolio_textdomain' ); ?></th>
+						<td class="gwa-gopf-w300">
+							<select name="orderby-vb" class="gwa-gopf-w250">
+								<option value="post__in"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'post__in' ? ' selected="selected"' : '' ); ?>><?php _e( 'Default order', 'go_portfolio_textdomain' ); ?></option>
+								<option value="ID"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'ID' ? ' selected="selected"' : '' ); ?>><?php _e( 'Order by ID', 'go_portfolio_textdomain' ); ?></option>							
+								<option value="date"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'date' ? ' selected="selected"' : '' ); ?>><?php _e( 'Order by date', 'go_portfolio_textdomain' ); ?></option>
+								<option value="author"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'author' ? ' selected="selected"' : '' ); ?>><?php _e( 'Order by author', 'go_portfolio_textdomain' ); ?></option>
+								<option value="title"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'title' ? ' selected="selected"' : '' ); ?>><?php _e( 'Order by title', 'go_portfolio_textdomain' ); ?></option>
+								<option value="modified"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'modified' ? ' selected="selected"' : '' ); ?>><?php _e( 'Order by last modified date', 'go_portfolio_textdomain' ); ?></option>
+								<option value="rand"<?php echo ( isset( $portfolio['orderby-vb'] ) && $portfolio['orderby-vb'] == 'rand' ? ' selected="selected"' : '' ); ?>><?php _e( 'Random order', 'go_portfolio_textdomain' ); ?></option>
+							</select>
+						</td>
+						<td><p class="description"><?php _e( 'Parameter to sort the attachments by.', 'go_portfolio_textdomain' ); ?></p></td>
+					</tr>	
 				</table>
 				<!-- /Gallery visual builder -->
 					

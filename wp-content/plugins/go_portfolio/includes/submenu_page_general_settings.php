@@ -3,10 +3,10 @@
  * Submenu page for in admin area
  * General Settings Page
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 $screen = get_current_screen();
@@ -44,7 +44,6 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 		if ( $general_settings != $new_general_settings ) { 
 			update_option ( self::$plugin_prefix . '_general_settings', $new_general_settings );
 		}
-		self::generate_styles();		
 
 		/* Set the reponse message */
 		$response['result'] = 'success';

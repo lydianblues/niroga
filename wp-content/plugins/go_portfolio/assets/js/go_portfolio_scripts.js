@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------------------- /
 
-	Plugin Name: Go - Responsive Portfolio for WP
+	Plugin Name: Go Portfolio - WordPress Responsive Portfolio
 	Author: Granth
-	Version: 1.6.2
+	Version: 1.6.3
 
 	+----------------------------------------------------+
 		TABLE OF CONTENTS
@@ -572,7 +572,7 @@
 				$portfolio.each(function(index, element) {
 					var $this = $(this);
 					if ( $this.data('lbenabled') ) {
-						$this.find('.gw-gopf-magnific-popup[href!=""], .gw-gopf-magnific-popup-html[href!=""]').removeAttr('href');
+						$this.find('.gw-gopf-magnific-popup[href!=""], .gw-gopf-magnific-popup-html[href!=""]').attr('href','#');
 						portfolioGallery[$this.data('id')] = $this.find('.gw-gopf-magnific-popup[data-mfp-src!="#"][data-mfp-src!=""], .gw-gopf-magnific-popup-html[data-mfp-src!="#"][data-mfp-src!=""]').magnificPopup({
 							type : 'image',
 							closeOnContentClick : true,
@@ -683,18 +683,20 @@
 									};
 								},
 								beforeClose : function() {
-									if (history.pushState)
-										history.pushState('', null, window.location.pathname + window.location.search);
-									else {									
-										var scrollPosX = document.body.scrollTop;
-										var scrollPosY = document.body.scrollLeft;
-										window.location.hash = '';
-										document.body.scrollTop = scrollPosX;
-										document.body.scrollLeft = scrollPosY;
+									if ($this.data('deepLinking')) {
+										if (history.pushState)
+											history.pushState('', null, window.location.pathname + window.location.search);
+										else {									
+											var scrollPosX = document.body.scrollTop;
+											var scrollPosY = document.body.scrollLeft;
+											window.location.hash = '';
+											document.body.scrollTop = scrollPosX;
+											document.body.scrollLeft = scrollPosY;
+										};
 									};
 									if ($(this.currItem.el).hasClass('gw-gopf-magnific-popup-html')) {
 										$('.mfp-wrap').css('display','none');
-									};
+									};									
 									mfpOpened=false;
 								},
 								afterClose : function() {

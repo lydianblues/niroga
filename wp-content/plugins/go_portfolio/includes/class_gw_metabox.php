@@ -1,17 +1,17 @@
 <?php
 /**
- * Go – Responsive Portfolio for WP
+ * Go Portfolio - WordPress Responsive Portfolio 
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 /**
  * Class for creating meta boxes
  *
- * @package   Go - Portfolio
+ * @package   Go Portfolio
  * @author    Granth <granthweb@gmail.com>
  */
  

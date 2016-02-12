@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------------------- /
 
-	Plugin Name: Go – Responsive Portfolio for WP
+	Plugin Name: Go Portfolio - WordPress Responsive Portfolio
 	Author: Granth
-	Version: 1.6.2
+	Version: 1.6.3
 
 	+----------------------------------------------------+
 		TABLE OF CONTENTS

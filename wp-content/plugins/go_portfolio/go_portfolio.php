@@ -1,17 +1,17 @@
 <?php
 /**
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  *
- * Plugin Name: Go – Responsive Portfolio for WP
- * Plugin URI:  http://codecanyon.net/user/Granth
+ * Plugin Name: Go Portfolio - WordPress Responsive Portfolio 
+ * Plugin URI:  http://go-portfolio.com
  * Description: Portfolio manager plugin. This plugin allows you to manage, edit, and create new portfolios, showcases or teasers.
- * Version:     1.6.2
+ * Version:     1.6.3
  * Author:      Granth
- * Author URI:  http://codecanyon.net/user/Granth
+ * Author URI:  http://granthweb.com
  * Text Domain: go_portfolio_textdomain
  * Domain Path: /lang
  */

@@ -2,10 +2,10 @@
 /**
  * Common functions
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 /**
@@ -42,16 +42,22 @@ class GW_GoPortfolio_VCExtend {
  
     public function integrateWithVC() {
 
-		/* Get portfolio data */
-		$portfolios = get_option( GW_Go_Portfolio::plugin_prefix() . '_portfolios' );		
+		/* Get portfolio data */		
+		$names = array();
+		$portfolios = get_option( GW_Go_Portfolio::plugin_prefix() . '_portfolios' );
 
 		if ( !empty( $portfolios ) ) {
 			foreach ( $portfolios as $portfolio ) {
-				$dropdown_data[$portfolio['name']] = $portfolio['id'];
+				if ( !empty( $portfolio['name'] ) && !empty( $portfolio['id'] ) ) {
+					$names[] = $portfolio['name'];
+					$name_count = array_count_values( $names );
+					$dropdown_data[sprintf('%1$s (%2$s)', $portfolio['name'], $portfolio['id'])] = $portfolio['id'];
+				}
 			}
-		} else {
-			$dropdown_data[0] = __('No portfolio(s) found!', 'go_portfolio_textdomain' );
 		}
+		
+		if ( empty( $dropdown_data ) ) $dropdown_data[0] = __('No portfolio(s) found!', 'go_portfolio_textdomain' );	
+		
 		
 		if ( function_exists( 'vc_map' ) ) {
 		
@@ -70,7 +76,8 @@ class GW_GoPortfolio_VCExtend {
 						'param_name' => 'id',
 						'value' => $dropdown_data,
 						'description' => __('Select portfolio', 'go_portfolio_textdomain' ),
-						'admin_label' => true
+						'admin_label' => true,
+						'save_always' => true
 					)
 				)
 			) );

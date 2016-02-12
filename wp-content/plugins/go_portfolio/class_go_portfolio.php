@@ -1,23 +1,23 @@
 <?php
 /**
- * Go – Responsive Portfolio for WP
+ * Go Portfolio - WordPress Responsive Portfolio 
  *
- * @package   Go – Responsive Portfolio for WP
+ * @package   Go Portfolio - WordPress Responsive Portfolio 
  * @author    Granth <granthweb@gmail.com>
  * @link      http://granthweb.com
- * @copyright 2015 Granth
+ * @copyright 2016 Granth
  */
 
 /**
  * Plugin main class
  *
- * @package   Go - Portfolio
+ * @package   Go Portfolio
  * @author    Granth <granthweb@gmail.com>
  */
  
 class GW_Go_Portfolio {
 
-	protected static $plugin_version = '1.6.1';
+	protected static $plugin_version = '1.6.3';
 	protected $plugin_slug = 'go-portfolio';
 	protected static $plugin_prefix = 'gw_go_portfolio';	
 	protected static $instance = null;
@@ -147,8 +147,7 @@ class GW_Go_Portfolio {
 		delete_option( self::$plugin_prefix . '_version' );	
 		$get_plugin_version = self::plugin_version_check();
 		if ( !$get_plugin_version ) { 
-			update_option ( self::$plugin_prefix . '_version', self::$plugin_version );
-			self::generate_styles();		
+			update_option ( self::$plugin_prefix . '_version', self::$plugin_version );	
 		} 
 		
 		/* Update notices notices */
@@ -292,8 +291,8 @@ class GW_Go_Portfolio {
 
 		}		
 	}
-
-
+	
+	 
 	/**
 	 * Register and enqueue public styles
 	 */
@@ -306,21 +305,127 @@ class GW_Go_Portfolio {
 			$mfp_css = '.mfp-bg { z-index:' . $zindex_value . ' !important;} .mfp-wrap { z-index:' . ( $zindex_value+1 ) . ' !important;}';
 			wp_add_inline_style( $this->plugin_slug .'-magnific-popup-styles', $mfp_css );			
 		}
-		if ( is_multisite() ) {
-			global $blog_id;
-			$site_suffix = '_site' . $blog_id; 	
-		} else {
-			$site_suffix = '';	
+		wp_enqueue_style( $this->plugin_slug .'-styles', GW_GO_PORTFOLIO_URI . 'assets/css/go_portfolio_styles.css', array(), self::$plugin_version );
+		if ( isset( $general_settings['responsivity'] ) ) {
+		$responsive_css = '@media only screen' . ( isset( $general_settings['size1-min'] ) && $general_settings['size1-min'] != '' ? ' and (min-width: ' . $general_settings['size1-min'] . ')' : '' ) . (
+		isset( $general_settings['size1-max'] ) && $general_settings['size1-max'] != '' ? ' and (max-width: ' . $general_settings['size1-max'] . ')' : '' ) . ' {
+		.gw-gopf-posts { letter-spacing:10px; }
+		.gw-gopf {
+			'. ( isset( $general_settings['max-width3'] ) && !empty( $general_settings['max-width3'] ) ? 'max-width:' . floatval( $general_settings['max-width3'] ) . 'px;' : '' ) .'
+			margin:0 auto;
+		}
+		.gw-gopf-1col .gw-gopf-col-wrap { 
+        	float:left !important;		
+			margin-left:0 !important;
+        	width:100%;		
+		} 
+		.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-10cols .gw-gopf-col-wrap { width:50% !important; }		
+	}
+
+		@media only screen' . ( isset( $general_settings['size2-min'] ) && $general_settings['size2-min'] != '' ? ' and (min-width: ' . $general_settings['size2-min'] . ')' : '' ) . (
+		isset( $general_settings['size2-max'] ) && $general_settings['size2-max'] != '' ? ' and (max-width: ' . $general_settings['size2-max'] . ')' : '' ) . ' {
+		.gw-gopf-posts { letter-spacing:20px; }
+		.gw-gopf {
+			'. ( isset( $general_settings['max-width2'] ) && !empty( $general_settings['max-width2'] ) ? 'max-width:' . floatval( $general_settings['max-width2'] ) . 'px;' : '' ) .'
+			margin:0 auto;
+		}		
+		.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-10cols .gw-gopf-col-wrap { 
+        	float:left !important;		
+			margin-left:0 !important;
+        	width:100%;
 		}
 
-		$css_file_exists = is_file( GW_GO_PORTFOLIO_DIR . 'assets/css/go_portfolio_styles' . $site_suffix  . '.css' );
+		/* RTL */
+		.gw-gopf-rtl.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-10cols .gw-gopf-col-wrap { float:right !important; }
 		
-		if ( $css_file_exists === false ) {	
-
-			self::generate_styles();
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-10cols .gw-gopf-col-wrap { float:left !important; }
+		
+	}
+	
+	
+		@media only screen' . ( isset( $general_settings['size3-min'] ) && $general_settings['size3-min'] != '' ? ' and (min-width: ' . $general_settings['size3-min'] . ')' : '' ) . (
+		isset( $general_settings['size3-max'] ) && $general_settings['size3-max'] != '' ? ' and (max-width: ' . $general_settings['size3-max'] . ')' : '' ) . ' {
+		.gw-gopf-posts { letter-spacing:30px; }
+		.gw-gopf {
+			'. ( isset( $general_settings['max-width'] ) && !empty( $general_settings['max-width'] ) ? 'max-width:' . floatval( $general_settings['max-width'] ) . 'px;' : '' ) .'
+			margin:0 auto;
 		}
+		.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-10cols .gw-gopf-col-wrap {
+        	margin-left:0 !important;
+        	float:left !important;
+        	width:100%;
+         }
+		 
+		/* RTL */
+		.gw-gopf-rtl.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-rtl.gw-gopf-10cols .gw-gopf-col-wrap { float:right !important; }
 		
-		wp_enqueue_style( $this->plugin_slug .'-styles', GW_GO_PORTFOLIO_URI . 'assets/css/go_portfolio_styles' . $site_suffix  . '.css', array(), self::$plugin_version );
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-1col .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-2cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-3cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-4cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-5cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-6cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-7cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-8cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-9cols .gw-gopf-col-wrap,
+		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-10cols .gw-gopf-col-wrap { float:left !important; }		
+		 
+	}';
+			wp_add_inline_style( $this->plugin_slug .'-styles', $responsive_css );			
+		}		
 	}
 
 
@@ -329,6 +434,7 @@ class GW_Go_Portfolio {
 	 */
 	 
 	public function enqueue_scripts() {
+		
 		$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
 		wp_enqueue_script( $this->plugin_slug . '-magnific-popup-script', plugins_url( 'assets/plugins/magnific-popup/jquery.magnific-popup.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
 		wp_enqueue_script( $this->plugin_slug . '-isotope-script', plugins_url( 'assets/plugins/jquery.isotope.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
@@ -355,12 +461,11 @@ class GW_Go_Portfolio {
 				$templates = self::load_templates();
 				if ( $templates ) { update_option ( self::$plugin_prefix . '_templates', $templates ); }
 				$styles = self::load_styles();
-				if ( $styles ) { update_option ( self::$plugin_prefix . '_styles', $styles ); }					
-				self::generate_styles();
+				if ( $styles ) { update_option ( self::$plugin_prefix . '_styles', $styles ); }
 				$notices[] = array ( 
 					'success' => true,
 					'permanent' => false,
-					'message' => sprintf( __( 'Go – Responsive Portfolio for WP plugin has been updated! Current version: %1$s', 'go_portfolio_textdomain' ), self::$plugin_version )
+					'message' => sprintf( __( 'Go Portfolio - WordPress Responsive Portfolio  plugin has been updated! Current version: %1$s', 'go_portfolio_textdomain' ), self::$plugin_version )
 				);
 				if ( version_compare( $saved_version, '1.4.0', "<" ) ) {
 					$notices[] = array ( 
@@ -398,7 +503,7 @@ class GW_Go_Portfolio {
 
 		/* Main menu page */
 		$this->screen_hooks[] = add_menu_page( 
-			__( 'Go - Portfolio', 'go_portfolio_textdomain' ),
+			__( 'Go Portfolio', 'go_portfolio_textdomain' ),
 			__( 'Go Portfolio', 'go_portfolio_textdomain' ), 
 			$capability, 
 			$this->plugin_slug, 
@@ -409,7 +514,7 @@ class GW_Go_Portfolio {
 		/* Submenu page - Custom Post Types */
 		$this->screen_hooks[] = add_submenu_page( 
 			$this->plugin_slug,
-			__( 'Custom Post Types', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go - Portfolio', 'go_portfolio_textdomain' ),
+			__( 'Custom Post Types', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go Portfolio', 'go_portfolio_textdomain' ),
 			__( 'Custom Post Types', 'go_portfolio_textdomain' ),
 			$capability,
 			$this->plugin_slug . '-custom-post-types', 
@@ -419,7 +524,7 @@ class GW_Go_Portfolio {
 		/* Submenu page - General Settings */
 		$this->screen_hooks[] = add_submenu_page(
 			$this->plugin_slug,
-			__( 'General Settings', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go - Portfolio', 'go_portfolio_textdomain' ),
+			__( 'General Settings', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go Portfolio', 'go_portfolio_textdomain' ),
 			__( 'General Settings', 'go_portfolio_textdomain' ),
 			$capability,
 			$this->plugin_slug . '-settings',
@@ -429,7 +534,7 @@ class GW_Go_Portfolio {
 		/* Submenu page - Template & Style Editor */
 		$this->screen_hooks[] = add_submenu_page(
 			$this->plugin_slug,
-			__( 'Template & Style Editor', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go - Portfolio', 'go_portfolio_textdomain' ),
+			__( 'Template & Style Editor', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go Portfolio', 'go_portfolio_textdomain' ),
 			__( 'Template & Style Editor', 'go_portfolio_textdomain' ),
 			$capability,
 			$this->plugin_slug . '-editor',
@@ -439,7 +544,7 @@ class GW_Go_Portfolio {
 		/* Submenu page - Import & Export */
 		$this->screen_hooks[] = add_submenu_page(
 			$this->plugin_slug,
-			__( 'Import & Export', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go - Portfolio', 'go_portfolio_textdomain' ),
+			__( 'Import & Export', 'go_portfolio_textdomain' ) . ' | ' . __( 'Go Portfolio', 'go_portfolio_textdomain' ),
 			__( 'Import & Export', 'go_portfolio_textdomain' ),
 			$capability,
 			$this->plugin_slug . '-import-export',
@@ -537,44 +642,11 @@ class GW_Go_Portfolio {
 
 
 	/**
-	 * Generate static css file from file & db data
+	 * Generate inline styles
 	 */
-	 
-	public static function generate_styles() {
 
-		ob_start();
-		$css_file = plugin_dir_path( __FILE__ ) . 'assets/css/go_portfolio_dynamic_styles.php';
-		$css_file_exists = is_file( $css_file );
-		
-		if ( !$css_file_exists ) {
-			$notices[] = array ( 
-				'success' => false,
-				'permanent' => false,
-				'message' => sprintf( __( 'The "%1$s" file doesn\' t exist.', 'go_portfolio_textdomain' ), $css_file )
-			);
-			if ( isset( $notices ) ) { self::update_admin_notices ( $notices ); }	
-			return false;
-		} 
-	
-		require_once( $css_file );
-		if ( is_multisite() ) {
-			global $blog_id;
-			$site_suffix = '_site' . $blog_id; 	
-		} else {
-			$site_suffix = '';	
-		}
-		$file_data = ob_get_clean();
-		$write_success = @file_put_contents( plugin_dir_path( __FILE__ ) . 'assets/css/go_portfolio_styles' . $site_suffix . '.css', $file_data );
-		if ( $write_success === false ) {
-			$notices[] = array ( 
-				'success' => false,
-				'permanent' => false,
-				'message' => __( 'The "go_portfolio_styles.css" file couldn\'t be created in "assets/css" folder lack of write permission. <strong>Please set this folder\'s chmod to 777 and activate the plugin again.</strong>', 'go_portfolio_textdomain' )
-			);
-		}
-		
-		if ( isset( $notices ) ) { self::update_admin_notices ( $notices ); }	
-		
+	public static function generate_inline_styles( $portfolio ) {
+		include( GW_GO_PORTFOLIO_INCLUDES . 'generate_inline_style.php' );
 	}	
 
 
@@ -866,7 +938,7 @@ class GW_Go_Portfolio {
 							}
 						}
 						
-						apply_filters( 'manage_edit-'.$custom_post_type['slug'].'_columns', array ( $this, 'cpt_edit_columns' ), 'e' );
+						apply_filters( 'manage_edit-'.$custom_post_type['slug'].'_columns', array ( $this, 'cpt_edit_columns' ), '' );
 						add_filter( 'manage_edit-'.$custom_post_type['slug'].'_columns', array ( $this, 'cpt_edit_columns' ) );
 						
 						add_action( 'manage_'.$custom_post_type['slug'].'_posts_custom_column',  array ( $this, 'cpt_custom_columns' ) );
@@ -1570,7 +1642,7 @@ class GW_Go_Portfolio {
 				'class' => 'regular-text',
 				'wrapper-data-parent' => 'thumbnail-type lightbox-type lightbox-video-type',
 				'wrapper-data-children' => 'metacafe-video'		
-			),
+			),		
 			
 			/* Soundcloud audio lightbox */
 			array( 
@@ -1833,6 +1905,12 @@ class GW_Go_Portfolio {
 		
 					/* Check if given id exist in plugin db */
 					if ( $portfolio['id'] == $id ) {
+
+							ob_start();
+							echo '<style>';
+							self::generate_inline_styles( $portfolio );
+							echo '</style>';
+							$css_style = ob_get_clean();
 							
 							/* Check if post type is registered */
 							$post_types = get_post_types( '', 'objects' );
@@ -1903,10 +1981,17 @@ class GW_Go_Portfolio {
 										}
 										$new_wp_query_args['post__in'] = $items;
 										if ( isset( $excluded_posts ) && isset( $items ) ) {
-											$new_items = array_diff($items,$excluded_posts );
+											$new_items = array_diff( $items,$excluded_posts );
 											$new_wp_query_args['post__in'] = $new_items;
-										}										
-										$new_wp_query_args['orderby'] = 'post__in';
+										}
+										
+										if ( !isset( $portfolio['orderby-vb'] ) || !isset( $portfolio['order-vb'] ) ) {
+											$new_wp_query_args['orderby'] = 'post__in';
+										} else {
+											$new_wp_query_args['orderby'] = $portfolio['orderby-vb'];
+											$new_wp_query_args['order'] = $portfolio['order-vb'];
+											if ( $portfolio['orderby-vb'] == 'post__in' && $portfolio['order-vb'] == 'DESC' ) $new_wp_query_args['post__in'] = array_reverse( $items);
+										}
 									}
 								}
 								
@@ -2123,6 +2208,8 @@ class GW_Go_Portfolio {
 															}
 														}
 														
+														$lighbox_content = '';
+														
 														/* Video types */
 														if ( isset( $post_meta['gw_go_portfolio_lightbox_video_type'][0] ) && $post_meta['gw_go_portfolio_lightbox_video_type'][0]== 'youtube_video' && isset( $post_meta['gw_go_portfolio_lightbox_youtube_video_id'][0] ) ) {
 															$lighbox_link = '//www.youtube.com/watch?v=' . $post_meta['gw_go_portfolio_lightbox_youtube_video_id'][0];
@@ -2174,8 +2261,8 @@ class GW_Go_Portfolio {
 													}
 													
 													/* Lightbox button links */
-													$post_lb_button_data_raw = '<a title="' . esc_attr( isset( $portfolio['lightbox-caption'] ) ? trim( get_the_title() ) : '' ) . '" data-id="' . $post->ID . '_' . $portfolio_key . '" href="' . $lighbox_link . '" data-mfp-src="' . $lighbox_link . '" class="' . $lighbox_class . ' gw-gopf-post-overlay gw-gopf-post-overlay-link"' . ( isset( $popup_height ) ? ' data-height="' . $popup_height . '"' : '' ) . '>';
-													$post_lb_button = '<a title="' . esc_attr( isset( $portfolio['lightbox-caption'] ) ? trim( get_the_title() ) : '' ) . '" data-id="' . $post->ID . '_' . $portfolio_key . '" href="' . $lighbox_link . '" data-mfp-src="' . $lighbox_link . '" class="' . $button_style_class . ' ' . $lighbox_class . '"' . ( isset( $popup_height ) ? ' data-height="' . $popup_height . '"' : '' ) . '>' . $button_content . '</a>';
+													$post_lb_button_data_raw = '<a title="' . esc_attr( isset( $portfolio['lightbox-caption'] ) ? trim( get_the_title() ) : '' ) . '" data-id="' . $post->ID . '_' . $portfolio_key . '" href="' . $lighbox_link . '" data-content="' . $lighbox_content . '" data-mfp-src="' . $lighbox_link . '" class="' . $lighbox_class . ' gw-gopf-post-overlay gw-gopf-post-overlay-link"' . ( isset( $popup_height ) ? ' data-height="' . $popup_height . '"' : '' ) . '>';
+													         $post_lb_button = '<a title="' . esc_attr( isset( $portfolio['lightbox-caption'] ) ? trim( get_the_title() ) : '' ) . '" data-id="' . $post->ID . '_' . $portfolio_key . '" href="' . $lighbox_link . '" data-content="' . $lighbox_content . '" data-mfp-src="' . $lighbox_link . '" class="' . $button_style_class . ' ' . $lighbox_class . '"' . ( isset( $popup_height ) ? ' data-height="' . $popup_height . '"' : '' ) . '>' . $button_content . '</a>';
 																
 													/* Read more button links */
 													if ( isset( $portfolio['overlay-style'] ) && $portfolio['overlay-style'] == '2' ) {
@@ -2233,9 +2320,14 @@ class GW_Go_Portfolio {
 															$template_data['post_media'] .= $matches[0];
 															$template_data['post_media'] .= '</div>';													
 														} elseif ( isset( $thumb_img_src[0] ) && !empty( $thumb_img_src[0] ) ) {
+															$alt = '';
+															if ( isset( $thumb_img_src[0] ) ) {
+																$pathinfo = pathinfo( $thumb_img_src[0] );
+																if ( isset( $pathinfo['filename'] ) ) $alt = $pathinfo['filename'];
+															}
 															$tn_img_file = $lb_img_file = $thumb_img_src[0];
 															$template_data['post_media'] .= '<div class="gw-gopf-post-media-wrap" style="background-image:url(\'' . $tn_img_file . '\'); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=' . $tn_img_file . ', sizingMethod=\'scale\');' . ( isset( $img_ratio ) ? ' height:0; padding-bottom:'. $img_ratio * 100 . '%' : '' ) . ( isset( $img_height ) ? 'height:' . $img_height . 'px' : '' ) . '">';
-															$template_data['post_media'] .= '<img src="' . $thumb_img_src[0] . '" alt="">';
+															$template_data['post_media'] .= '<img src="' . $thumb_img_src[0] . '" alt="' . $alt . '">';
 															$template_data['post_media'] .= '</div>';															
 														} elseif ( has_post_thumbnail() || $arg_post_type == 'attachment' ) {
 															global $wp_version;
@@ -2246,10 +2338,19 @@ class GW_Go_Portfolio {
 															}
 															$tn_img_data = wp_get_attachment_image_src( $tn_id, $thumbanail_size );
 															$lb_img_data = wp_get_attachment_image_src( $tn_id, $lightbox_size );
+
+															$alt = '';
+															$alt = get_post_meta( $tn_id, '_wp_attachment_image_alt', true );
+															if ( $alt == '') {
+																$attachment = get_post( $tn_id );
+																if ( !empty( $attachment ) ) $alt = $attachment->post_title;
+															}
+															if ( !empty( $alt ) ) $alt = trim( strip_tags( $alt ) );
+															
 															if ( $tn_img_data ) { $tn_img_file = $tn_img_data[0]; }
 															if ( $lb_img_data ) { $lb_img_file = $lb_img_data[0]; }
 															$template_data['post_media'] .= '<div class="gw-gopf-post-media-wrap" style="background-image:url(\'' . $tn_img_file . '\'); filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=' . $tn_img_file . ', sizingMethod=\'scale\');' . ( isset( $img_ratio ) ? ' height:0; padding-bottom:'. $img_ratio * 100 . '%' : '' ) . ( isset( $img_height ) ? 'height:' . $img_height . 'px' : '' ) . '">';
-															$template_data['post_media'] .= $arg_post_type == 'attachment' ? '<img src="' . $tn_img_file . '" alt="">' : get_the_post_thumbnail( $post->ID, $thumbanail_size );
+															$template_data['post_media'] .= $arg_post_type == 'attachment' ? '<img src="' . $tn_img_file . '" alt="' . $alt . '">' : get_the_post_thumbnail( $post->ID, $thumbanail_size );
 															$template_data['post_media'] .= '</div>';															
 														} elseif ( isset( $portfolio['first-img-thumb'] ) && $portfolio['first-img-thumb'] == 'fallback' && isset( $matches ) && !empty( $matches ) ) {
 															$tn_img_file = $lb_img_file = $matches[1];
@@ -2334,7 +2435,7 @@ class GW_Go_Portfolio {
 													}
 		
 													/* 7. Post date */
-													$template_data['post_date'] = date_i18n( get_option( 'date_format' ), get_post_time( 'U', true ) );
+													$template_data['post_date'] = apply_filters( 'go_portfolio_date_format', date_i18n( get_option( 'date_format' ), get_post_time( 'U', true ) ), $portfolio['id'] );
 													
 													/* 8. Post excerpt - custom excerpt */
 													$excerpt_src = isset( $portfolio['excerpt-src'] ) && !empty ( $portfolio['excerpt-src'] ) ? $portfolio['excerpt-src'] : 'content';
@@ -2379,7 +2480,9 @@ class GW_Go_Portfolio {
 													if ( defined( 'WOOCOMMERCE_VERSION' ) && isset( $query_post_type ) && $query_post_type=='product' ) {
 													
 														/* 14.1. Add to Cart button */
-														$template_data['woo_add_to_cart'] = do_shortcode('[add_to_cart_url id="' . $post->ID . '"]');
+														//$template_data['woo_add_to_cart'] = do_shortcode('[add_to_cart_url id="' . $post->ID . '"]');
+														$shop_page_url = get_permalink( woocommerce_get_page_id( 'shop' ) );
+											            $template_data['woo_add_to_cart'] = $shop_page_url . '?add-to-cart=' . $post->ID;
 														if ( $woo_is_variation ) { $template_data['woo_add_to_cart'] = $post_link; }
 														
 														/* 14.2. Price */
@@ -2504,7 +2607,7 @@ class GW_Go_Portfolio {
 								$shortcode_content = preg_replace( '/\r\n+|\r+|\n+|\t+/i', '', $shortcode_content);
 								$shortcode_content = preg_replace( '#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $shortcode_content);
 								ob_end_clean();
-								return $shortcode_content;									
+								return $css_style . $shortcode_content;									
 								break;
 								
 							} else {
@@ -2520,7 +2623,7 @@ class GW_Go_Portfolio {
 			return '<p>' . sprintf( __( 'Portfolio with an id of "%s" is not defined.', 'go_portfolio_textdomain' ), $id ) . '</p>';		
 		}		
 				
-	}
+	}	
 
 
 }
