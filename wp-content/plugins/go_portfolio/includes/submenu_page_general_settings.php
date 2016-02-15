@@ -90,6 +90,42 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 
 		<!-- postbox -->
 		<div class="postbox">
+			<h3 class="hndle"><?php _e( 'Admin Settings', 'go_portfolio_textdomain' ); ?><span class="gwwpa-toggle"></span></h3>
+			<div class="inside">
+				<table class="form-table"> 
+					<tr>
+						<th class="gwa-gopf-w150"><strong><?php _e( 'Disable AJAX in admin?', 'go_portfolio_textdomain' ); ?></strong></th>
+						<td class="gwa-gopf-w100"><label><input type="checkbox" name="disable-ajax" value="1"<?php echo isset( $general_settings['disable-ajax'] ) ? 'value="1" checked="checked"' : '' ; ?> /> <?php _e( 'Yes', 'go_portfolio_textdomain' ); ?></label></td>
+						<td colspan="3"><p class="description"><?php _e( 'Whether to disable AJAX in then plugin admin area when you edit a portfolio?', 'go_portfolio_textdomain' ); ?></p></td>						
+					</tr>
+				</table>
+				<?php if ( current_user_can( 'manage_options' ) ) : ?>
+				<div class="gwa-gopf-separator"></div>
+				<table class="form-table"> 
+					<tr>
+						<th class="gwa-gopf-w150"><strong><?php _e( 'Set Role', 'go_portfolio_textdomain' ); ?></strong></th>
+						<td class="gwa-gopf-w100">
+							<select name="capability" class="gwa-gopf-w250">
+								<option value="manage_options" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'manage_options' ? 'selected="selected"' : ''; ?>><?php _e( 'Administrator', 'go_portfolio_textdomain' ); ?></option>
+								<option value="edit_private_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'edit_private_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Editor', 'go_portfolio_textdomain' ); ?></option>
+								<option value="publish_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'publish_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Author', 'go_portfolio_textdomain' ); ?></option>
+								<option value="edit_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'edit_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Contributor', 'go_portfolio_textdomain' ); ?></option>
+							</select>						
+						</td>
+						<td colspan="3"><p class="description"><?php _e( 'Set user access to the plugin.', 'go_portfolio_textdomain' ); ?></p></td>
+					</tr>                   
+				</table>
+				<?php endif; ?>			
+			</div>
+		</div> 
+		<!-- /postbox --> 	        
+
+		<p class="submit">
+			<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Save', 'go_portfolio_textdomain' ); ?>" />
+		</p>
+
+		<!-- postbox -->
+		<div class="postbox">
 			<h3 class="hndle"><?php _e( 'Enable Post Types', 'go_portfolio_textdomain' ); ?><span class="gwwpa-toggle"></span></h3>
 			<div class="inside">
 				<table class="form-table">
@@ -267,32 +303,30 @@ if ( !empty( $_POST ) && check_admin_referer( $this->plugin_slug . basename( __F
 		
 		<!-- postbox -->
 		<div class="postbox">
-			<h3 class="hndle"><?php _e( 'Other Settings', 'go_portfolio_textdomain' ); ?><span class="gwwpa-toggle"></span></h3>
+			<h3 class="hndle"><?php _e( 'Plugin Assets', 'go_portfolio_textdomain' ); ?><span class="gwwpa-toggle"></span></h3>
 			<div class="inside">
-				<table class="form-table"> 
-					<tr>
-						<th class="gwa-gopf-w150"><strong><?php _e( 'Disable AJAX in admin?', 'go_portfolio_textdomain' ); ?></strong></th>
-						<td class="gwa-gopf-w100"><label><input type="checkbox" name="disable-ajax" value="1"<?php echo isset( $general_settings['disable-ajax'] ) ? 'value="1" checked="checked"' : '' ; ?> /> <?php _e( 'Yes', 'go_portfolio_textdomain' ); ?></label></td>
-						<td colspan="3"><p class="description"><?php _e( 'Whether to disable AJAX in then plugin admin area when you edit a portfolio?', 'go_portfolio_textdomain' ); ?></p></td>						
-					</tr>
-				</table>
-				<?php if ( current_user_can( 'manage_options' ) ) : ?>
-				<div class="gwa-gopf-separator"></div>
-				<table class="form-table"> 
-					<tr>
-						<th class="gwa-gopf-w150"><strong><?php _e( 'Set Role', 'go_portfolio_textdomain' ); ?></strong></th>
-						<td class="gwa-gopf-w100">
-							<select name="capability" class="gwa-gopf-w250">
-								<option value="manage_options" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'manage_options' ? 'selected="selected"' : ''; ?>><?php _e( 'Administrator', 'go_portfolio_textdomain' ); ?></option>
-								<option value="edit_private_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'edit_private_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Editor', 'go_portfolio_textdomain' ); ?></option>
-								<option value="publish_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'publish_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Author', 'go_portfolio_textdomain' ); ?></option>
-								<option value="edit_posts" <?php echo isset( $general_settings['capability'] ) && $general_settings['capability'] == 'edit_posts' ? 'selected="selected"' : ''; ?>><?php _e( 'Contributor', 'go_portfolio_textdomain' ); ?></option>
-							</select>						
-						</td>
-						<td colspan="3"><p class="description"><?php _e( 'Set user access to the plugin.', 'go_portfolio_textdomain' ); ?></p></td>
-					</tr>
-				</table>
-				<?php endif; ?>			
+				<table class="form-table">
+                    <tr>
+                        <th class="gwa-gopf-w150"><label><?php _e( 'Plugin Page(s) Restriction', 'go_portfolio_textdomain' ); ?></label></th>
+                        <td class="gwa-gopf-w100">
+                            <select name="plugin-pages-rule" class="gwa-gopf-w250">
+                                <option value="in" <?php echo isset( $general_settings['plugin-pages-rule'] ) && $general_settings['plugin-pages-rule'] == 'in' ? 'selected="selected"' : ''; ?>><?php _e( 'Include', 'go_portfolio_textdomain' ); ?></option>
+                                <option value="not_in" <?php echo isset( $general_settings['plugin-pages-rule'] ) && $general_settings['plugin-pages-rule'] == 'not_in' ? 'selected="selected"' : ''; ?>><?php _e( 'Exclude', 'go_portfolio_textdomain' ); ?></option>
+                            </select>								
+                        </td>
+                        <td colspan="3"><p class="description"><?php _e( 'Specify the rule of the restriction. Include: pages/posts where to load plugin assets (JavaScript & CSS files). Exlude: pages/posts where NOT to load plugin assets.', 'go_portfolio_textdomain' ); ?></p></td>						
+                    </tr>                
+                    <tr>
+                        <th><label><?php _e( 'Plugin Page(s)', 'go_portfolio_textdomain' ); ?></label></th>
+                        <td><input type="text" class="gwa-gopf-w250" name="plugin-pages" value="<?php echo esc_attr( isset( $general_settings['plugin-pages'] ) ? $general_settings['plugin-pages'] : '' ); ?>"></td>
+                        <td colspan="3"><p class="description"><?php _e( 'Comma separated list of page/post IDs (e.g. 13, 54, 126). Use to restrict the plugin to load or NOT to load JavaScript & CSS files (depending of the restriction rule) for the selected pages/posts only improving site performance. Leave blank if you don\'t want any restriction.', 'go_portfolio_textdomain' ); ?></p></td>
+                    </tr>
+                    <tr>
+                        <th><label><?php _e( 'Load JavaScript In Header', 'go_portfolio_textdomain' ); ?></label></th>
+                        <td class="gwa-gopf-w100"><label><input type="checkbox" name="js-in-header" value="1"<?php echo isset( $general_settings['js-in-header'] ) ? 'value="1" checked="checked"' : '' ; ?> /> <?php _e( 'Yes', 'go_portfolio_textdomain' ); ?></label></td>
+						<td colspan="3"><p class="description"><?php _e( 'Whether to load plugin JavaScript in header section of the website. Disable it to load it in the page footer (recommended).', 'go_portfolio_textdomain' ); ?></p></td>
+                    </tr>                    
+				</table>		
 			</div>
 		</div> 
 		<!-- /postbox --> 					    

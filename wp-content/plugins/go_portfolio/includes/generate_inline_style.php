@@ -11,6 +11,7 @@
 
 $styles = get_option( self::$plugin_prefix . '_styles' );
 $id_prefix = ' #' . self::$plugin_prefix . '_' . $portfolio['id'];
+$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
 
 /* Get style */
 if ( isset( $portfolio['style'] ) && !empty( $portfolio['style'] ) && $styles[$portfolio['style']]['data'] ) {

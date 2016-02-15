@@ -9,7 +9,7 @@
  * Plugin Name: Go Portfolio - WordPress Responsive Portfolio 
  * Plugin URI:  http://go-portfolio.com
  * Description: Portfolio manager plugin. This plugin allows you to manage, edit, and create new portfolios, showcases or teasers.
- * Version:     1.6.3
+ * Version:     1.6.4
  * Author:      Granth
  * Author URI:  http://granthweb.com
  * Text Domain: go_portfolio_textdomain

@@ -17,7 +17,7 @@
  
 class GW_Go_Portfolio {
 
-	protected static $plugin_version = '1.6.3';
+	protected static $plugin_version = '1.6.4';
 	protected $plugin_slug = 'go-portfolio';
 	protected static $plugin_prefix = 'gw_go_portfolio';	
 	protected static $instance = null;
@@ -298,8 +298,29 @@ class GW_Go_Portfolio {
 	 */
 	 
 	public function enqueue_styles() {
-		wp_enqueue_style( $this->plugin_slug .'-magnific-popup-styles', GW_GO_PORTFOLIO_URI . 'assets/plugins/magnific-popup/magnific-popup.css', array(), self::$plugin_version );
+		
+		global $post;
+		
 		$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
+
+		if ( !empty( $general_settings['plugin-pages-rule'] ) &&  $general_settings['plugin-pages'] && !empty( $post ) ) {
+		
+			$page_ids = $general_settings['plugin-pages'];
+		
+			if ( !empty( $page_ids ) ) {
+				
+				$pages =  trim( preg_replace( '/([^0-9][^,]{0})+/', ',', $page_ids ), ',' );
+				$pages = explode( ',', $pages );
+				
+				if ( $general_settings['plugin-pages-rule'] == 'in' && !in_array( $post->ID, $pages ) ) return;
+				if ( $general_settings['plugin-pages-rule'] == 'not_in' && in_array( $post->ID, $pages ) ) return;
+					
+			}
+			
+		}
+		
+		wp_enqueue_style( $this->plugin_slug .'-magnific-popup-styles', GW_GO_PORTFOLIO_URI . 'assets/plugins/magnific-popup/magnific-popup.css', array(), self::$plugin_version );
+
 		$zindex_value = isset( $general_settings['lb-zindex'] ) ? floatval( $general_settings['lb-zindex'] ) : '';	
 		if ( $zindex_value != '' ) {
 			$mfp_css = '.mfp-bg { z-index:' . $zindex_value . ' !important;} .mfp-wrap { z-index:' . ( $zindex_value+1 ) . ' !important;}';
@@ -424,8 +445,15 @@ class GW_Go_Portfolio {
 		.gw-gopf-slider-type.gw-gopf-rtl.gw-gopf-10cols .gw-gopf-col-wrap { float:left !important; }		
 		 
 	}';
+	
 			wp_add_inline_style( $this->plugin_slug .'-styles', $responsive_css );			
-		}		
+		}
+		
+		$font_import = '';
+		if ( isset( $general_settings['primary-font-css'] ) && !empty( $general_settings['primary-font-css'] ) ) { $font_import = '@import url(' . $general_settings['primary-font-css'] . ');'; }
+		if ( isset( $general_settings['secondary-font-css'] ) && !empty( $general_settings['secondary-font-css'] ) ) { $font_import = '@import url(' . $general_settings['secondary-font-css'] . ');'; }
+		if ( !empty( $font_import ) ) wp_add_inline_style( $this->plugin_slug .'-styles', $font_import );	
+				
 	}
 
 
@@ -435,12 +463,33 @@ class GW_Go_Portfolio {
 	 
 	public function enqueue_scripts() {
 		
+		global $post;
+		
 		$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
-		wp_enqueue_script( $this->plugin_slug . '-magnific-popup-script', plugins_url( 'assets/plugins/magnific-popup/jquery.magnific-popup.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
-		wp_enqueue_script( $this->plugin_slug . '-isotope-script', plugins_url( 'assets/plugins/jquery.isotope.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
-		wp_enqueue_script( $this->plugin_slug . '-caroufredsel-script', plugins_url( 'assets/plugins/jquery.carouFredSel-6.2.1-packed.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
-		wp_enqueue_script( $this->plugin_slug . '-touchswipe-script', plugins_url( 'assets/plugins/jquery.touchSwipe.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );				
-		wp_enqueue_script( $this->plugin_slug . '-script', plugins_url( 'assets/js/go_portfolio_scripts.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, true );
+		
+		if ( !empty( $general_settings['plugin-pages-rule'] ) &&  $general_settings['plugin-pages'] && !empty( $post ) ) {
+		
+			$page_ids = $general_settings['plugin-pages'];
+		
+			if ( !empty( $page_ids ) ) {
+				
+				$pages =  trim( preg_replace( '/([^0-9][^,]{0})+/', ',', $page_ids ), ',' );
+				$pages = explode( ',', $pages );
+				if ( $general_settings['plugin-pages-rule'] == 'in' && !in_array( $post->ID, $pages ) ) return;
+				if ( $general_settings['plugin-pages-rule'] == 'not_in' && in_array( $post->ID, $pages ) ) return;
+					
+			}
+			
+		}
+		
+		$in_footer = empty( $general_settings['js-in-header'] );
+
+		$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
+		wp_enqueue_script( $this->plugin_slug . '-magnific-popup-script', plugins_url( 'assets/plugins/magnific-popup/jquery.magnific-popup.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, $in_footer );
+		wp_enqueue_script( $this->plugin_slug . '-isotope-script', plugins_url( 'assets/plugins/jquery.isotope.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, $in_footer );
+		wp_enqueue_script( $this->plugin_slug . '-caroufredsel-script', plugins_url( 'assets/plugins/jquery.carouFredSel-6.2.1-packed.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, $in_footer );
+		wp_enqueue_script( $this->plugin_slug . '-touchswipe-script', plugins_url( 'assets/plugins/jquery.touchSwipe.min.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, $in_footer );				
+		wp_enqueue_script( $this->plugin_slug . '-script', plugins_url( 'assets/js/go_portfolio_scripts.js', __FILE__ ), array( 'jquery' ), self::$plugin_version, $in_footer );
 		wp_localize_script( $this->plugin_slug . '-script', self::$plugin_prefix . '_settings', array( 
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'mobileTransition' => isset( $general_settings['disable-mobile-trans'] ) ? 'disabled': 'enabled'
@@ -1898,6 +1947,7 @@ class GW_Go_Portfolio {
 			$custom_post_types = get_option( self::$plugin_prefix . '_cpts' );
 			$templates = get_option( self::$plugin_prefix . '_templates' );
 			$styles = get_option( self::$plugin_prefix . '_styles' );
+			$css_style = '';
 			
 			/* Check if portfolio exists and really registered */
 			if ( !empty( $portfolios ) ) {
@@ -1906,11 +1956,39 @@ class GW_Go_Portfolio {
 					/* Check if given id exist in plugin db */
 					if ( $portfolio['id'] == $id ) {
 
-							ob_start();
-							echo '<style>';
-							self::generate_inline_styles( $portfolio );
-							echo '</style>';
-							$css_style = ob_get_clean();
+							global $post;
+				
+							$general_settings = get_option( self::$plugin_prefix . '_general_settings' );
+							
+							if ( !empty( $general_settings['plugin-pages-rule'] ) &&  $general_settings['plugin-pages'] && !empty( $post ) ) {
+							
+								$page_ids = $general_settings['plugin-pages'];
+							
+								if ( !empty( $page_ids ) ) {
+									
+									$pages =  trim( preg_replace( '/([^0-9][^,]{0})+/', ',', $page_ids ), ',' );
+									$pages = explode( ',', $pages );
+									
+									if ( $general_settings['plugin-pages-rule'] == 'in' && in_array( $post->ID, $pages ) ||  $general_settings['plugin-pages-rule'] == 'not_in' && !in_array( $post->ID, $pages ) ) {
+										
+										ob_start();
+										echo '<style>';
+										self::generate_inline_styles( $portfolio );
+										echo '</style>';
+										$css_style = ob_get_clean();
+										
+									}
+									
+										
+								}
+								
+							} else {
+								ob_start();
+								echo '<style>';
+								self::generate_inline_styles( $portfolio );
+								echo '</style>';
+								$css_style = ob_get_clean();
+							}
 							
 							/* Check if post type is registered */
 							$post_types = get_post_types( '', 'objects' );
@@ -2454,8 +2532,8 @@ class GW_Go_Portfolio {
 														if ( $portfolio['excerpt-src'] == 'content' ) {
 															$post_content_src = substr( $post_content_src, 0, strpos( $post_content_src, '<!--more-->' ) );
 														}
-														$content = go_portfolio_wp_trim_excerpt( $post_content_src, $loop_excerpt_length, $excerpt_more, $strip_shortcodes, $strip_html, $allowed_tags );		
-													}
+														$content = go_portfolio_wp_trim_excerpt( $post_content_src, $loop_excerpt_length, $excerpt_more, $strip_shortcodes, $strip_html, $allowed_tags );
+													}											
 													
 													$template_data['post_excerpt'] = $content;										
 													

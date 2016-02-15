@@ -35,25 +35,38 @@ function go_portfolio_clean_input( $input_data=array(), $html_allowed_keys=array
 
 function go_portfolio_wp_trim_excerpt( $text, $excerpt_word_count=25,  $excerpt_end = '...', $strip_shortcodes=true, $strip_html=true, $allowed_tags='' ) {
 		
-		/* Delete all shortcodes */
-		if ( $strip_shortcodes ) { $text = strip_shortcodes( $text ); };
-	 
-		$text = wpautop( $text );
-		$text = do_shortcode( shortcode_unautop( $text ) );
-		$text = str_replace( ']]>', ']]&gt;', $text );
+	/* Delete all shortcodes */
+	if ( $strip_shortcodes ) { $text = strip_shortcodes( $text ); };
+ 
+	$text = wpautop( $text );
+	$text = do_shortcode( shortcode_unautop( $text ) );
+	$text = str_replace( ']]>', ']]&gt;', $text );
 
-	 	/* Strip tags */
-		$text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text); 
-		if ( $strip_html ) { $text = strip_tags( $text, $allowed_tags ); }
-		$words = preg_split( "/[\n\r\t ]+/", $text, $excerpt_word_count + 1, PREG_SPLIT_NO_EMPTY );
-		
-		if ( count( $words ) > $excerpt_word_count ) {
-			array_pop( $words );
-			$text = implode( ' ', $words );
-			$text = $text . $excerpt_end;
-		} else {
-			$text = implode( ' ', $words );
-		}
+	/* Strip tags */
+	$text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text); 
+	if ( $strip_html ) { $text = strip_tags( $text, $allowed_tags ); }
+	$words = preg_split( "/[\n\r\t ]+/", $text, $excerpt_word_count + 1, PREG_SPLIT_NO_EMPTY );
+	
+	if ( count( $words ) > $excerpt_word_count ) {
+		array_pop( $words );
+		$text = implode( ' ', $words );
+		$text = $text . $excerpt_end;
+	} else {
+		$text = implode( ' ', $words );
+	}
+	
+	/* Fix broken HTML */
+	if ( $strip_html === false && $text != '' ) {
+	
+		$charset = get_option( 'blog_charset', 'UTF-8' );
+		$text = mb_convert_encoding( $text, 'HTML-ENTITIES', $charset ); 
+		$doc = new DOMDocument();
+		$doc->encoding = $charset;
+		$doc->loadHTML( $text );
+		$text = $doc->saveHTML();
+
+	}																				
+	
 	return $text;
 }
 
