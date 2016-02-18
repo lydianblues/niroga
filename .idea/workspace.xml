@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80b81582-95fe-4f74-86fd-1d28bf6b561b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain-en_US.mo" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain-en_US.mo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/admin/js/go_portfolio_admin_scripts.js" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/admin/js/go_portfolio_admin_scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/assets/css/go_portfolio_styles.css" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/assets/css/go_portfolio_styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/assets/js/go_portfolio_scripts.js" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/assets/js/go_portfolio_scripts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/class_go_portfolio.php" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/class_go_portfolio.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/go_portfolio.php" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/go_portfolio.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/functions.php" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/functions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/generate_inline_style.php" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/generate_inline_style.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/submenu_page_general_settings.php" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/includes/submenu_page_general_settings.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain-en_US.po" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain-en_US.po" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain.pot" afterPath="$PROJECT_DIR$/wp-content/plugins/go_portfolio/lang/go_portfolio_textdomain.pot" />
-    </list>
+    <list default="true" id="80b81582-95fe-4f74-86fd-1d28bf6b561b" name="Default" comment="" />
     <ignored path="niroga.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -34,11 +21,11 @@
     <favorites_list name="niroga" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -48,7 +35,7 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter-child/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -58,18 +45,28 @@
       <file leaf-file-name="single-event.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/single-event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.7096774">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="single-event.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="single-event.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter-child/tribe-events/single-event.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36320755">
+            <state vertical-scroll-proportion="-4.548387">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="general.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/common/src/functions/template-tags/general.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-70.16129">
+              <caret line="292" column="13" selection-start-line="292" selection-start-column="13" selection-end-line="292" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -78,7 +75,7 @@
       <file leaf-file-name="plugin.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-includes/plugin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="13.193548">
+            <state vertical-scroll-proportion="-5.129032">
               <caret line="231" column="47" selection-start-line="231" selection-start-column="47" selection-end-line="231" selection-end-column="47" />
               <folding />
             </state>
@@ -88,18 +85,18 @@
       <file leaf-file-name="Templates.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/Tribe/Templates.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="24.548388">
+            <state vertical-scroll-proportion="0.09677419">
               <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="general.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="general.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/functions/template-tags/general.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.8387096">
-              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.33254716">
+              <caret line="911" column="31" selection-start-line="911" selection-start-column="31" selection-end-line="911" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -108,7 +105,7 @@
       <file leaf-file-name="default-template.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/default-template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -136,6 +133,16 @@
   <component name="PhpServers">
     <servers>
       <server host="niroga" id="7fefd52d-0842-40f6-a244-674ea291ebab" name="niroga" />
+      <server host="wordpress" id="e5dfcc6f-e662-4388-858c-580bf8968244" name="wordpress" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$/wp-content/plugins/revslider/admin/assets/imports/highlight-carousel" remote-root="/Volumes/Opt/wordpress/site" />
+        </path_mappings>
+      </server>
+      <server host="localhost" id="e479d8b6-6a08-459e-a8ca-9d6564526182" name="localhost" use_path_mappings="true">
+        <path_mappings>
+          <mapping local-root="$PROJECT_DIR$" remote-root="/Volumes/Opt/wordpress/site" />
+        </path_mappings>
+      </server>
     </servers>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
@@ -276,7 +283,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25679544" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25679544" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -325,11 +332,11 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/functions/template-tags/general.php</url>
-          <line>32</line>
-          <option name="timeStamp" value="6" />
+          <line>867</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="7" />
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -374,10 +381,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter/header.php">
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/default-template.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/Tribe/Templates.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09677419">
+          <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-includes/plugin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.129032">
+          <caret line="231" column="47" selection-start-line="231" selection-start-column="47" selection-end-line="231" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/single-event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7096774">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -390,7 +421,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/default-template.php">
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter/header.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -398,42 +429,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/views/single-event.php">
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/common/src/functions/template-tags/general.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wp-includes/plugin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="13.193548">
-          <caret line="231" column="47" selection-start-line="231" selection-start-column="47" selection-end-line="231" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/functions/template-tags/general.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.8387096">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/Tribe/Templates.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="24.548388">
-          <caret line="453" column="0" selection-start-line="453" selection-start-column="0" selection-end-line="453" selection-end-column="0" />
+        <state vertical-scroll-proportion="-70.16129">
+          <caret line="292" column="13" selection-start-line="292" selection-start-column="13" selection-end-line="292" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wp-content/themes/jupiter-child/tribe-events/single-event.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36320755">
+        <state vertical-scroll-proportion="-4.548387">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/the-events-calendar/src/functions/template-tags/general.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33254716">
+          <caret line="911" column="31" selection-start-line="911" selection-start-column="31" selection-end-line="911" selection-end-column="31" />
           <folding />
         </state>
       </provider>

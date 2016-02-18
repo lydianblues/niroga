@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 3.9
-Tested up to: 4.4.1
-Stable tag: 4.0.5
+Tested up to: 4.4
+Stable tag: 4.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -224,6 +224,18 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.0.6] 2016-02-17 =
+
+* Fix - Resolved issue where the list widget was displaying dates in the wrong timezone when sitewide timezones were enabled
+* Fix - Custom Recurring descriptions are now saving as expected
+* Fix - Administration Recurring Exclusion Datepickers are now fully operational with custom formats
+* Fix - Prevent "/all" page to show past events
+* Fix - Ensure Photo view is fully displayed on Mobile
+* Fix - Organizer and Venue URL now respect UTF-8 characters
+* Fix - All of our Permalinks will now allow translations with non-alphanumeric characters
+* Fix - Fixing Fatals on bad Debug Classes for Map View
+* Tweak - "/all" page on Recurring events will be recoginized as a `is_archive` template
 
 = [4.0.5] 2016-01-25 =
 

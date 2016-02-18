@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 3.9
 Tested up to: 4.4
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,6 +215,10 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/18h9" target="_blank">The Events Calendar: iCal Importer</a>
 
 == Changelog ==
+
+= [4.0.3] 2016-02-17 =
+
+* Fix - Pevent warning for Database Meta table on Weekdays Queries
 
 = [4.0.2] 2015-12-16 =
 

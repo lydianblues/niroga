@@ -40,9 +40,9 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 */
 		protected static $defaultMuFilters;
 
-		const REQUIRED_TEC_VERSION = '4.0.2';
+		const REQUIRED_TEC_VERSION = '4.0.6';
 
-		const VERSION = '4.0.2';
+		const VERSION = '4.0.3';
 		/**
 		 * Initialize the addon to make sure the versions line up.
 		 *
