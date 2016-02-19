@@ -40,6 +40,8 @@ $event_id = get_the_ID();
 		<?php endif; ?>
 	</div>
 
+	<?php the_meta(); ?>
+
 	<!-- Event header -->
 	<div id="tribe-events-header" <?php tribe_events_the_header_attributes() ?>>
 		<!-- Navigation -->
