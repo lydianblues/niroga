@@ -11,7 +11,7 @@
 
 	switch ($post_type) {
 		case 'image': 
-			require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+			require_once (THEME_INCLUDES . "/bfi_thumb.php");
 			$image_src_array = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', true );
 			$image_src = bfi_thumb( $image_src_array[ 0 ], array('width' => $image_width, 'height' => $image_height));
 			?>

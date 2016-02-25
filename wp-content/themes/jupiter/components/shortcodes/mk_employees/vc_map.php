@@ -88,6 +88,13 @@ vc_map(array(
             "description" => __("", "mk_framework")
         ) ,
         array(
+            "type" => "textfield",
+            "heading" => __("Select Specific Categories.", "mk_framework"),
+            "param_name" => "categories",
+            "value" => '',
+            "description" => __("You will need to go to Wordpress Dashboard => Employees => Employees Categories. In the right hand find Slug column. you will need to add employees category slugs in this option. add comma to separate them.", "mk_framework")
+        ),
+        array(
             "type" => "range",
             "heading" => __("Offset", "mk_framework") ,
             "param_name" => "offset",

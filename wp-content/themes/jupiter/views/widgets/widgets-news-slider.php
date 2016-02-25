@@ -11,27 +11,13 @@ class Artbees_Widget_News_Feed extends WP_Widget {
 		WP_Widget::__construct( 'news_feed_widget', THEME_SLUG.' - '.'News Slider', $widget_ops );
 
 
-		add_action( "save_post", array( &$this, "flush_widget_cache" ) );
-		add_action( "deleted_post", array( &$this, "flush_widget_cache" ) );
-		add_action( "switch_theme", array( &$this, "flush_widget_cache" ) );
-
-
 	}
 
 
 	function widget( $args, $instance ) {
 
-		$cache = wp_cache_get( "Artbees_Widget_News_Feed", "widget" );
 		global $mk_options;
 
-		if ( !is_array( $cache ) )
-			$cache = array();
-
-		if ( isset( $cache[$args['widget_id']] ) ) {
-			echo $cache[$args['widget_id']];
-			return;
-		}
-		ob_start();
 		extract( $args );
 
 		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? 'Latest News' : $instance['title'], $instance, $this->id_base ); 
@@ -48,53 +34,52 @@ class Artbees_Widget_News_Feed extends WP_Widget {
 
 		$r = new WP_Query( $query );
 
+
+
 		if ( $r-> have_posts() ) :
 
 			echo $before_widget;
+			
 
 		if ( $title ) echo $before_title . $title . $after_title; ?>
 
 
-       <div class="news-widget-slider mk-flexslider js-flexslider" id="slider_<?php echo $random; ?>"><ul class="mk-flex-slides">
+       <div class="news-widget-slider mk-flexslider js-flexslider clear" id="slider_<?php echo $random; ?>">
+       		<ul class="mk-flex-slides">
 
-		<?php
+				<?php while ( $r-> have_posts() ) : $r -> the_post();
 
-		while ( $r-> have_posts() ) : $r -> the_post();
+					?>
+					<li>
+					<?php if ( has_post_thumbnail() ) : ?>
+			        <a href="<?php echo get_permalink(); ?>" title="<?php the_title(); ?>" class="news-widget-thumbnail">
+			        <?php		
+							$image_src_array = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', true );
+							$image_src = bfi_thumb( $image_src_array[ 0 ], array('width' => 500, 'height' => 250)); 
+						?><img alt="<?php the_title(); ?>" title="<?php the_title(); ?>" src="<?php echo $image_src; ?>" />
+					</a>
+					<?php endif; ?>
 
-		?>
-		<li>
-		<?php if ( has_post_thumbnail() ) : ?>
-        <a href="<?php echo get_permalink(); ?>" title="<?php the_title(); ?>" class="news-widget-thumbnail">
-        <?php		
-				$image_src_array = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full', true );
-				$image_src = bfi_thumb( $image_src_array[ 0 ], array('width' => 500, 'height' => 250)); 
-			?><img alt="<?php the_title(); ?>" title="<?php the_title(); ?>" src="<?php echo $image_src; ?>" />
-		</a>
-		<?php endif; ?>
-
-		<h4 class="news-widget-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
-		<div class="news-widget-excerpt"><?php the_excerpt(); ?></div>
-		<a href="<?php echo get_permalink(); ?>" class="mk-read-more"><?php _e('Read more' , 'mk_framework'); ?><i class="mk-icon-double-angle-right"></i></a>
-		</li>
-		<?php endwhile;  ?>
-        </ul>
-        <?php if($mk_options['news_page'] != '') : ?>
+					<h4 class="news-widget-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
+					<div class="news-widget-excerpt"><?php the_excerpt(); ?></div>
+					<a href="<?php echo get_permalink(); ?>" class="mk-read-more"><?php _e('Read more' , 'mk_framework'); ?><i class="mk-icon-double-angle-right"></i></a>
+					</li>
+				<?php endwhile;  ?>
+       		 </ul>
+        <?php if(isset($mk_options['news_page']) && !empty($mk_options['news_page'])) : ?>
 				<a class="mk-button mk-skin-button three-dimension small" href="<?php echo get_permalink($mk_options['news_page']); ?>"><i class="mk-icon-double-angle-right"></i><?php _e('Back to News', 'mk_framework'); ?></a>
 		<?php endif; ?>
-		<div>
+
+		</div>
         <?php
 		
 
 		wp_reset_query();
 
+		echo $after_widget;
 
 		endif;
-
-
-    $cache[$args['widget_id']] = ob_get_flush();
-	wp_cache_set( 'Artbees_Widget_News_Feed', $cache, 'widget' );        
-
-	echo $after_widget;
+	
 
 		}
 
@@ -104,19 +89,10 @@ class Artbees_Widget_News_Feed extends WP_Widget {
 		$instance['title'] = $new_instance['title'];
 		$instance['count'] = (int)$new_instance['count'];
 	
-		$this-> flush_widget_cache();
-
-		$alloptions = wp_cache_get( 'alloptions', 'options' );
-		if ( isset( $alloptions['Artbees_Widget_News_Feed'] ) )
-			delete_option( 'Artbees_Widget_News_Feed' );
 
 		return $instance;
 	}
 
-
-	function flush_widget_cache() {
-		wp_cache_delete( 'Artbees_Widget_News_Feed', 'widget' );
-	}
 
 
 	function form( $instance ) {

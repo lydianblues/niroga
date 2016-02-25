@@ -77,8 +77,8 @@ if($view_params['style'] == 'grid') {
 }
 
 if ($view_params['image_size'] == 'crop') {
-    $image_width = $width * $view_params['image_quality'];
-    $image_height = $height * $view_params['image_quality'];
+    $image_width = $width;
+    $image_height = $height;
 
     $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
     $image_output_src = mk_image_generator($image_src_array[0], $image_width, $image_height, 'true');

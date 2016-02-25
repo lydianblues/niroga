@@ -29,7 +29,7 @@ class Artbees_Widget_Slideshow extends WP_Widget {
 		if ( $count > 0 ) {
 			for ( $i=1; $i<=$count; $i++ ) {
 				$src =  isset( $instance["src_".$i] ) ? $instance["src_".$i] : '';
-				require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+				require_once (THEME_INCLUDES . "/bfi_thumb.php");
 				$image_src = bfi_thumb( $src, array('width' => $width, 'height' => $height)); 
 				$output .= '<li>';
 				$output .= '<img alt="Slide" src="'.$image_src.'" />';

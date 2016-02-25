@@ -6,7 +6,7 @@ extract(shortcode_atts(array(
 	'image_size'					=> 'crop',
 	'full_height'                  	=> 'false',
 	'album_height'					=> 300,
-	'image_quality'					=> 1,
+	//'image_quality'					=> 1,
 	'description_preview'			=> 'true',
 	'thumbnail_preview'				=> 'true',
 	'overlay_preview'				=> 'true',

@@ -5,21 +5,41 @@ include ($path . '/config.php');
 
 global $mk_options, $wp_query;
 
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 
 $id = Mk_Static_Files::shortcode_id();
 
 $query_options = array(
     'post_type' => 'post',
-    'count' => $count,
     'offset' => $offset,
-    'cat' => $cat,
-    'author' => $author,
     'posts' => $posts,
     'orderby' => $orderby,
     'order' => $order,
 );
+
+if(is_archive()) {
+    $query_options['category_name'] = isset($wp_query->query['category_name']) ? $wp_query->query['category_name'] : '';
+    $count = isset($wp_query->query_vars['posts_per_page']) ? $wp_query->query_vars['posts_per_page'] : $count;
+    $query_options['author_name'] = isset($wp_query->query['author_name']) ? $wp_query->query['author_name'] : '';
+
+    $query_options['year'] = isset($wp_query->query['year']) ? $wp_query->query['year'] : '';
+    $query_options['monthnum'] = isset($wp_query->query['monthnum']) ? $wp_query->query['monthnum'] : '';
+    $query_options['m'] = isset($wp_query->query['m']) ? $wp_query->query['m'] : '';
+    $query_options['second'] = isset($wp_query->query['second']) ? $wp_query->query['second'] : '';
+    $query_options['minute'] = isset($wp_query->query['minute']) ? $wp_query->query['minute'] : '';
+    $query_options['hour'] = isset($wp_query->query['hour']) ? $wp_query->query['hour'] : '';
+    $query_options['w'] = isset($wp_query->query['w']) ? $wp_query->query['w'] : '';
+    $query_options['day'] = isset($wp_query->query['day']) ? $wp_query->query['day'] : '';
+    $query_options['tag'] = isset($wp_query->query['tag']) ? $wp_query->query['tag'] : '';
+
+} else {
+    $query_options['author'] = $author;
+}
+
+$query_options['count'] = $count;
+$query_options['cat'] = $cat;
+
 
 $query = mk_wp_query($query_options);
 $r = $query['wp_query'];
@@ -64,7 +84,7 @@ $atts = array(
     'image_size' => $image_size,
     'excerpt_length' => $excerpt_length,
     'thumbnail_align' => $thumbnail_align,
-    'image_quality' => $image_quality,
+    //'image_quality' => $image_quality,
     'i' => 0
 );
 
@@ -98,28 +118,31 @@ switch ($magazine_strcutre) {
 $data_config[] = 'data-query="'.base64_encode(json_encode($query_options)).'"';
 $data_config[] = 'data-loop-atts="'.base64_encode(json_encode($atts)).'"';
 $data_config[] = 'data-pagination-style="'.$pagination_style.'"';
-$data_config[] = 'data-max-pages="'.$r->max_num_pages.'"';
-$data_config[] = 'data-loop-iterator="'.$r->query['posts_per_page'].'"';
+$data_config[] = is_archive() ? 'data-max-pages="'.$r->max_num_pages.'"' : 'data-max-pages="'.$r->max_num_pages.'"';
+$data_config[] = 'data-loop-iterator="'.$count.'"';
+//if(is_archive()) $data_config[] = 'data-archive-cat="'.$wp_query->query['category_name'].'"';
 
 if($style == 'grid' || $style == 'newspaper' || $style == 'spotlight') {
     $data_config[] = 'data-mk-component="Grid"';
     $data_config[] = 'data-grid-config=\'{"container":"#loop-'.$id.'", "item":".mk-isotop-item"}\'';
 }
+
 ?>
 
 
 <section id="loop-<?php echo $id; ?>" <?php echo implode(' ', $data_config); ?> class="js-loop js-el clear <?php echo implode(' ', $wrapper_class); ?>" <?php echo get_schema_markup('blog'); ?>>
     <?php
-    if (is_archive()):
-        $r = $wp_query;
+
+/*    if (is_archive()):
+        //$r = $wp_query;
         if (have_posts()):
             while (have_posts()):
                 the_post();
                 $atts['i']++;
                 echo mk_get_shortcode_view('mk_blog', 'loop-styles/' . $style, true, $atts);
             endwhile;
-        endif;
-    else:
+        endif; 
+    else:*/
         if ($r->have_posts()):
             while ($r->have_posts()):
                 $r->the_post();
@@ -127,7 +150,7 @@ if($style == 'grid' || $style == 'newspaper' || $style == 'spotlight') {
                 echo mk_get_shortcode_view('mk_blog', 'loop-styles/' . $style, true, $atts);
             endwhile;
         endif;
-    endif;
+/*    endif;*/
     ?>    
 </section>
 
@@ -138,5 +161,7 @@ if($style == 'grid' || $style == 'newspaper' || $style == 'spotlight') {
 if ($pagination != 'false') {
     echo mk_get_view('global', 'loop-pagination', true, ['pagination_style' => $pagination_style, 'r' => $r]);
 }
+
+wp_nonce_field('mk-load-more', 'safe_load_more');
 
 wp_reset_postdata();

@@ -12,7 +12,7 @@
 }
 .Edge .clipper,
 .IE .clipper {
-  clip: rect(auto, auto, auto, auto);
+  clip: rect(auto auto auto auto);
   overflow: hidden;
 }
 .mk-edge-wrapper {

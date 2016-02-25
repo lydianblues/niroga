@@ -32,8 +32,7 @@ $font_icon_container->addClass(get_viewport_animation_class($animation));
 $font_icon_container->addClass($el_class);
 
 if ( $link ) {
-	$smooth_scroll_css = (preg_match('/#/',$link)) ? ' class="mk-smooth"' : '';
-	$font_icon->wrap('<a target="'.$target.'" href="'.$link.'"'.$smooth_scroll_css.'>');
+	$font_icon->wrap('<a target="'.$target.'" href="'.$link.'" class="js-smooth-scroll">');
 }
 if(!empty( $icon )) {
     $icon = (strpos($icon, 'mk-') !== FALSE) ? $icon : ( 'mk-'.$icon.'' );

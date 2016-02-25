@@ -16,7 +16,7 @@ $player->addClass($large_player_class);
 $player->addClass($el_class);
 
 if ( $thumb && $remove_thumb == 'false') {
-	require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+	require_once (THEME_INCLUDES . "/bfi_thumb.php");
 	$image_src = bfi_thumb( $thumb, array('width' => $img_dimension, 'height' => $img_dimension));
 	$player->find('.audio-thumb')
 		->attr('src', mk_image_generator($image_src, $img_dimension,$img_dimension))

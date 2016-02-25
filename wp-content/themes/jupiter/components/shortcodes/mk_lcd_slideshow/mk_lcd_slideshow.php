@@ -8,7 +8,7 @@ $images = explode( ',', $images );
 
 $id = uniqid();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $class[] = get_viewport_animation_class($animation);
 $class[] = $el_class;

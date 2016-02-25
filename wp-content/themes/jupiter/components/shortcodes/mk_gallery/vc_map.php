@@ -58,7 +58,7 @@ vc_map(array(
         ) ,
         array(
             "heading" => __("Image Size", 'mk_framework') ,
-            "description" => __("", 'mk_framework') ,
+            "description" => __("<span style='color:red'>Please note that in Masonry styles, image width and height must be equal(square). So if you will use image sizes other than Resize & Crop, make sure those images are arranged to be square shaped images.</span>", 'mk_framework') ,
             "param_name" => "image_size",
             "value" => mk_get_image_sizes(),
             "type" => "dropdown",
@@ -99,7 +99,16 @@ vc_map(array(
             "heading" => __("Overlay Color", "mk_framework") ,
             "param_name" => "overlay_color",
             "value" => "",
-            "description" => __("", "mk_framework")
+            "description" => __("", "mk_framework"),
+            "dependency" => array(
+                'element' => "hover_scenarios",
+                'value' => array(
+                    'fadebox',
+                    'blur',
+                    'overlay_layer',
+                    'grayscale'
+                )
+            )
         ) ,
         array(
             "heading" => __("Item Spacing", 'mk_framework') ,
@@ -155,7 +164,7 @@ vc_map(array(
                 )
             )
         ) ,
-        array(
+        /*array(
             "type" => "dropdown",
             "heading" => __("Increase Quality of Image", "mk_framework") ,
             "param_name" => "image_quality",
@@ -165,7 +174,7 @@ vc_map(array(
                 __("Images 3 times bigger (fullwidth row compatible)", 'mk_framework') => "3"
             ) ,
             "description" => __("If you want gallery images to be retina compatible or you just want to use it in full width row, you may consider increasing the image size. This option will help you to manually define the image quality.", "mk_framework")
-        ) ,
+        ) ,*/
         array(
             "heading" => __("Pagination?", 'mk_framework') ,
             "description" => __("Enable / Disable pagination for this image loop.", 'mk_framework') ,

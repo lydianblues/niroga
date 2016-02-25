@@ -276,18 +276,7 @@
   position: relative;
   float: left;
 }
-.post-type-badge {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: block;
-  opacity: 0;
-  margin: -24px 0 0 -24px;
-}
-.post-type-badge i {
-  font-size: 48px;
-  color: #ffffff;
-}
+
 .mk-blog-portraite {
   width: 100%;
 }
@@ -385,18 +374,19 @@
   display: block;
 }
 .mk-blog-modern-item .featured-image img,
-.mk-blog-classic-item .featured-image img {
+.mk-blog-classic-item .featured-image img{
   position: relative;
   width: 100%;
   max-width: 100%;
 }
+
+.mk-blog-modern-item .swiper-slide img,
+.mk-blog-classic-item .swiper-slide img {
+  width: 100%;
+}
 .mk-blog-modern-item .featured-image:hover .image-hover-overlay,
 .mk-blog-classic-item .featured-image:hover .image-hover-overlay {
   opacity: .85;
-}
-.mk-blog-modern-item .featured-image:hover .post-type-badge,
-.mk-blog-classic-item .featured-image:hover .post-type-badge {
-  opacity: 1;
 }
 .mk-blog-modern-item .featured-image:hover img,
 .mk-blog-classic-item .featured-image:hover img {
@@ -1260,9 +1250,7 @@
       -ms-transform: scale(1.05);
           transform: scale(1.05);
 }
-.mk-blog-newspaper-item .featured-image:hover .post-type-badge {
-  opacity: 1;
-}
+
 .mk-blog-newspaper-item .audio-iframe {
   margin-bottom: 0;
 }
@@ -1710,7 +1698,7 @@
 }
 .mk-blog-thumbnail-item .featured-image {
   position: relative;
-  width: 30%;
+  width: 35%;
   display: inline-block;
   overflow: hidden;
 }
@@ -1719,11 +1707,8 @@
       -ms-transform: scale(1.05);
           transform: scale(1.05);
 }
-.mk-blog-thumbnail-item .featured-image:hover .post-type-badge {
-  opacity: 1;
-}
 .mk-blog-thumbnail-item .item-wrapper {
-  width: 70%;
+  width: 65%;
   display: inline-block;
 }
 .mk-blog-thumbnail-item .item-wrapper .mk-blog-author,
@@ -1737,13 +1722,13 @@
 .mk-blog-thumbnail-item .item-wrapper .the-excerpt {
   margin-bottom: 20px;
 }
+.mk-blog-thumbnail-item .featured-image img {
+    width: 100%;
+  }
 @media handheld, only screen and (max-width: 767px) {
   .mk-blog-thumbnail-item .featured-image {
     width: 100%;
     margin-bottom: 20px;
-  }
-  .mk-blog-thumbnail-item .featured-image img {
-    width: 100%;
   }
   .mk-blog-thumbnail-item .mk-button-align.left {
     text-align: left !important;

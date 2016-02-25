@@ -27,7 +27,7 @@ class Artbees_Widget_Testimonials extends WP_Widget {
 				$url =  isset( $instance["url_".$i] ) ? $instance["url_".$i]:'';
 				$src =  isset( $instance["src_".$i] ) ? $instance["src_".$i]:'';
 				if(!empty($src)) {
-					require_once(THEME_FUNCTIONS . "/bfi_cropping.php");	
+					require_once (THEME_INCLUDES . "/bfi_thumb.php");
 					$image_src = bfi_thumb( $src, array('width' => 50, 'height' => 50)); 
 				}
 				

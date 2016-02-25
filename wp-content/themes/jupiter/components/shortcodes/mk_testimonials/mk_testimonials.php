@@ -3,7 +3,7 @@
 $path = pathinfo(__FILE__) ['dirname'];
 include ($path . '/config.php');
 
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $id = uniqid();
 
@@ -11,6 +11,7 @@ $query = mk_wp_query(array(
     'post_type' => 'testimonial',
     'count' => $count,
     'posts' => $testimonials,
+    'categories' => $categories,
     'orderby' => $orderby,
     'order' => $order,
 ));

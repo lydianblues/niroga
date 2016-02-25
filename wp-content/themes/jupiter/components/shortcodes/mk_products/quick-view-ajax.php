@@ -25,8 +25,10 @@ class Mk_Woocommerce_Quick_View
     function get_product_by_id($id = false) {
         
         if (empty($id)) return false;
-        
-        global $mk_options;
+
+        if(method_exists('WPBMap', 'addAllMappedShortcodes')) {
+             WPBMap::addAllMappedShortcodes();
+        }
         
         $query = array(
             'post_type' => 'product',

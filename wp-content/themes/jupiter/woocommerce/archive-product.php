@@ -37,11 +37,16 @@ get_header( 'shop' ); ?>
 				do_action( 'woocommerce_before_shop_loop' );
 			?>
 
-			<?php woocommerce_product_loop_start(); ?>
+			<?php 
+			if(woocommerce_product_subcategories()) {
 
-				<?php woocommerce_product_subcategories(); ?>
+				woocommerce_product_loop_start();
 
-			<?php woocommerce_product_loop_end(); ?>	
+					 woocommerce_product_subcategories();
+
+			 	woocommerce_product_loop_end(); 
+			 }
+			?>	
 
 			
 

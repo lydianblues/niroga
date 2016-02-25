@@ -22,7 +22,7 @@ $pages = array(
 	</span>
 </div>
 
-<p class="header-desc"><?php _e('You are awesome! You are now equipped with arguably the most powerful WordPress Website builder. To enjoy the full experience we strongly recommend to register your product and turn on automatic updates.', 'mk_framework'); ?></p>
+<p class="header-desc"><?php _e('You are awesome! You are now equipped with arguably the most powerful WordPress Website builder. To enjoy the full experience we strongly recommend to register your product.', 'mk_framework'); ?></p>
 
 <ul class="cp-tabs-holder">
 	<?php foreach ($pages as $slug => $name) { 

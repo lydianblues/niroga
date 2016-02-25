@@ -404,6 +404,7 @@ function mk_post_nav($same_category = true, $taxonomy = 'category') {
                 $category[] = $cat->name;
             }
             $output.= '<span class="pagenav-category">' . implode(', ', $category) . '</span>';
+            $category = array();
         } 
         elseif ($post_type == 'portfolio') {
             $terms = get_the_terms($entry->ID, 'portfolio_category');
@@ -415,6 +416,7 @@ function mk_post_nav($same_category = true, $taxonomy = 'category') {
                 }
             }
             $output.= '<span class="pagenav-category">' . implode(', ', $terms_name) . '</span>';
+            $terms_name = array();
         } 
         elseif ($post_type == 'product') {
             $terms = get_the_terms($entry->ID, 'product_cat');
@@ -426,6 +428,7 @@ function mk_post_nav($same_category = true, $taxonomy = 'category') {
                 }
             }
             $output.= '<span class="pagenav-category">' . implode(', ', $terms_name) . '</span>';
+            $terms_name = array();
         } 
         elseif ($post_type == 'news') {
             $terms = get_the_terms($entry->ID, 'news_category');
@@ -437,6 +440,7 @@ function mk_post_nav($same_category = true, $taxonomy = 'category') {
                 }
             }
             $output.= '<span class="pagenav-category">' . implode(', ', $terms_name) . '</span>';
+            $terms_name = array();
         }
         $output.= "</span>";
         $output.= "</div>";
@@ -687,58 +691,141 @@ add_action('wp_ajax_mk_contact_form', 'mk_contact_form');
 function mk_contact_form() {
 
     check_ajax_referer('mk-contact-form-security', 'security');
-    
-    $sitename = get_bloginfo('name');
-    
-    try {
-        $siteurl = $_SERVER['HTTP_REFERER']; // Current URL
-    } catch (Exception $e) {
-        $siteurl = home_url();
-    }
-    
-    $to = isset($_POST['to']) ? trim($_POST['to']) : '';
-    $name = isset($_POST['name']) ? trim($_POST['name']) : '';
-    $last_name = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
-    $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-    $website = isset($_POST['website']) ? trim($_POST['website']) : '';
-    $email = isset($_POST['email']) ? trim($_POST['email']) : '';
-    $content = isset($_POST['content']) ? trim($_POST['content']) : '';
-    
-    $error = false;
-    if ($to === '' || $email === '' || $content === '' || $name === '') {
-        $error = true;
-    }
-    if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $email)) {
-        $error = true;
-    }
-    if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $to)) {
-        $error = true;
-    }
-    
-    if ($error == false) {
-        $subject = sprintf(__('%1$s\'s message from %2$s', 'mk_framework') , $sitename, $name);
-        $body = __('Site: ', 'mk_framework') . $sitename . ' (' . $siteurl . ')' . "\n\n";
-        $body.= __('Name: ', 'mk_framework') . $name . " " . $last_name . "\n\n";
-        $body.= __('Email: ', 'mk_framework') . $email . "\n\n";
-        if (!empty($phone)) {
-            $body.= __('Phone Number: ', 'mk_framework') . $phone . "\n\n";
-        }
-        if (!empty($website)) {
-            $body.= __('Website: ', 'mk_framework') . $website . "\n\n";
-        }
-        $body.= __('Messages: ', 'mk_framework') . $content;
-        $headers = "From: $name $last_name <$email>\r\n";
-        $headers.= "Reply-To: $email\r\n";
+
         
-        if (wp_mail($to, $subject, $body, $headers)) {
-            echo true;
-        } 
-        else {
-            echo false;
+        $sitename = get_bloginfo('name');
+        
+        try {
+            $siteurl = $_SERVER['HTTP_REFERER']; // Current URL
+        } catch (Exception $e) {
+            $siteurl = home_url();
         }
-        wp_die();
+        
+        $send_to = mk_get_contact_form_email(trim($_POST['p_id']), trim($_POST['sh_id']));
+        $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+        $last_name = isset($_POST['last_name']) ? trim($_POST['last_name']) : '';
+        $phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $website = isset($_POST['website']) ? trim($_POST['website']) : '';
+        $content = isset($_POST['content']) ? trim($_POST['content']) : '';
+        
+        $error = false;
+        if ($send_to === '' || $email === '' || $content === '' || $name === '') {
+            $error = true;
+        }
+        if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $email)) {
+            $error = true;
+        }
+        if (!preg_match('/^[^@]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$/', $send_to)) {
+            $error = true;
+        }
+        
+        if ($error == false) {
+            $subject = sprintf(__('%1$s\'s message from %2$s', 'mk_framework') , $sitename, $name);
+            $body = __('Site: ', 'mk_framework') . $sitename . ' (' . $siteurl . ')' . "\n\n";
+            $body.= __('Name: ', 'mk_framework') . $name . " " . $last_name . "\n\n";
+            $body.= __('Email: ', 'mk_framework') . $email . "\n\n";
+            if (!empty($phone)) {
+                $body.= __('Phone Number: ', 'mk_framework') . $phone . "\n\n";
+            }
+            if (!empty($website)) {
+                $body.= __('Website: ', 'mk_framework') . $website . "\n\n";
+            }
+            $body.= __('Messages: ', 'mk_framework') . $content;
+            $headers = "From: $name $last_name <$email>\r\n";
+            $headers.= "Reply-To: $email\r\n";
+            
+            if (wp_mail($send_to, $subject, $body, $headers)) {
+                echo 'Email sent!';
+            } 
+            else {
+                echo 'Email could not be sent!';
+            }
+        } else {
+            echo 'Error(s) occured!';
+        }
+
+         wp_die();
+
+}
+
+if (!function_exists('mk_update_contact_form_email')) {
+    function mk_update_contact_form_email($p_id, $sh_id, $email) {
+
+        $email = empty($email) ? get_bloginfo( 'admin_email' ) : $email;
+        
+        $stored_email = get_option('contact-email-'. $p_id. '-' . $sh_id);
+
+        if($stored_email != $email) {
+            update_option('contact-email-'. $p_id . '-' . $sh_id, $email);
+        }    
     }
 }
+
+
+if (!function_exists('mk_get_contact_form_email')) {
+    function mk_get_contact_form_email($p_id, $sh_id) {
+        
+        return get_option('contact-email-'. $p_id. '-' . $sh_id);
+    }
+}
+
+
+/*
+ * Outputs some hidden inputs for contact forms to have post id and shortcode id to be sent to admin-ajax.
+*/
+if (!function_exists('mk_contact_form_hidden_values')) {
+    function mk_contact_form_hidden_values($sh_id, $p_id) {
+            $output = '<input type="hidden" id="sh_id" name="sh_id" value="'.$sh_id.'">';
+            $output .= '<input type="hidden" id="p_id" name="p_id" value="'.$p_id.'">';
+
+            return $output;
+    }
+}
+
+/*
+ * Create nonce to be used only one time.
+*/
+/*function mk_create_onetime_nonce($action = -1, $name = 'security') {
+    $time = time();
+    $nonce = wp_create_nonce($time.$action);
+    $value =  $nonce . '-' . $time;
+
+    return '<input type="hidden" name="'.$name.'" value="'.$value.'"/>';
+}*/
+
+
+
+/*
+ * Verify the Nonce and expire it.
+*/
+/*if (!function_exists('mk_verify_onetime_nonce')) {
+    function mk_verify_onetime_nonce( $_nonce, $action = -1) {
+
+        @list( $nonce, $time ) = explode( '-', $_nonce );
+    
+        // bad formatted onetime-nonce
+        if ( empty( $nonce ) || empty( $time ) )
+            return false;
+        
+        $nonce_transient = get_transient( '_nonce_' . $time );
+        
+        // nonce cannot be validated or has expired or was already used
+        if (
+            ! wp_verify_nonce( $nonce, $time . $action ) ||
+            false === $nonce_transient ||
+            'used' === $nonce_transient
+        )
+            return false;
+        
+        // mark this nonce as used
+        set_transient( '_nonce_' . $time, 'used', 60*60 );
+        
+        // return true to mark this nonce as valid
+        return true;
+    }
+}*/
+
 
 /*-----------------*/
 

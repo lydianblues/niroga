@@ -108,7 +108,7 @@ endif;
 $loop_image_size = isset($mk_options['woo_loop_image_size']) ? $mk_options['woo_loop_image_size'] : 'crop';
 
 if ( has_post_thumbnail() ) {
-	require_once(THEME_FUNCTIONS . "/bfi_cropping.php");	
+	require_once (THEME_INCLUDES . "/bfi_thumb.php");	
 
 	echo '<a href="'. get_permalink().'" class="product-link">';
 

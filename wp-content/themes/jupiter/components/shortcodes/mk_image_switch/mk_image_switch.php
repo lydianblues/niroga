@@ -7,7 +7,7 @@ $html = file_get_contents( $path . '/template.php' );
 $html = phpQuery::newDocument( $html );
 $id = Mk_Static_Files::shortcode_id();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $first_image_id = mk_get_attachment_id_from_url($src_first);
 $first_image_alt = get_post_meta($first_image_id, '_wp_attachment_image_alt', true);
@@ -64,7 +64,7 @@ if ( $crop == 'true' ) {
 			height: '.$image_height.'px;
 		}
 		#mk-image-switch-'.$id.' .image__container {
-			width: '.$image_width.'px;
+			max-width: '.$image_width.'px;
 			height: '.$image_height.'px;
 		}
 	';
@@ -75,7 +75,7 @@ if ( $crop == 'true' ) {
 			height: '.$image_size[1].'px;
 		}
 		#mk-image-switch-'.$id.' .image__container {
-			width: '.$image_size[0].'px;
+			max-width: '.$image_size[0].'px;
 			height: '.$image_size[1].'px;
 		}
 	';

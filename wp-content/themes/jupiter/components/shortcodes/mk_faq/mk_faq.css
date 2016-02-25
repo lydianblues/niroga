@@ -13,7 +13,7 @@
 .mk-faq-container.fancy-style-wrapper .mk-faq-toggle {
   padding: 0;
 }
-.mk-faq-container.fancy-style-wrapper .mk-toggle-title {
+.mk-faq-container.fancy-style-wrapper .mk-toggle .mk-toggle-title {
   padding: 18px;
   background: transparent;
   transition: all .2s;

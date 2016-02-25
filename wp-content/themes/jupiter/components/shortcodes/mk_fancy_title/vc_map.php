@@ -58,7 +58,7 @@ vc_map(array(
                 __('Single Color', "mk_framework") => "single_color",
                 __('Gradient Color', "mk_framework") => "gradient_color"
             ) ,
-            "description" => __("", "mk_framework")
+            "description" => __("Gradients work properly only in Webkit browsers.", "mk_framework")
         ),
         array(
             "type" => "colorpicker",

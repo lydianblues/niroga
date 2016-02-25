@@ -1,57 +1,57 @@
-(function($) {
-	'use strict';
+// (function($) {
+// 	'use strict';
 
-	$('.js-blend-mode').each( blend );
+// 	$('.js-blend-mode').each( blend );
 
-	function blend() {
-		var layer = this,
-			style = layer.currentStyle || window.getComputedStyle(layer, false),
-			img = style.backgroundImage,
-			color = style.backgroundColor,
-			mode = layer.getAttribute('data-blend'),
-			canvas = layer.getElementsByTagName('canvas')[0],
-			output = layer.querySelectorAll('.mk-blend-layer')[0],
-			isLuminosity = (mode === 'luminosity');
+// 	function blend() {
+// 		var layer = this,
+// 			style = layer.currentStyle || window.getComputedStyle(layer, false),
+// 			img = style.backgroundImage,
+// 			color = style.backgroundColor,
+// 			mode = layer.getAttribute('data-blend'),
+// 			canvas = layer.getElementsByTagName('canvas')[0],
+// 			output = layer.querySelectorAll('.mk-blend-layer')[0],
+// 			isLuminosity = (mode === 'luminosity');
 
-		img = img.replace('url(', '').replace(')', '').replace(/"/g, '').replace(/'/g, ''); 
-		color = color.replace('(', '').replace(')', '').replace('rgba', '').replace('rgb', '').split(',');
-		mode = (mode === 'soft-light') ? 'softLight' : mode;
-		mode = (mode === 'luminosity') ? 'overlay' : mode;
+// 		img = img.replace('url(', '').replace(')', '').replace(/"/g, '').replace(/'/g, ''); 
+// 		color = color.replace('(', '').replace(')', '').replace('rgba', '').replace('rgb', '').split(',');
+// 		mode = (mode === 'soft-light') ? 'softLight' : mode;
+// 		mode = (mode === 'luminosity') ? 'overlay' : mode;
 
 
-	    MK.core.loadDependencies([ MK.core.path.plugins + 'caman.js' ], function() {
+// 	    MK.core.loadDependencies([ MK.core.path.plugins + 'caman.js' ], function() {
  
-	    	Caman(canvas, img, function () { 
-	    		if(isLuminosity) this.greyscale();
+// 	    	Caman(canvas, img, function () { 
+// 	    		if(isLuminosity) this.greyscale();
 
-	    		this.newLayer(function () {
-			  		this.fillColor( rgb2hex( color ) );
-    				this.opacity( rgba2opacity( color ) * 100 );
-			  		this.setBlendingMode( mode );
-			  	});
+// 	    		this.newLayer(function () {
+// 			  		this.fillColor( rgb2hex( color ) );
+//     				this.opacity( rgba2opacity( color ) * 100 );
+// 			  		this.setBlendingMode( mode );
+// 			  	});
 
-				this.render(function() {
-					var img = this.toBase64();
-					output.style.backgroundImage = 'url(' + img + ')';
-				});
-			});
+// 				this.render(function() {
+// 					var img = this.toBase64();
+// 					output.style.backgroundImage = 'url(' + img + ')';
+// 				});
+// 			});
 
-	    });
-	}
+// 	    });
+// 	}
 
-	function rgb2hex(rgb) { // or rgba is also fine
-	    function hex(x) {
-	        return ("0" + parseInt(x).toString(16)).slice(-2);
-	    }
-	    return "#" + hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
-	}
+// 	function rgb2hex(rgb) { // or rgba is also fine
+// 	    function hex(x) {
+// 	        return ("0" + parseInt(x).toString(16)).slice(-2);
+// 	    }
+// 	    return "#" + hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
+// 	}
 
-	function rgba2opacity(rgba) {
-		var a = rgba[3].replace(' ', '');
-		return Number(rgba[3]) || 1;
-	}
+// 	function rgba2opacity(rgba) {
+// 		var a = rgba[3].replace(' ', '');
+// 		return Number(rgba[3]) || 1;
+// 	}
 
-}(jQuery));
+// }(jQuery));
 
 
 (function($) {

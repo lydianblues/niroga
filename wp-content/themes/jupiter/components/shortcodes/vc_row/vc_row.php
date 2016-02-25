@@ -14,7 +14,7 @@ global $post;
 $page_layout = get_post_meta($post->ID, '_layout', true);
 
 if (isset($_REQUEST['layout']) && !empty($_REQUEST['layout'])) {
-    $page_layout = $_REQUEST['layout'];
+    $page_layout = esc_html($_REQUEST['layout']);
 }
 
 $padding = !empty($padding) ? $padding : $column_padding;

@@ -2,6 +2,7 @@
 .height-full .mk-custom-box,
 .height-full .box-holder {
   height: 100%;
+  width: 100%;
   transition: background .2s ease-in-out;
 }
 .mk-custom-box .mk-custom-box--overlay {

@@ -1,4 +1,11 @@
 <?php
+
+$has_posts = wp_count_posts('news')->publish;
+if( !$has_posts ) {
+    echo 'No news posts to show!';
+    return;
+}
+
 $phpinfo = pathinfo(__FILE__);
 $path = $phpinfo['dirname'];
 include ($path . '/config.php');
@@ -6,7 +13,7 @@ include ($path . '/config.php');
 $id = uniqid();
 
 $output = '';
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $output .= mk_get_view('global', 'shortcode-heading', false, ['title' => $widget_title]);
 

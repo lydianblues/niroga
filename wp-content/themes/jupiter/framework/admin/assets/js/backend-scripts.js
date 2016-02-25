@@ -489,16 +489,17 @@ General Background Selector
                 jQuery('#bg_panel_color_2').parent().siblings('.wp-color-result').css('background-color', color_2_value);
                 jQuery('#bg_panel_stretch').attr('value', size_value);
                 if (size_value == 'true') {
-                    jQuery('#bg_panel_stretch').parent().removeClass('off').addClass('on');
+                    jQuery('#bg_panel_stretch').parent().removeClass('mk-toggle-off').addClass('mk-toggle-on');
                 } else {
-                    jQuery('#bg_panel_stretch').parent().removeClass('on').addClass('off');
+                    jQuery('#bg_panel_stretch').parent().removeClass('mk-toggle-on').addClass('mk-toggle-off');
                 }
                 jQuery('#bg_panel_parallax').attr('value', parallax_value);
                 if (parallax_value == 'true') {
-                    jQuery('#bg_panel_parallax').parent().removeClass('off').addClass('on');
+                    jQuery('#bg_panel_parallax').parent().removeClass('mk-toggle-off').addClass('mk-toggle-on');
                 } else {
-                    jQuery('#bg_panel_parallax').parent().removeClass('on').addClass('off');
+                    jQuery('#bg_panel_parallax').parent().removeClass('mk-toggle-on').addClass('mk-toggle-off');
                 }
+
                 jQuery('#mk-bg-edit-panel a[rel="' + position_value + '"]').siblings().removeClass('selected').end().addClass('selected');
                 jQuery('#mk-bg-edit-panel a[rel="' + repeat_value + '"]').siblings().removeClass('selected').end().addClass('selected');
                 jQuery('#mk-bg-edit-panel a[rel="' + attachment_value + '"]').siblings().removeClass('selected').end().addClass('selected');
@@ -621,12 +622,20 @@ General Background Selector
             jQuery(repeat_id).attr('value', repeat);
             jQuery(attachment_id).attr('value', attachment);
             jQuery(source_id).attr('value', image_source);
+
+            if (bg_size == 'true') {
+                stretch_option = 'cover';
+            } else {
+                stretch_option = 'contain';
+            }
             //update preview panel background
             if (image != '') {
                 jQuery(section_preview_class).find('.mk-bg-preview-layer').css({
                     'background-image': 'url(' + image + ')',
+                    'background-size': stretch_option,
                 });
             }
+            
             if (image_source == 'no-image') {
                 jQuery(section_preview_class).find('.mk-bg-preview-layer').css({
                     'background-image': 'none',
@@ -701,12 +710,22 @@ General Background Selector
             position = jQuery(position_id).val();
             repeat = jQuery(repeat_id).val();
             attachment = jQuery(attachment_id).val();
+            
+            size_id = '#' + this_panel_rel + '_size';
+            size_value = jQuery(size_id).val();
+            if (size_value == 'true') {
+                stretch_option = 'cover';
+            } else {
+                stretch_option = 'contain';
+            }
             //update preview panel background
             if (image != '') {
                 jQuery(this_panel).find('.mk-bg-preview-layer').css({
                     'background-image': 'url(' + image + ')',
+                    'background-size': stretch_option,
                 });
             }
+
             if (color_gradient == 'single') {
                 jQuery(this_panel).find('.mk-bg-preview-layer').css({
                     'background-color': color,

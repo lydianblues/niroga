@@ -21,7 +21,7 @@ extract(shortcode_atts(array(
      'hover_scenarios'        => 'slidebox',
      'grid_spacing'           => 4,
      'el_class'               => '',
-     'image_quality'          => 1,
+     //'image_quality'          => 1,
      'image_size'             => 'crop',
      "sortable"               => 'true',
      'sortable_align'         => 'left',     

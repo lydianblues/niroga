@@ -78,7 +78,7 @@ vc_map(array(
             )*/
         ),
 
-        array(
+        /*array(
             "type" => "dropdown",
             "heading" => __("Increase Quality of Image", "mk_framework"),
             "param_name" => "image_quality",
@@ -94,7 +94,7 @@ vc_map(array(
                 )
             ),
             "description" => __("If you would like your portfolio images to be retina compatible or just want to use it in fullwidth row, you may consider increasing the image size. This option will help you define the image quality manually. Please note that this option will not work for Masonry portfolio style.", "mk_framework")
-        ),
+        ),*/
 
         array(
             "heading" => __("Show Description?", 'mk_framework'),

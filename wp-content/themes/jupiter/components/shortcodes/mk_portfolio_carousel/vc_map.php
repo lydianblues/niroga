@@ -97,15 +97,11 @@ vc_map(array(
             "description" => __("Number of post to displace or pass over, it means based on your order of the loop, this number will define how many posts to pass over and start from the nth number of the offset.", "mk_framework")
         ),
         array(
+            "heading" => __("Image Size", 'mk_framework'),
+            "description" => __("", 'mk_framework'),
+            "param_name" => "image_size",
+            "value" => mk_get_image_sizes(),
             "type" => "dropdown",
-            "heading" => __("Increase Quality of Image", "mk_framework"),
-            "param_name" => "image_quality",
-            "value" => array(
-                __("Normal Quality", 'mk_framework') => "1",
-                __("Images 2 times bigger (retina compatible)", 'mk_framework') => "2",
-                __("Images 3 times bigger (fullwidth row compatible)", 'mk_framework') => "3"
-            ),
-            "description" => __("If you want portfolio images to be retina compatible or you just want to use it in fullwidth row, you may consider increasing the image size. This option will help you define the image quality yourself.", "mk_framework")
         ),
         array(
             "type" => "multiselect",

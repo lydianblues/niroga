@@ -10,7 +10,7 @@ if ( $images == '' ) return null;
 
 $images = explode( ',', $images );
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 // $slider_atts[] = 'data-animation="'.$effect.'"';
 // $slider_atts[] = 'data-easing="swing"';

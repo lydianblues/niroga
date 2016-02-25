@@ -59,7 +59,7 @@ class Artbees_Widget_Instagram_Feeds extends WP_Widget {
 		    feed.run();
 		});
 		</script>
-		<div id="instagram-feeds-<?php echo $id; ?>" class="mk-instagram-feeds"></div>
+		<div id="instagram-feeds-<?php echo $id; ?>" class="mk-instagram-feeds clear"></div>
 		<?php
 			echo $after_widget;
 		}

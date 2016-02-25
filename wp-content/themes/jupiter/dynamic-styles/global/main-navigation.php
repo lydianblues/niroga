@@ -47,6 +47,12 @@ Mk_Static_Files::addGlobalStyle("
 .menu-hover-style-2 .main-navigation-ul > li.menu-item:hover > a.menu-item-link,
 .menu-hover-style-2 .main-navigation-ul > li.current-menu-item > a.menu-item-link,
 .menu-hover-style-2 .main-navigation-ul > li.current-menu-ancestor > a.menu-item-link,
+.menu-hover-style-1.mk-vm-menuwrapper li.menu-item > a:hover,
+.menu-hover-style-1.mk-vm-menuwrapper li.menu-item:hover > a,
+.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-item > a,
+.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-ancestor > a,
+.menu-hover-style-2.mk-vm-menuwrapper li.menu-item > a:hover,
+.menu-hover-style-2.mk-vm-menuwrapper li.menu-item:hover > a,
 .menu-hover-style-2.mk-vm-menuwrapper li.current-menu-item > a,
 .menu-hover-style-2.mk-vm-menuwrapper li.current-menu-ancestor > a
 {
@@ -55,22 +61,10 @@ Mk_Static_Files::addGlobalStyle("
 }
 
 
-.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-item > a,
-.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-ancestor > a
-{
-
-	color: {$mk_options['main_nav_top_hover_skin']} !important;
-}
-
-
-.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-item > a,
-.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-ancestor > a
-{
-	border-left-color:{$mk_options['main_nav_top_hover_skin']};
-}
-
-
 .menu-hover-style-3 .main-navigation-ul > li.menu-item > a.menu-item-link:hover,
+.menu-hover-style-3 .main-navigation-ul > li.menu-item:hover > a.menu-item-link,
+.menu-hover-style-3.mk-vm-menuwrapper li > a:hover,
+.menu-hover-style-3.mk-vm-menuwrapper li:hover > a,
 .menu-hover-style-3 .main-navigation-ul > li.menu-item:hover > a.menu-item-link
 {
 	border:2px solid {$mk_options['main_nav_top_hover_skin']};
@@ -95,6 +89,8 @@ Mk_Static_Files::addGlobalStyle("
 .menu-hover-style-4 .main-navigation-ul li.menu-item:hover > a.menu-item-link,
 .menu-hover-style-4 .main-navigation-ul li.current-menu-item > a.menu-item-link,
 .menu-hover-style-4 .main-navigation-ul li.current-menu-ancestor > a.menu-item-link,
+.menu-hover-style-4.mk-vm-menuwrapper li a:hover,
+.menu-hover-style-4.mk-vm-menuwrapper li:hover > a,
 .menu-hover-style-4.mk-vm-menuwrapper li.current-menu-item > a,
 .menu-hover-style-4.mk-vm-menuwrapper li.current-menu-ancestor > a,
 .menu-hover-style-5 .main-navigation-ul > li.menu-item > a.menu-item-link:after
@@ -105,6 +101,8 @@ Mk_Static_Files::addGlobalStyle("
 
 .menu-hover-style-4.mk-vm-menuwrapper li.current-menu-ancestor > a:after,
 .menu-hover-style-4.mk-vm-menuwrapper li.current-menu-item > a:after,
+.menu-hover-style-4.mk-vm-menuwrapper li:hover > a:after,
+.menu-hover-style-4.mk-vm-menuwrapper li a:hover::after 
 {
 	color:{$mk_options['main_nav_top_hover_txt_color']};
 }
@@ -117,6 +115,13 @@ Mk_Static_Files::addGlobalStyle("
 .menu-hover-style-1 .main-navigation-ul > li.current-menu-ancestor > a.menu-item-link 
 {
 	border-top-color:{$mk_options['main_nav_top_hover_skin']};
+}
+
+.menu-hover-style-1.mk-vm-menuwrapper li > a:hover,
+.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-item > a,
+.menu-hover-style-1.mk-vm-menuwrapper li.current-menu-ancestor > a
+{
+	border-left-color:{$mk_options['main_nav_top_hover_skin']};
 }
 
 

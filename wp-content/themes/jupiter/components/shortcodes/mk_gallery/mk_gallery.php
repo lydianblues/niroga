@@ -1,7 +1,6 @@
 <?php
 $path = pathinfo(__FILE__) ['dirname'];
 include ($path . '/config.php');
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
 
 
  $column_css = $mansory_style = '';
@@ -78,7 +77,7 @@ $atts = array(
     'column_css' => $column_css,
     'frame_style' => $frame_style,
     'custom_links' => $custom_links,
-    'image_quality' => $image_quality,
+    //'image_quality' => $image_quality,
     'image_size' => $image_size,
     'height' => $height,
     'column' => $column,
@@ -93,7 +92,7 @@ if ($paged > 1) {
 
 if($style != 'grid') {
     $data_config[] = 'data-mk-component="Masonry"';
-    $data_config[] = 'data-masonry-config=\'{"container":"#gallery-loop-'.$id.'", "item":".js-gallery-item"}\'';
+    $data_config[] = 'data-masonry-config=\'{"container":"#gallery-loop-'.$id.'", "item":".js-gallery-item", "cols": "4"}\'';
 } 
 
 $data_config[] = 'data-query="'.base64_encode(json_encode($query_options)).'"';
@@ -151,7 +150,7 @@ Mk_Static_Files::addCSS("
     #gallery-loop-{$id} .image-hover-overlay {
         {$overlay_color}
     }
-    #gallery-loop-{$id} .hover-grayscale .gallery-inner img {
+    #gallery-loop-{$id} .hover-grayscale .image-hover-overlay img {
         filter: url('{$theme_images}/grayscale.svg#greyscale');
     }
 ", $id);

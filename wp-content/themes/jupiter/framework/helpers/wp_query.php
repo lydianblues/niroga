@@ -33,6 +33,9 @@ if (!function_exists('mk_wp_query')) {
         if (isset($cat) && !empty($cat) && $post_type == 'post') {
             $query['cat'] = $cat;
         }
+        if (isset($category_name) && !empty($category_name) && $post_type == 'post') {
+            $query['category_name'] = $category_name;
+        }
         
         if (isset($categories) && !empty($categories) && $post_type != 'post') {
             $query['tax_query'] = array(
@@ -47,6 +50,9 @@ if (!function_exists('mk_wp_query')) {
         if (isset($author) && !empty($author)) {
             $query['author'] = $author;
         }
+         if (isset($author_name) && !empty($author_name)) {
+            $query['author_name'] = $author_name;
+        }
         if (isset($posts) && !empty($posts)) {
             $query['post__in'] = explode(',', $posts);
         }
@@ -56,6 +62,39 @@ if (!function_exists('mk_wp_query')) {
         if (isset($order) && !empty($order)) {
             $query['order'] = $order;
         }
+
+        if (isset($year) && !empty($year)) {
+            $query['year'] = $year;
+        }
+
+        if (isset($monthnum) && !empty($monthnum)) {
+            $query['monthnum'] = $monthnum;
+        }
+
+        if (isset($m) && !empty($m)) {
+            $query['m'] = $m;
+        }
+
+        if (isset($second) && !empty($second)) {
+            $query['second'] = $second;
+        }
+
+        if (isset($minute) && !empty($minute)) {
+            $query['minute'] = $minute;
+        }
+
+        if (isset($hour) && !empty($hour)) {
+            $query['hour'] = $hour;
+        }
+
+        if (isset($w) && !empty($w)) {
+            $query['w'] = $w;
+        }
+
+        if (isset($day) && !empty($day)) {
+            $query['day'] = $day;
+        }
+
         if(isset($paged) && !empty($paged)) {
             $query['paged'] = $paged;    
         } else {

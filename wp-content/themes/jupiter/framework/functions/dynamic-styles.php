@@ -289,9 +289,9 @@ class Mk_Static_Files
             require_once (ABSPATH . '/wp-admin/includes/file.php');
             WP_Filesystem();
         }
-        global $components_prefix;
+        global $components_filename;
         
-        update_option('global_assets_filename', $components_prefix, true);
+        update_option('global_assets_filename', $components_filename, true);
         $merged_assets = array_unique($merged_assets);
         foreach ($store_options as $extension => $filename) {
             $concat_string = self::ConcatenateAssetsByExtension($minify, $extension, $merged_assets);
@@ -450,7 +450,7 @@ class Mk_Static_Files
            }
        }
        
-        if ($minify && $mk_dev != true && $mk_options['minify-' . $extension] != 'false') {
+        if (($minify && $mk_dev != true && $mk_options['minify-' . $extension] != 'false') or (isset($mk_options['pagespeed-optimization']) and $mk_options['pagespeed-optimization'] != 'false')) {
             $file_contents = self::minify_string($file_contents, $extension);
         }
         
@@ -569,26 +569,32 @@ class Mk_Static_Files
      * @copyright   Artbees LTD (c)
      * @link        http://artbees.net
      * @since       Version 5.0
-     * @last_update     Version 5.0.5
+     * @last_update     Version 5.0.8
      */
     
     static function global_assets() {
         global $app_global_assets;
-        global $components_prefix;
+        global $components_filename;
         global $mk_dev;
         global $global_assets_diff;
         global $dynamic_global_assets;
-        
+        global $mk_options;
+
         $saved_assets = array();
         $merged_assets = array();
         $global_assets_diff = array();
-        $time = "production";
-        if ($mk_dev) $time = "dev";
-        
+        $path = get_stylesheet_directory() . "/components/shortcodes/";
         $defined_constants = get_defined_constants(true);
-        
-        $components_prefix = "components-" . $time;
-        
+
+        if ($mk_dev) {
+        $components_suffix = "dev";
+        } else if(isset($mk_options['disable-dynamic-assets']) and $mk_options['disable-dynamic-assets'] == 'true') {
+        $components_suffix = "full";
+        } else {
+        $components_suffix = "production";
+        }
+
+        $components_filename = "components-" . $components_suffix;
         $saved_assets_db_object = self::jupiter_get_rows("type", "short_code", "name");
         
         if (is_array($saved_assets_db_object)) {
@@ -598,15 +604,18 @@ class Mk_Static_Files
         }
         
         if (!$app_global_assets) $app_global_assets = array();
+
+        if($components_suffix == "full") {
+            $app_global_assets = mk_scandir($path, GLOB_ONLYDIR);
+            $merged_assets = array_merge($saved_assets, $app_global_assets);
+        } else {
+            $merged_assets = array_merge($saved_assets, $app_global_assets);
+        }
         
-        $merged_assets = array_merge($saved_assets, $app_global_assets);
-        
-        $global_assets_diff = self::fast_array_diff($merged_assets, $saved_assets);
-        
-        if ($mk_dev) {
-            $path = get_stylesheet_directory() . "/components/shortcodes/";
+        if($mk_dev) {
             $global_assets_diff = mk_scandir($path, GLOB_ONLYDIR);
-            $time = "dev";
+        } else {
+            $global_assets_diff = self::fast_array_diff($merged_assets, $saved_assets);
         }
         
         if (sizeof($global_assets_diff) or $mk_dev) {
@@ -625,9 +634,11 @@ class Mk_Static_Files
                     );
                 }
             }
-            if (count($insert_arrays)) self::jupiter_insert_rows($insert_arrays);
-            $store_options["js"] = $components_prefix . ".min.js";
-            $store_options["css"] = $components_prefix . ".min.css";
+
+            if (count($insert_arrays))
+            self::jupiter_insert_rows($insert_arrays);
+            $store_options["js"] = $components_filename . ".min.js";
+            $store_options["css"] = $components_filename . ".min.css";
             update_option('global_assets_filename', "");
             self::delete_global_assets(false);
             self::StoreGlobalAssets(true, $store_options, $merged_assets);
@@ -936,6 +947,7 @@ class Mk_Static_Files
         $js_deleted = true;
         $css_deleted = true;
         $global_assets_filename = get_option('global_assets_filename');
+
         if (!$global_assets_filename) {
             $global_assets_filename = "";
         }
@@ -952,24 +964,18 @@ class Mk_Static_Files
                         $wp_filesystem->delete($assets[$i]);
                         $try_count++;
                     }
-                } 
-                else {
+                } else {
                     
                     // TODO: remove those after testing on live
                     echo "<!-- not deleted $assets[$i] " . strpos($assets[$i], "components") . " --> ";
                 }
-            } 
-            else {
-                
+
+            } else {
+
                 if (stristr($assets[$i], "components")) {
                     $wp_filesystem->delete($assets[$i]);
-                } 
-                else {
-                    
-                    // TODO: remove those after testing on live
-                    //echo "<!--  not deleted code 2 $assets[$i] - ".strpos($assets[$i],"components")." - ".stristr($assets[$i] ,"components")." --> ";
-                    
                 }
+
             }
         }
         
@@ -1326,10 +1332,26 @@ class Mk_Static_Files
     }
 
 
+    /**
+     * The key method for Google PageSpeed optimization. It get's the whole html output
+     * and move asset files to the bottom. Except the critical css path.
+     *
+     * @author      Uğur Mirza ZEYREK
+     * @copyright   Artbees LTD (c)
+     * @link        http://artbees.net
+     * @since       Version 5.0
+     * @last_update Version 5.0.8
+     *
+     * @param $output
+     * @return mixed|string
+     */
     function move_assets_to_footer($output)
     {
         global $mk_options;
         global $time_start;
+        
+        $ajax_check = (isset($output{3})) ? mb_substr($output, 0, 3) : $output;
+        if(is_numeric(strpos($ajax_check,"{"))) return $output;
 
         $is_admin = !(!is_numeric(strpos($_SERVER["REQUEST_URI"],"?wc-ajax")) and !is_admin() and !( in_array( $GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php','admin-ajax.php')) and !is_numeric(strpos($_SERVER["REQUEST_URI"],"/wp-admin")) and !is_numeric(strpos($_SERVER["REQUEST_URI"],"wc-ajax"))   ));
         if($is_admin) return $output;

@@ -14,7 +14,7 @@ extract(shortcode_atts(array(
     'hover_scenarios'   => 'fadebox',
     'overlay_color'     => '',
     'orderby'           => 'date',
-    'image_quality'     => 1,
+    //'image_quality'     => 1,
     'item_spacing'      => 8,
     'order'             => 'ASC',
     'pagination'        => 'false',

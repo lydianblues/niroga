@@ -126,7 +126,7 @@ $options = array(
         ) ,
     ) ,
     array(
-        "name" => __("Transprent header Skin", 'mk_framework') ,
+        "name" => __("Transparent header Skin", 'mk_framework') ,
         "desc" => __("Use this option to decide about the skin of transparent header.", 'mk_framework') ,
         "id" => "_transparent_header_skin",
         "default" => "light",
@@ -279,7 +279,11 @@ $options = array(
         "default" => "",
         "type" => 'hidden_input'
     ) ,
-    
+    array(
+        "id" => "body_size",
+        "default" => "false",
+        "type" => 'hidden_input'
+    ) ,
     array(
         "id" => "body_position",
         "default" => "",
@@ -341,7 +345,11 @@ $options = array(
         "default" => "",
         "type" => 'hidden_input'
     ) ,
-    
+    array(
+        "id" => "page_size",
+        "default" => "false",
+        "type" => 'hidden_input'
+    ) ,
     array(
         "id" => "page_position",
         "default" => "",
@@ -397,7 +405,11 @@ $options = array(
         "default" => "vertical",
         "type" => 'hidden_input'
     ) ,
-    
+    array(
+        "id" => "header_size",
+        "default" => "false",
+        "type" => 'hidden_input'
+    ) ,    
     array(
         "id" => "header_image",
         "default" => "",
@@ -464,7 +476,11 @@ $options = array(
         "default" => "",
         "type" => 'hidden_input'
     ) ,
-    
+    array(
+        "id" => "banner_size",
+        "default" => "false",
+        "type" => 'hidden_input'
+    ) ,
     array(
         "id" => "banner_position",
         "default" => "",
@@ -525,7 +541,11 @@ $options = array(
         "default" => "",
         "type" => 'hidden_input'
     ) ,
-    
+    array(
+        "id" => "footer_size",
+        "default" => "false",
+        "type" => 'hidden_input'
+    ) ,    
     array(
         "id" => "footer_position",
         "default" => "",

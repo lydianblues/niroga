@@ -27,13 +27,27 @@ class Mk_Load_More
     
     public function get_loop() {
         $content = '';
+
+        check_ajax_referer('mk-load-more', 'safe_load_more');
+
+        if(method_exists('WPBMap', 'addAllMappedShortcodes')) {
+            WPBMap::addAllMappedShortcodes();
+        }
+        
         $query = isset($_REQUEST['query']) ? json_decode(base64_decode($_REQUEST['query']), true) : false;
         $atts = isset($_REQUEST['atts']) ? json_decode(base64_decode($_REQUEST['atts']), true) : false;
         $loop_iterator = isset($_REQUEST['loop_iterator']) ? $_REQUEST['loop_iterator'] : 0;
         
-        $query['categories'] = isset($_REQUEST['term']) ? $_REQUEST['term'] : false;
-        $query['author'] = isset($_REQUEST['author']) ? $_REQUEST['author'] : false;
-        $query['post__in'] = isset($_REQUEST['posts']) ?  explode(',', $_REQUEST['posts']) : false;
+        if(isset($_REQUEST['term'])) {
+            $query['categories'] = !empty($_REQUEST['term']) ? $_REQUEST['term'] : false;
+        }
+        if(isset($_REQUEST['author'])) {
+            $query['author'] = !empty($_REQUEST['author']) ? $_REQUEST['author'] : false;    
+        }
+        if(isset($_REQUEST['posts'])) {
+            $query['post__in'] = !empty($_REQUEST['posts']) ?  explode(',', $_REQUEST['posts']) : false;    
+        }
+
         $query['paged'] = isset($_REQUEST['paged']) ? $_REQUEST['paged'] : false;
 
         $query = mk_wp_query($query);

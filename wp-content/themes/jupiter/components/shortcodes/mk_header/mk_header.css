@@ -8,3 +8,9 @@
 .js-header-shortcode {
 	background: transparent !important;
 }
+
+
+/* Fixes a bug that pushes header to out of page section */
+.mk-page-section .js-header-shortcode .mk-header-holder{
+	position: relative !important;
+}

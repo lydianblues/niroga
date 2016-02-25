@@ -7,7 +7,7 @@ if($maxPages <= 1) return false;
 // Classic Pagination
 if ($view_params['pagination_style'] == 1) {
 		?>
-		<div class="mk-pagination mk-grid js-el" data-number-pages="8" data-max-pages="<?php echo $maxPages; ?>" data-mk-component="Pagination">
+		<div class="mk-pagination mk-grid js-el clear" data-number-pages="8" data-max-pages="<?php echo $maxPages; ?>" data-mk-component="Pagination">
 			<a href="#" class="mk-pagination-previous is-vis-hidden js-pagination-prev"></a>
 
 				<?php for($i = 0; $i < $maxPages && $i < 10; $i++) { ?>
@@ -28,18 +28,18 @@ if ($view_params['pagination_style'] == 1) {
 				<span class="pagination-max-pages"><?php echo $maxPages; ?></span>
 			</div>
 		</div>
-
 		<?php 
 } 
-?>
-
-<?php
 // Pagination with load more button
-if ($view_params['pagination_style'] == 2) { ?>
-	<a class="mk-loadmore-button js-loadmore-button clear" href="javascript:;">
+else if ($view_params['pagination_style'] == 2) { ?>
+	<a id="mk_load_more_button" class="mk-loadmore-button js-loadmore-button clear" href="javascript:;">
 		<i class="mk-moon-loop-4"></i>
 		<i class="mk-moon-arrow-down-4"></i>
 		<?php _e('Load More', 'mk_framework'); ?>
 	</a>
-<?php } ?>    
+<?php } 
 
+// Loading on scroll indicator
+else if ($view_params['pagination_style'] == 3) { ?>
+	<div class="load-more-scroll js-load-more-scroll"></div>
+<?php }

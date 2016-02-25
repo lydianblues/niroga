@@ -17,7 +17,7 @@ $blog_type = 'blog-post-type-'.mk_get_blog_single_type();
 
 if ( have_posts() ) while ( have_posts() ) : the_post(); ?>
 
-<article id="<?php the_ID(); ?>" <?php post_class(array('mk-blog-single', $blog_style, $blog_type)); ?>>
+<article id="<?php the_ID(); ?>" <?php post_class(array('mk-blog-single', $blog_style, $blog_type)); ?> itemscope="itemscope" itemtype="https://schema.org/BlogPosting" itemprop="blogPost">
 
 	<?php do_action('blog_single_before_featured_image'); ?>
 

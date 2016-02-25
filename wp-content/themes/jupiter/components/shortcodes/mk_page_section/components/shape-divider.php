@@ -184,31 +184,31 @@ Mk_Static_Files::addCSS('
 	#mk-shape-divider-'.$id.' .shape__container {
  		background-color: '.$bg_color.';
  	}
-	@-moz-document url-prefix() {
+	/* @-moz-document url-prefix() { */
 		#mk-shape-divider-'.$id.' .shape__container .shape {
 			overflow: hidden;
 			height: '.$pattern_height.';
 		}
-	}
+	/* } */
  ', $id);
 
 if($is_top == true) {
 	Mk_Static_Files::addCSS('
-		@-moz-document url-prefix() {
+		/* @-moz-document url-prefix() { */
 			#mk-shape-divider-'.$id.' .shape__container .shape svg {
 				position: relative;
 				top: 0.4px;
 			}
-		}
+		/* } */
 	', $id);
 }else {
 	Mk_Static_Files::addCSS('
-		@-moz-document url-prefix() {
+		/* @-moz-document url-prefix() { */
 			#mk-shape-divider-'.$id.' .shape__container .shape svg {
 				position: relative;
 				top: -0.4px;
 			}
-		}
+		/* } */
 	', $id);
 }
 

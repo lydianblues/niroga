@@ -7,13 +7,15 @@ include ($path . '/config.php');
 
 global $mk_options, $wp_query;
 
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $item_id = (!empty($item_id)) ? $item_id : 1409305847;
 
 $id = Mk_Static_Files::shortcode_id();
 
-$cat = isset($_REQUEST['term']) ? $_REQUEST['term'] : $categories;
+$cat = isset($_REQUEST['term']) ? esc_html($_REQUEST['term']) : $categories;
+$cat = is_archive() ? $wp_query->query['portfolio_category'] : $cat;
+$count = is_archive() ? get_option('posts_per_page') : $count;
 
 $query_options = array(
             'post_type' => 'portfolio',
@@ -35,7 +37,7 @@ $r = $query['wp_query'];
 if (is_singular()) {
      global $post;
      $layout = get_post_meta($post->ID, '_layout', true);
-} if (is_archive()) {
+} else if (is_archive()) {
      $layout = $mk_options['archive_portfolio_layout'];
 }
 
@@ -55,7 +57,7 @@ $atts = array(
      'zoom_icon' => $zoom_icon,
      'grid_spacing' => $grid_spacing,
      'hover_scenarios' => $hover_scenarios,
-     'image_quality' => $image_quality,
+     //'image_quality' => $image_quality, removed since v5.0.8
      'image_size' => $image_size,
      'excerpt_length' => $excerpt_length,
      'r' => 0
@@ -112,14 +114,17 @@ if ($style == 'grid' || $style == 'masonry' && $ajax == 'true') { ?>
 
 <?php 
 
+if($pagination === 'false') $pagination_style = 0;
+
 $data_config[] = 'data-query="'.base64_encode(json_encode($query_options)).'"';
 $data_config[] = 'data-loop-atts="'.base64_encode(json_encode($atts)).'"';
 $data_config[] = 'data-pagination-style="'.$pagination_style.'"';
 $data_config[] = 'data-max-pages="'.$r->max_num_pages.'"';
 $data_config[] = 'data-loop-iterator="'.$r->query['posts_per_page'].'"';
-$data_config[] = 'data-loop-categories="'.$categories.'"';
+$data_config[] = 'data-loop-categories="'.$cat.'"';
 $data_config[] = 'data-loop-author="'.$author.'"';
 $data_config[] = 'data-loop-posts="'.$posts.'"';
+//if(is_archive()) $data_config[] = 'data-archive-cat="'.$wp_query->query['portfolio_category'].'"';
 
 if($style == 'masonry') {
     $data_config[] = 'data-mk-component="Masonry"';
@@ -139,31 +144,26 @@ if($style == 'classic') {
     <div class="portfolio-loader"><div><div class="mk-preloader"></div></div></div>
     <?php 
     $atts['i'] = 0;
-    if (is_archive()):
-        $r = $wp_query;
-        if (have_posts()):
-            while (have_posts()):
-                the_post();
-                $atts['i']++;
-                echo mk_get_shortcode_view('mk_portfolio', 'loop-styles/' . $style, true, $atts);
-            endwhile;
-        endif;
-    else:
-        if ($r->have_posts()):
-            while ($r->have_posts()):
-                $r->the_post();
-                $atts['i']++;
-                echo mk_get_shortcode_view('mk_portfolio', 'loop-styles/' . $style, true, $atts);
-            endwhile;
-        endif;
+    if ($r->have_posts()):
+        while ($r->have_posts()):
+            $r->the_post();
+            $atts['i']++;
+            echo mk_get_shortcode_view('mk_portfolio', 'loop-styles/' . $style, true, $atts);
+        endwhile;
     endif;
     ?>
 
     </section>
   
-     <?php if( $pagination === 'true' ) {
+     <?php 
+
+        if( $pagination === 'true' ) {
              echo mk_get_view('global', 'loop-pagination', true, ['pagination_style' => $pagination_style, 'r' => $r]); 
-         } ?>
+         } 
+
+         wp_nonce_field('mk-load-more', 'safe_load_more');
+
+         ?>
 <?php if($style == 'grid' || $style == 'masonry'): ?>
     </div>
 <?php endif;?>

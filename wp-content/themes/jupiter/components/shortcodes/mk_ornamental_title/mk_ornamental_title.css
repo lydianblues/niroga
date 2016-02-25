@@ -1,6 +1,5 @@
 .mk-ornamental-title .title {
   margin: 0 auto;
-  overflow: hidden;
 }
 .mk-ornamental-title .title .title-text,
 .mk-ornamental-title .title .title-image {
@@ -84,9 +83,50 @@
 .mk-ornamental-title.norman-short-double .title .title-image:after {
   content: '';
   display: block;
-  width: 1500px;
   position: absolute;
 }
+
+.mk-ornamental-title.rovi-single .title .title-text:before, 
+.mk-ornamental-title.rovi-double .title .title-text:before, 
+.mk-ornamental-title.norman-single .title .title-text:before, 
+.mk-ornamental-title.norman-double .title .title-text:before, 
+.mk-ornamental-title.rovi-single .title .title-image:before, 
+.mk-ornamental-title.rovi-double .title .title-image:before, 
+.mk-ornamental-title.norman-single .title .title-image:before, 
+.mk-ornamental-title.norman-double .title .title-image:before, 
+.mk-ornamental-title.rovi-single .title .title-text:after, 
+.mk-ornamental-title.rovi-double .title .title-text:after, 
+.mk-ornamental-title.norman-single .title .title-text:after, 
+.mk-ornamental-title.norman-double .title .title-text:after, 
+.mk-ornamental-title.rovi-single .title .title-image:after, 
+.mk-ornamental-title.rovi-double .title .title-image:after, 
+.mk-ornamental-title.norman-single .title .title-image:after, 
+.mk-ornamental-title.norman-double .title .title-image:after {
+  width: 1500px;
+}
+
+.mk-ornamental-title.rovi-single .title .title-text:after, 
+.mk-ornamental-title.rovi-double .title .title-text:after, 
+.mk-ornamental-title.norman-single .title .title-text:after, 
+.mk-ornamental-title.norman-double .title .title-text:after, 
+.mk-ornamental-title.rovi-single .title .title-image:after, 
+.mk-ornamental-title.rovi-double .title .title-image:after, 
+.mk-ornamental-title.norman-single .title .title-image:after, 
+.mk-ornamental-title.norman-double .title .title-image:after {
+  left: 100%;
+}
+
+.mk-ornamental-title.rovi-single .title .title-text:before, 
+.mk-ornamental-title.rovi-double .title .title-text:before, 
+.mk-ornamental-title.norman-single .title .title-text:before, 
+.mk-ornamental-title.norman-double .title .title-text:before, 
+.mk-ornamental-title.rovi-single .title .title-image:before, 
+.mk-ornamental-title.rovi-double .title .title-image:before, 
+.mk-ornamental-title.norman-single .title .title-image:before, 
+.mk-ornamental-title.norman-double .title .title-image:before {
+  right: 100%;
+}
+
 .mk-ornamental-title.rovi-double .title .title-text:before,
 .mk-ornamental-title.norman-double .title .title-text:before,
 .mk-ornamental-title.norman-short-double .title .title-text:before,
@@ -106,6 +146,7 @@
 .mk-ornamental-title.norman-single .title,
 .mk-ornamental-title.norman-double .title {
   width: 100%;
+  overflow: hidden;
 }
 .mk-ornamental-title.normal-single .title .title-text:before,
 .mk-ornamental-title.normal-short-single .title .title-text:before,
@@ -116,6 +157,7 @@
 .mk-ornamental-title.norman-short-single .title,
 .mk-ornamental-title.norman-short-double .title {
   display: inline-block;
+  margin: 0 55px;
 }
 .mk-ornamental-title.norman-short-single .title .title-text,
 .mk-ornamental-title.norman-short-double .title .title-text {
@@ -125,17 +167,25 @@
 .mk-ornamental-title.norman-short-double .title .title-image {
   float: left;
 }
-.mk-ornamental-title.norman-short-single .title:before,
-.mk-ornamental-title.norman-short-double .title:before,
-.mk-ornamental-title.norman-short-single .title:after,
-.mk-ornamental-title.norman-short-double .title:after {
+.mk-ornamental-title.norman-short-single .title-text:before,
+.mk-ornamental-title.norman-short-double .title-text:before,
+.mk-ornamental-title.norman-short-single .title-text:after,
+.mk-ornamental-title.norman-short-double .title-text:after {
   content: '';
-  position: relative;
+  position: absolute;
+  top: calc(50% - 1.5px);
   width: 55px;
-  left: initial;
-  float: left;
   height: 3px;
 }
+.mk-ornamental-title.norman-short-single .title-text:before,
+.mk-ornamental-title.norman-short-double .title-text:before {
+  left: -55px;
+}
+.mk-ornamental-title.norman-short-single .title-text:after,
+.mk-ornamental-title.norman-short-double .title-text:after {
+  right: -55px;
+}
+
 .mk-ornamental-title.norman-short-single.align-center,
 .mk-ornamental-title.norman-short-double.align-center {
   text-align: center;
@@ -215,4 +265,48 @@
 .mk-ornamental-title.lemo-double .title .title-text:after,
 .mk-ornamental-title.lemo-double .title .title-image:after {
   bottom: -5px;
+}
+
+
+@media handheld, only screen and (max-width: 736px) {
+  .mk-ornamental-title.norman-short-single .title-text:before,
+  .mk-ornamental-title.norman-short-double .title-text:before,
+  .mk-ornamental-title.norman-short-single .title-text:after,
+  .mk-ornamental-title.norman-short-double .title-text:after,
+  .mk-ornamental-title.rovi-single .title .title-text:before, 
+  .mk-ornamental-title.rovi-double .title .title-text:before, 
+  .mk-ornamental-title.norman-single .title .title-text:before, 
+  .mk-ornamental-title.norman-double .title .title-text:before, 
+  .mk-ornamental-title.rovi-single .title .title-image:before, 
+  .mk-ornamental-title.rovi-double .title .title-image:before, 
+  .mk-ornamental-title.norman-single .title .title-image:before, 
+  .mk-ornamental-title.norman-double .title .title-image:before, 
+  .mk-ornamental-title.rovi-single .title .title-text:after, 
+  .mk-ornamental-title.rovi-double .title .title-text:after, 
+  .mk-ornamental-title.norman-single .title .title-text:after, 
+  .mk-ornamental-title.norman-double .title .title-text:after, 
+  .mk-ornamental-title.rovi-single .title .title-image:after, 
+  .mk-ornamental-title.rovi-double .title .title-image:after, 
+  .mk-ornamental-title.norman-single .title .title-image:after, 
+  .mk-ornamental-title.norman-double .title .title-image:after {
+    width: 0;
+  }
+
+  .mk-ornamental-title.rovi-double .title .title-text .line-left,
+  .mk-ornamental-title.rovi-double .title .title-image .line-left,
+  .mk-ornamental-title.rovi-double .title .title-text .line-right,
+  .mk-ornamental-title.rovi-double .title .title-image .line-right {
+    height: 0;
+  }
+
+  .mk-ornamental-title .title .title-text,
+  .mk-ornamental-title .title .title-image {
+    padding: 0;
+    border-width: 0px !important;
+  }
+
+  .mk-ornamental-title.norman-short-single .title,
+  .mk-ornamental-title.norman-short-double .title {
+    margin: 0;
+  }
 }

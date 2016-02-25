@@ -467,6 +467,7 @@ h6 {
   line-height: 1.3em;
   -ms-word-wrap: break-word;
   word-wrap: break-word;
+  text-transform: none;
 }
 h1 {
   font-size: 36px;
@@ -1335,20 +1336,9 @@ shortcodes-chart.less
 shortcodes-contact-form.less
 **********************************************/
 .mk-contact-form-wrapper.classic-style .mk-form-row i {
-  z-index: 1;
+  z-index: 12;
 }
-.mk-contact-form-wrapper.outline-style.contact-light .text-input,
-.mk-contact-form-wrapper.outline-style.contact-light .mk-textarea {
-  z-index: auto;
-}
-.mk-contact-form-wrapper.outline-style .mk-invalid {
-  z-index: 10 !important;
-}
-.mk-contact-form-wrapper.corporate-style .mk-form-row .text-input,
-.mk-contact-form-wrapper.corporate-style .mk-form-row .mk-textarea {
-  z-index: auto;
-}
-.mk-contact-form-wrapper.corporate-style .mk-invalid {
+.mk-contact-form-wrapper .mk-invalid {
   z-index: 10 !important;
 }
 .mk-progress-button[data-style="move-up"] .mk-progress-button-content {
@@ -1715,6 +1705,9 @@ p.demo_store {
   height: 0;
   overflow: hidden;
 }
+.mk-blog-container .mk-slider-holder-img {
+  width: 100%;
+}
 .mk-section-video {
   position: absolute;
   top: 0;
@@ -1787,6 +1780,21 @@ p.demo_store {
           transform-style: preserve-3d;
   background-position: center;
   background-size: cover;
+}
+.post-type-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  opacity: 0;
+  margin: -24px 0 0 -24px;
+}
+.post-type-badge i {
+  font-size: 48px;
+  color: #ffffff;
+}
+.mk-blog-container .featured-image:hover .post-type-badge {
+  opacity: 1;
 }
 /*Other Button Styling*/
 .button,
@@ -2953,6 +2961,11 @@ Used in page section and edge slider
     max-width: 200px !important;
   }
 }
+@media handheld, only screen and (max-width: 400px) {
+  .header-logo img {
+    max-width: 160px !important;
+  }
+}
 .header-style-1.sticky-style-fixed .menu-hover-style-3 .main-navigation-ul > li,
 .header-style-1.sticky-style-fixed .menu-hover-style-5 .main-navigation-ul > li,
 .sticky-style-fixed .mk-header-inner .mk-header-search,
@@ -2973,6 +2986,7 @@ Used in page section and edge slider
 }
 .mk-header-holder {
   width: 100%;
+  position: absolute;
 }
 .mk-header-holder.fancybox-margin {
   right: -9px;
@@ -3037,39 +3051,30 @@ Used in page section and edge slider
   display: block;
 }
 .admin-bar .sticky-style-fixed.header-style-1 .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-3 .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-2 .mk-header-holder {
+.admin-bar .sticky-style-fixed.header-style-3 .mk-header-holder {
   top: 32px;
 }
 .admin-bar .sticky-style-fixed.header-style-1.a-sticky .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-3.a-sticky .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-2.a-sticky .mk-header-holder {
+.admin-bar .sticky-style-fixed.header-style-3.a-sticky .mk-header-holder {
   top: -3px;
 }
 .admin-bar .sticky-style-fixed.header-style-1.a-sticky.toolbar-false .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-3.a-sticky.toolbar-false .mk-header-holder,
-.admin-bar .sticky-style-fixed.header-style-2.a-sticky.toolbar-false .mk-header-holder {
+.admin-bar .sticky-style-fixed.header-style-3.a-sticky.toolbar-false .mk-header-holder {
   top: 32px;
 }
 @media screen and (max-width: 782px) {
   .admin-bar .sticky-style-fixed.header-style-1 .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-3 .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-2 .mk-header-holder {
+  .admin-bar .sticky-style-fixed.header-style-3 .mk-header-holder {
     top: 0;
   }
   .admin-bar .sticky-style-fixed.header-style-1.a-sticky .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-3.a-sticky .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-2.a-sticky .mk-header-holder {
+  .admin-bar .sticky-style-fixed.header-style-3.a-sticky .mk-header-holder {
     top: 0;
   }
   .admin-bar .sticky-style-fixed.header-style-1.a-sticky.toolbar-false .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-3.a-sticky.toolbar-false .mk-header-holder,
-  .admin-bar .sticky-style-fixed.header-style-2.a-sticky.toolbar-false .mk-header-holder {
+  .admin-bar .sticky-style-fixed.header-style-3.a-sticky.toolbar-false .mk-header-holder {
     top: 0;
   }
-}
-.sticky-style-slide .mk-header-padding-wrapper {
-  display: none;
 }
 .sticky-style-slide .mk-header-padding-wrapper.enable-padding {
   display: block;
@@ -3140,6 +3145,7 @@ Used in page section and edge slider
 }
 #mk-boxed-layout {
   position: relative;
+  z-index: 0;
 }
 .mk-boxed-enabled #mk-boxed-layout {
   width: 100%;
@@ -3223,9 +3229,6 @@ Used in page section and edge slider
 }
 .header-style-2.menu-hover-3 .main-navigation-ul > li.menu-item > a.menu-item-link {
   line-height: 16px;
-}
-#mk-theme-container:not(.trans-header) .header-style-2 .mk-header-padding-wrapper {
-  display: none;
 }
 /* Header Style 1 */
 .header-style-1.header-align-center .mk-header-nav-container {
@@ -3682,8 +3685,7 @@ body:not(.mk-boxed-enabled) .sticky-style-fixed.header-style-1 .mk-header-holder
 body:not(.mk-boxed-enabled) .sticky-style-fixed.header-style-3 .mk-header-holder {
   right: 0;
 }
-body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-1 .mk-header-holder,
-body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-3 .mk-header-holder {
+body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-1 .mk-header-holder {
   right: 300px;
 }
 .dashboard-opened #mk-theme-container {
@@ -4089,10 +4091,6 @@ body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-3 
 }
 #theme-page .theme-page-wrapper.left-layout .sidebar-wrapper {
   padding: 30px 20px 30px;
-}
-/* Fixes flip box overflow-x issue */
-.mk-main-wrapper-holder {
-  overflow: hidden;
 }
 * html #theme-page,
 * html #mk-sidebar {
@@ -4952,11 +4950,22 @@ body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-3 
   padding: 0;
 }
 .main-navigation-ul li.no-mega-menu ul.sub-menu {
-  display: none;
   position: absolute;
   top: 100%;
   right: 0;
   padding: 8px 0;
+}
+.main-navigation-ul:not(.dropdownJavascript) li.menu-item:hover > ul.sub-menu {
+  display: block;
+}
+.main-navigation-ul li > .sub-menu {
+  top: -10000px !important;
+}
+.main-navigation-ul > li:hover > .sub-menu {
+  top: 100% !important;
+}
+.main-navigation-ul .sub-menu li:hover > .sub-menu {
+  top: 0 !important;
 }
 .header-align-left .mk-grid .main-navigation-ul li.no-mega-menu > ul.sub-menu,
 .header-align-center .mk-grid .main-navigation-ul li.no-mega-menu > ul.sub-menu,
@@ -4975,7 +4984,6 @@ body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-3 
   left: auto;
 }
 .main-navigation-ul li.has-mega-menu > ul.sub-menu {
-  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -5114,9 +5122,6 @@ body:not(.mk-boxed-enabled).dashboard-opened .sticky-style-fixed.header-style-3 
   display: block;
   text-decoration: none;
   white-space: normal;
-}
-.main-navigation-ul:not(.dropdownJavascript) li.menu-item:hover > ul.sub-menu {
-  display: block;
 }
 .mk-main-navigation > .main-navigation-ul > .menu-item-language {
   visibility: hidden;
@@ -8193,7 +8198,7 @@ Related Posts
 }
 /* Widgets:CALENDAR
 -------------------------------------------------------------------- */
-#calendar_wrap {
+.calendar_wrap {
   position: relative;
   margin: 5px;
   padding: 0;
@@ -9778,9 +9783,9 @@ Pagination Styles
   .mk-pagination .mk-total-pages,
   .mk-pagination .mk-pagination-inner {
     float: none;
-    margin: 20px auto 0;
+    margin: 60px auto 0;
     clear: both;
-    padding-bottom: 40px;
+    padding-top: 0;
   }
   .mk-pagination .page-number,
   .mk-pagination .current-page {
@@ -9790,7 +9795,7 @@ Pagination Styles
   .mk-pagination .mk-pagination-next,
   .mk-pagination .mk-pagination-previous {
     position: absolute;
-    bottom: 75px;
+    top: 75px;
     width: 50%;
   }
   .mk-pagination .mk-pagination-next {
@@ -10851,7 +10856,12 @@ Pagination Styles
   100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 }
 
-
+.load-more-scroll {
+  position: relative;
+  height: 70px;
+  width: 200px;
+  margin: 0 auto;
+}
 
 .mk-loading-indicator {
   position: absolute;
@@ -12205,6 +12215,7 @@ Pagination Styles
   .mk-product-loop .products .mk--col--4-12,
   .mk-product-loop .products .mk--col--1-2 {
     width: 100% !important;
+    max-width: none !important;
   }
 }
 /* Product Quick View

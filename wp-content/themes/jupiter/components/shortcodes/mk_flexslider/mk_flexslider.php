@@ -5,7 +5,7 @@ include( $path . '/config.php' );
 
 $id = Mk_Static_Files::shortcode_id();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 global $mk_options;
 

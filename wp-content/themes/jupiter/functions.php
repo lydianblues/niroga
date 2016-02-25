@@ -155,9 +155,6 @@ class Theme
         
         add_image_size('woocommerce-recent-carousel', 330, 260, false);
         
-        add_image_size('blog-thumbnail-style', 400, 350, false);
-        add_image_size('blog-thumbnail-style-2x', 800, 700, false);
-        
         add_image_size('blog-carousel', 245, 180, true);
         add_image_size('blog-showcase', 260, 180, true);
         
@@ -185,9 +182,16 @@ class Theme
     }
     function functions() {
         include_once (ABSPATH . 'wp-admin/includes/plugin.php');
+        
+        include_once (THEME_ADMIN . '/general/general-functions.php');
+
+        require_once (THEME_INCLUDES . "/tgm-plugin-activation/request-plugins.php");
+        require_once (THEME_INCLUDES . "/phpquery/phpQuery.php");
+        require_once (THEME_INCLUDES . "/otf-regen-thumbs/otf-regen-thumbs.php");
+        require_once (THEME_INCLUDES . "/bfi_thumb.php");
+
         require_once (THEME_FUNCTIONS . "/general-functions.php");
         require_once (THEME_FUNCTIONS . "/ajax-search.php");
-        require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
         require_once (THEME_FUNCTIONS . "/vc-integration.php");
         require_once (THEME_FUNCTIONS . "/post-pagination.php");
         
@@ -197,9 +201,6 @@ class Theme
         require_once (THEME_FUNCTIONS . "/mk-woocommerce.php");
         
         require_once (THEME_CONTROL_PANEL . "/logic/functions.php");
-        require_once (THEME_INCLUDES . "/tgm-plugin-activation/request-plugins.php");
-        require_once (THEME_INCLUDES . "/phpquery/phpQuery.php");
-        require_once (THEME_INCLUDES . "/otf-regen-thumbs/otf-regen-thumbs.php");
         
         require_once locate_template("views/global/love-post.php");
         require_once locate_template("framework/helpers/load-more.php");
@@ -241,8 +242,6 @@ class Theme
         if ('themes.php' == basename($_SERVER['PHP_SELF']) && isset($_GET['activated']) && $_GET['activated'] == 'true') {
             update_option('woocommerce_enable_lightbox', "no");
             
-            mk_purge_cache_actions();
-            
             flush_rewrite_rules();
             
             update_option(THEME_OPTIONS_BUILD, uniqid());
@@ -253,7 +252,6 @@ class Theme
     
     function admin() {
         if (is_admin()) {
-            include_once (THEME_ADMIN . '/general/general-functions.php');
             include_once (THEME_ADMIN . '/general/mega-menu.php');
             include_once (THEME_ADMIN . '/general/backend-enqueue-scripts.php');
             include_once (THEME_ADMIN . '/theme-options/options-save.php');

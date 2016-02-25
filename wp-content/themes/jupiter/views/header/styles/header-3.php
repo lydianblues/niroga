@@ -23,6 +23,7 @@ global $mk_options;
     );
 
     $is_shortcode = $header_class['is_shortcode'];
+    $is_transparent = (isset($view_params['is_transparent'])) ? ($view_params['is_transparent'] == 'false' ? false : is_header_transparent()) : is_header_transparent();
 
 ?> 
 <?php if(is_header_and_title_show($is_shortcode)) : ?>
@@ -70,6 +71,6 @@ global $mk_options;
         <?php endif; // End for option to disable header ?>
 
         <?php mk_get_header_view('global', 'header-sticky-padding' , ['is_shortcode' => $is_shortcode]); ?>
-        <?php mk_get_view('layout', 'title', false, ['is_shortcode' => $is_shortcode]); ?>
+        <?php if(!$is_transparent) mk_get_view('layout', 'title', false, ['is_shortcode' => $is_shortcode]); ?>
     </header>
 <?php endif; // End to disale whole header

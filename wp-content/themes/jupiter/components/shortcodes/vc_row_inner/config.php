@@ -1,6 +1,6 @@
 <?php
 extract(shortcode_atts(array(
-    'id' => '',
+    'el_id' => '',
     'visibility' => '',
     'is_fullwidth_content' => 'true',
     'css' => '',

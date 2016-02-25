@@ -17,7 +17,11 @@ if (($view_params['masonray_style'] == 'style1' && $view_params['i'] % 5 == 0) |
                         'id'=> $view_params['id'], 
                         'collection_title' => $view_params['collection_title'],
                         'hover_scenarios' => $view_params['hover_scenarios'],
-                        'disable_title' => $view_params['disable_title']
+                        'disable_title' => $view_params['disable_title'],
+                        'style' => $view_params['style'], 
+                        'column' => $view_params['column'], 
+                        'height' => $view_params['height'],
+                        'image_size' => $view_params['image_size']
                         )
                     );
 
@@ -25,7 +29,7 @@ if (($view_params['masonray_style'] == 'style1' && $view_params['i'] % 5 == 0) |
                     'style' => $view_params['style'], 
                     'column' => $view_params['column'], 
                     'height' => $view_params['height'], 
-                    'image_quality' => $view_params['image_quality'], 
+                    //'image_quality' => $view_params['image_quality'], 
                     'image_size' => $view_params['image_size']
                     )
         );

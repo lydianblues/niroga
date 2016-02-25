@@ -6,7 +6,8 @@ $html = file_get_contents( $path . '/template.php' );
 $html = phpQuery::newDocument( $html );
 $id = Mk_Static_Files::shortcode_id();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
+
 $image_src = bfi_thumb( $src, array('width' => $image_diameter, 'height' => $image_diameter));
 
 $container = pq('.mk-circle-image');

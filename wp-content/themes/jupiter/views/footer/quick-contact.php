@@ -22,6 +22,8 @@ $tabindex_2 = $id + 1;
 $tabindex_3 = $id + 2;
 $tabindex_4 = $id + 3;
 
+mk_update_contact_form_email(2342, 15, $mk_options['quick_contact_email']);
+
 ?>
 	<div class="mk-quick-contact-wrapper  js-bottom-corner-btn js-bottom-corner-btn--contact">
 			
@@ -53,8 +55,8 @@ $tabindex_4 = $id + 3;
                         <span class="state-error"><i class="mk-moon-close"></i></span>
                     </button>
                 </div>
-				<input type="hidden" value="<?php echo $mk_options['quick_contact_email']; ?>" name="contact_to"/>
 				<?php wp_nonce_field('mk-contact-form-security', 'security'); ?>
+				<?php echo mk_contact_form_hidden_values(15, 2342); ?>
 			</form>
 			<div class="bottom-arrow"></div>
 		</div>

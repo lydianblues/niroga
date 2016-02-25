@@ -15,7 +15,6 @@ if (!empty($_REQUEST['captcha'])) {
 
     echo $captcha_message;
 
-    unset($_SESSION['captcha']);
 }
 
 ?>

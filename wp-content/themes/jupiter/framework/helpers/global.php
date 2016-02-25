@@ -100,9 +100,30 @@ if (!function_exists('mk_get_control_panel_view')) {
  * Args are available in the tempalte as $view_params array
  * @param string filepart
  * @param mixed wp_args style argument list
+ *
+ *
+ * @last_update 5.0.8
  */
 function mk_get_template_part($file, $view_params = array() , $cache_args = array()) {
     global $post;
+
+    // security check for LFI
+    if(is_numeric(strpos($file,"..")) or is_numeric(strpos($file,"./"))) {
+    // if someone tries to reach parent directories
+        echo "Bad method! Code: GP-113";
+        die;
+    }
+
+    // die if file does not exists in the template or child theme directory.
+    if (file_exists(get_stylesheet_directory() . '/' . $file . '.php')) {
+        $file = get_stylesheet_directory() . '/' . $file . '.php';
+    } else if (file_exists(get_template_directory() . '/' . $file . '.php')) {
+        $file = get_template_directory() . '/' . $file . '.php';
+    } else {
+        echo "Bad method! Code: GP-123";
+        die;
+    }
+
     $view_params = wp_parse_args($view_params);
     $cache_args = wp_parse_args($cache_args);
     if ($cache_args) {
@@ -122,8 +143,6 @@ function mk_get_template_part($file, $view_params = array() , $cache_args = arra
     }
     $file_handle = $file;
     do_action('start_operation', 'mk_template_part::' . $file_handle);
-    if (file_exists(get_stylesheet_directory() . '/' . $file . '.php')) $file = get_stylesheet_directory() . '/' . $file . '.php';
-    elseif (file_exists(get_template_directory() . '/' . $file . '.php')) $file = get_template_directory() . '/' . $file . '.php';
     ob_start();
     $return = require ($file);
     $data = ob_get_clean();
@@ -166,7 +185,7 @@ if (!function_exists('mk_build_main_wrapper')) {
         $layout = is_search() ? $mk_options['search_page_layout'] : $layout;
 
         if (isset($_REQUEST['layout']) && !empty($_REQUEST['layout'])) {
-            $layout = $_REQUEST['layout'];
+            $layout = esc_html($_REQUEST['layout']);
         }
         
         $wrapper_class = empty($wrapper_custom_class) ? 'mk-main-wrapper mk-grid' : $wrapper_custom_class;
@@ -183,7 +202,7 @@ if (!function_exists('mk_build_main_wrapper')) {
         mk_get_view('blog/components', 'blog-single-bold-hero');
 ?>
         
-        <div id="theme-page" class="master-holder clear <?php echo mk_get_bg_cover_class($mk_options['page_size']); ?>" <?php echo get_schema_markup('main'); ?>>
+        <div id="theme-page" class="master-holder clear" <?php echo get_schema_markup('main'); ?>>
             <div class="mk-main-wrapper-holder">
                 <div id="mk-page-id-<?php
         echo $post->ID; ?>" class="theme-page-wrapper <?php

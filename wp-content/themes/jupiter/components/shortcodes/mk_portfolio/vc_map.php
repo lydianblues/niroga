@@ -90,6 +90,8 @@ vc_map(array(
                 )
             )
         ),
+        /*
+        Removed Since v5.0.8 Retina images will be added in v5.1
         array(
             "type" => "dropdown",
             "heading" => __("Increase Quality of Image", "mk_framework"),
@@ -106,7 +108,7 @@ vc_map(array(
                 )
             ),
             "description" => __("If you would like your portfolio images to be retina compatible or just want to use it in fullwidth row, you may consider increasing the image size. This option will help you define the image quality manually. Please note that this option will not work for Masonry portfolio style.", "mk_framework")
-        ),
+        ),*/
         array(
             "type" => "toggle",
             "heading" => __("Shows Posts Using Ajax?", "mk_framework"),

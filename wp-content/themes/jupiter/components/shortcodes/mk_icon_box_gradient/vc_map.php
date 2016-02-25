@@ -30,7 +30,7 @@
         ) ,
         array(
             "heading" => __("Container Shape", 'mk_framework') ,
-            "description" => __("", 'mk_framework') ,
+            "description" => __("Works properly only in Webkit browsers. Fallback to circle shape for others", 'mk_framework') ,
             "param_name" => "holder_shape",
             "border" => 'true',
             "value" => array(

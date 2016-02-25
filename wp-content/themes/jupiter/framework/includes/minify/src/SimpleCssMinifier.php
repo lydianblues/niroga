@@ -16,8 +16,10 @@ class SimpleCssMinifier
         $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
         // Remove space after colons
         $buffer = str_replace(': ', ':', $buffer);
-        // Remove whitespace
-        $buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
+        // Remove excess whitespace
+        $buffer = trim(preg_replace('/\s+/',' ', $buffer));
+        // Remove new lines, tabs and etc.
+        $buffer = str_replace(array("\r\n", "\r", "\n", "\t"), '', $buffer);
 
         return $buffer;
     }

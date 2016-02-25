@@ -148,7 +148,7 @@
             "type" => "textfield",
             "heading" => __("Email", "mk_framework"),
             "param_name" => "email",
-            "value" => "",
+            "value" => get_bloginfo( 'admin_email' ),
             "description" => sprintf(__('Which email would you like the contacts to be sent, if left empty emails will be sent to admin email : "%s"', "mk_framework"), get_bloginfo('admin_email'))
         ),
         array(

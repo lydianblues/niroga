@@ -560,6 +560,7 @@
   width: 39px;
   height: 39px;
   position: relative;
+  z-index: 9999;
 }
 .slick-slider-wrapper .slick-footer .footer-box .slick-minimize,
 .slick-slider-wrapper .slick-footer .footer-box .slick-pause {

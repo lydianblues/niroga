@@ -9,9 +9,15 @@ $hover_overlay = !empty($hover_overlay) ? (' style="background-color:' . $hover_
 
 <li>
 	<div class="mk-portfolio-item <?php echo $view_params['hover_scenarios']; ?>-hover">
+
+		<?php if ($view_params['hover_scenarios'] == 'none') { ?>
+			<a class="full-cover-link" title="<?php the_title(); ?>" href="<?php echo get_permalink(); ?>">&nbsp</a>
+		<?php  } ?>
+
+
 		<div class="featured-image">
 
-			<?php echo mk_get_shortcode_view('mk_portfolio_carousel', 'components/thumbnail', true, ['width' => 500, 'height' => 350, 'image_quality' => $view_params['image_quality']]); ?>
+			<?php echo mk_get_shortcode_view('mk_portfolio_carousel', 'components/thumbnail', true, ['width' => 500, 'height' => 350, 'image_size' => $view_params['image_size']]); ?>
 
 
 		    <?php if ($view_params['hover_scenarios'] == 'fadebox') { ?>
@@ -26,18 +32,17 @@ $hover_overlay = !empty($hover_overlay) ? (' style="background-color:' . $hover_
 		    <?php }
 		    } ?>
 
-		    <div class="icons-holder">
-		    	<a class="hover-icon project-load" data-post-id="<?php echo the_ID(); ?>" href="<?php echo mk_get_super_link(get_post_meta(get_the_ID(), '_portfolio_permalink', true)); ?>">
-		    		<i class="mk-jupiter-icon-arrow-circle"></i>
-		    	</a>
-
-		    	<a class="hover-icon mk-lightbox" href="<?php echo mk_get_portfolio_lightbox_url($view_params['post_type']); ?>" title="<?php the_title(); ?>" data-fancybox-group="carousel-<?php echo $view_params['id']; ?>" >
-		    		<i class="mk-jupiter-icon-plus-circle"></i>
-		    	</a>
-		    </div>
-
-
 		    <?php if ($view_params['hover_scenarios'] != 'none') { ?>
+
+			    <div class="icons-holder">
+			    	<a class="hover-icon project-load" data-post-id="<?php echo the_ID(); ?>" href="<?php echo mk_get_super_link(get_post_meta(get_the_ID(), '_portfolio_permalink', true)); ?>">
+			    		<i class="mk-jupiter-icon-arrow-circle"></i>
+			    	</a>
+
+			    	<a class="hover-icon mk-lightbox" href="<?php echo mk_get_portfolio_lightbox_url($view_params['post_type']); ?>" title="<?php the_title(); ?>" data-fancybox-group="carousel-<?php echo $view_params['id']; ?>" >
+			    		<i class="mk-jupiter-icon-plus-circle"></i>
+			    	</a>
+			    </div>
 
 		        <div class="portfolio-meta" <?php if($view_params['hover_scenarios'] == 'slidebox') { echo $hover_overlay; } ?>>
 		        	<h3 class="the-title"><?php the_title(); ?></h3><div class="clearboth"></div>
@@ -47,7 +52,10 @@ $hover_overlay = !empty($hover_overlay) ? (' style="background-color:' . $hover_
 			            <time class="item-date" datetime="<?php the_date('Y-m-d'); ?>"><?php the_date(); ?></time>
 			       <?php  } ?>
 		        </div>
+
 		    <?php } ?>
+
+
 		</div>
 	</div>
 </li>

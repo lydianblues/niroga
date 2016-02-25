@@ -14,6 +14,8 @@ $header_class = array(
         'el_class' => '',
 );
 
+$is_transparent = (isset($view_params['is_transparent'])) ? ($view_params['is_transparent'] == 'false' ? false : is_header_transparent()) : is_header_transparent();
+
 ?> 
 <?php //if(is_header_and_title_show()) : ?>
     <header <?php echo get_header_json_data($header_class['is_shortcode'], 4); ?> <?php echo mk_get_header_class($header_class); ?> <?php echo get_schema_markup('header'); ?>>
@@ -67,6 +69,6 @@ $header_class = array(
             </div>
         <?php endif; // End for option to disable header ?>
 
-        <?php mk_get_view('layout', 'title', false, ['is_shortcode' => false]); ?>
+        <?php if(!$is_transparent) mk_get_view('layout', 'title', false, ['is_shortcode' => false]); ?>
     </header>
 <?php //endif; // End to disale whole header

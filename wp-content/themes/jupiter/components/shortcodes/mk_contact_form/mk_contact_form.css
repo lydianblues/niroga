@@ -43,11 +43,11 @@ select {
 }
 .mk-contact-form .mk-form-third {
   width: 33.3333%;
-  display: inline-block;
+  float: left;
 }
 .mk-contact-form .mk-form-half {
   width: 50%;
-  display: inline-block;
+  float: left;
 }
 .mk-contact-form .s_form-all {
   position: relative;
@@ -90,6 +90,9 @@ General [ Modern Style ]
   text-align: center;
   width: 100%;
   position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .s_contact .s_txt-input {
   font-size: 14px;
@@ -98,11 +101,17 @@ General [ Modern Style ]
   width: 100%;
   border: medium none;
 }
-.s_contact .text-input.half {
+.s_contact .mk-form-row.half {
   width: 50%;
+  float: left;
 }
-.s_contact .text-input.two-third {
+.s_contact .mk-form-row input {
+  z-index: 11;
+  position: relative;
+}
+.s_contact .mk-form-row.one-third {
   width: 33.3333%;
+  float: left;
 }
 .s_contact .mk-textarea {
   height: 200px;
@@ -115,11 +124,12 @@ General [ Modern Style ]
 }
 .s_contact .captcha-change-image {
   position: absolute;
-  top: 15px;
+  top: 18px;
   right: 10px;
   text-align: right;
   font-size: 10px;
   line-height: 1;
+  z-index: 12;
 }
 .s_contact .mk-invalid {
   border: 1px solid #ff0000 !important;
@@ -186,6 +196,10 @@ modern Style
 .s_contact .s_txt-input {
   border: medium none;
 }
+.s_modern.s_contact .captcha-change-image {
+  width: 100px;
+  top:15px;
+}
 /*=======================
 Outline Style
 ========================*/
@@ -212,7 +226,10 @@ Outline Style
   height: 50px;
   max-width: 50%;
   position: relative;
-  top: -5px;
+  top: 2px;
+}
+.s_contact.s_outline .captcha-change-image {
+  width: 100px;
 }
 .s_contact.s_outline .s_txt-input {
   margin: 0;
@@ -337,7 +354,7 @@ Corporate Style
   max-height: 54px;
   top: 4px;
   right: 0;
-  z-index: 10;
+  z-index: 12;
   left: auto;
 }
 .s_contact.s_corporate .captcha-change-image {
@@ -346,7 +363,7 @@ Corporate Style
   position: static;
 }
 .s_contact.s_corporate .s_form-all {
-  padding: 5px;
+  padding: 0 5px 10px;
 }
 .s_contact.s_corporate .s_txt-input {
   margin: 0;
@@ -416,6 +433,10 @@ Corporate Style
 .s_contact.s_classic .mk-form-row {
   text-align: left;
 }
+.s_contact.s_classic .captcha-block {
+  display: inline-block;
+}
+
 .s_contact.s_classic .captcha-image {
   max-height: 40px;
   position: static;
@@ -452,9 +473,14 @@ Corporate Style
   color: inherit;
 }
 @media handheld, only screen and (max-width: 767px) {
-  .s_contact.s_classic .s_txt-input,
-  .s_contact.s_classic .mk-textarea {
+  .s_contact .s_txt-input,
+  .s_contact .mk-textarea {
     width: 100%
+  }
+  .s_contact .mk-form-row.one-third,
+  .s_contact .mk-form-row.half {
+    width: 100%;
+    float: none;
   }
 }
 /*=======================
@@ -569,8 +595,8 @@ Line Style
 .s_contact.s_line .text-input.mk-invalid + .ls-text-label::after,
 .s_contact.s_line .mk-textarea.mk-invalid + .ls-text-label::after,
 .s_contact.s_line .is-active .ls-text-label::after,
-.text-input:focus + .ls-text-label::after,
-.mk-textarea:focus + .ls-text-label::after {
+.s_contact.s_line .text-input:focus + .ls-text-label::after,
+.s_contact.s_line .mk-textarea:focus + .ls-text-label::after {
   background: #222222;
   -webkit-transform: scale3d(1, 0.25, 1);
           transform: scale3d(1, 0.25, 1);
@@ -604,5 +630,6 @@ Line Style
   .mk-contact-form .mk-form-half,
   .mk-contact-form .mk-form-third {
     width: 100% !important; 
+    float: none;
   }
 }

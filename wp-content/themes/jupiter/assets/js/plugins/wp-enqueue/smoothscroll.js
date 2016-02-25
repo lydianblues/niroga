@@ -1,3 +1,6 @@
+// NOTICE by MAKI: lookout when updating to add custom resize listener
+        // window.addResizeListener( document.getElementById( 'mk-theme-container' ), refreshSize );
+
 // SmoothScroll for websites v1.4.0 (Balazs Galambosi)
 // http://www.smoothscroll.net/
 //
@@ -133,6 +136,7 @@ function init() {
         setTimeout(refreshSize, 10);
 
         addEvent('resize', refreshSize);
+        window.addResizeListener( document.getElementById( 'mk-theme-container' ), refreshSize );
 
         // TODO: attributeFilter?
         var config = {

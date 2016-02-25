@@ -16,6 +16,9 @@ function mk_build_content_backgrounds($atts) {
         $output.= $repeat ? 'background-repeat:' . $repeat . ';' : '';
         $output.= $position ? 'background-position:' . $position . ';' : '';
         $output.= $attachment ? 'background-attachment:' . $attachment . ';' : '';
+        if ($stretch == 'true') {
+            $output.= 'background-size: cover;-webkit-background-size: cover;-moz-background-size: cover;';
+        }
     } 
     else {
         
@@ -36,6 +39,7 @@ $body_bg = mk_build_content_backgrounds(array(
     'color' => $mk_options['body_color'],
     'color_2' => $mk_options['body_color_2'],
     'image' => $mk_options['body_image'],
+    'stretch' => $mk_options['body_size'],
     'repeat' => $mk_options['body_repeat'],
     'position' => $mk_options['body_position'],
     'attachment' => $mk_options['body_attachment'],
@@ -52,6 +56,7 @@ $header_bg = mk_build_content_backgrounds(array(
     'color' => $mk_options['header_color'],
     'color_2' => $mk_options['header_color_2'],
     'image' => $mk_options['header_image'],
+    'stretch' => $mk_options['header_size'],
     'repeat' => $mk_options['header_repeat'],
     'position' => $mk_options['header_position'],
     'attachment' => $mk_options['header_attachment'],
@@ -67,6 +72,7 @@ $banner_bg = mk_build_content_backgrounds(array(
     'gradient_angle' => $mk_options['banner_color_gradient_angle'],
     'color' => $mk_options['banner_color'],
     'color_2' => $mk_options['banner_color_2'],
+    'stretch' => $mk_options['banner_size'],
     'image' => $mk_options['banner_image'],
     'repeat' => $mk_options['banner_repeat'],
     'position' => $mk_options['banner_position'],
@@ -84,6 +90,7 @@ $page_bg = mk_build_content_backgrounds(array(
     'color' => $mk_options['page_color'],
     'color_2' => $mk_options['page_color_2'],
     'image' => $mk_options['page_image'],
+    'stretch' => $mk_options['page_size'],
     'repeat' => $mk_options['page_repeat'],
     'position' => $mk_options['page_position'],
     'attachment' => $mk_options['page_attachment'],
@@ -100,6 +107,7 @@ $footer_bg = mk_build_content_backgrounds(array(
     'color' => $mk_options['footer_color'],
     'color_2' => $mk_options['footer_color_2'],
     'image' => $mk_options['footer_image'],
+    'stretch' => $mk_options['footer_size'],
     'repeat' => $mk_options['footer_repeat'],
     'position' => $mk_options['footer_position'],
     'attachment' => $mk_options['footer_attachment'],
@@ -132,6 +140,7 @@ if (global_get_post_id()) {
             'global_color' => $mk_options['body_color'],
             'color_2' => get_post_meta($post_id, 'body_color_2', true) ,
             'image' => get_post_meta($post_id, 'body_image', true) ,
+            'stretch' => get_post_meta($post_id, 'body_size', true),
             'repeat' => get_post_meta($post_id, 'body_repeat', true) ,
             'position' => get_post_meta($post_id, 'body_position', true) ,
             'attachment' => get_post_meta($post_id, 'body_attachment', true) ,
@@ -145,6 +154,7 @@ if (global_get_post_id()) {
             'global_color' => $mk_options['header_color'],
             'color_2' => get_post_meta($post_id, 'header_color_2', true) ,
             'image' => get_post_meta($post_id, 'header_image', true) ,
+            'stretch' => get_post_meta($post_id, 'header_size', true),
             'repeat' => get_post_meta($post_id, 'header_repeat', true) ,
             'position' => get_post_meta($post_id, 'header_position', true) ,
             'attachment' => get_post_meta($post_id, 'header_attachment', true) ,
@@ -158,6 +168,7 @@ if (global_get_post_id()) {
             'global_color' => $mk_options['banner_color'],
             'color_2' => get_post_meta($post_id, 'banner_color_2', true) ,
             'image' => get_post_meta($post_id, 'banner_image', true) ,
+            'stretch' => get_post_meta($post_id, 'banner_size', true) ,
             'repeat' => get_post_meta($post_id, 'banner_repeat', true) ,
             'position' => get_post_meta($post_id, 'banner_position', true) ,
             'attachment' => get_post_meta($post_id, 'banner_attachment', true) ,
@@ -171,6 +182,7 @@ if (global_get_post_id()) {
             'global_color' => $mk_options['page_color'],
             'color_2' => get_post_meta($post_id, 'page_color_2', true) ,
             'image' => get_post_meta($post_id, 'page_image', true) ,
+            'stretch' => get_post_meta($post_id, 'page_size', true),
             'repeat' => get_post_meta($post_id, 'page_repeat', true) ,
             'position' => get_post_meta($post_id, 'page_position', true) ,
             'attachment' => get_post_meta($post_id, 'page_attachment', true) ,
@@ -184,6 +196,7 @@ if (global_get_post_id()) {
             'global_color' => $mk_options['footer_color'],
             'color_2' => get_post_meta($post_id, 'footer_color_2', true) ,
             'image' => get_post_meta($post_id, 'footer_image', true) ,
+            'stretch' => get_post_meta($post_id, 'footer_size', true),
             'repeat' => get_post_meta($post_id, 'footer_repeat', true) ,
             'position' => get_post_meta($post_id, 'footer_position', true) ,
             'attachment' => get_post_meta($post_id, 'footer_attachment', true) ,

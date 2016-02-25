@@ -9,10 +9,11 @@ class mk_artbees_products
         add_action('wp_ajax_abb_install_template_action', array(&$this,
             'abb_install_template_action'
         ));
-        
-        add_action('admin_enqueue_scripts', array(&$this,
-            'enqueue'
-        ));
+        if(mk_is_control_panel()) {
+            add_action('admin_enqueue_scripts', array(&$this,
+                'enqueue'
+            ));
+        }
         
         add_action('wp_ajax_abb_import_demo_action', array(&$this,
             'abb_import_demo_action'
@@ -233,7 +234,7 @@ class mk_artbees_products
                             </div>
                             <div class="button-holder">
                                 <button id="import" type="submit" class="cp-button green small mk-import-content-btn">' . __('Activate', 'mk_framework') . '</button>
-                                <a href="http://artbees.net/themes/jupiter/' . basename($template) . '" target="_blank" class="cp-button gray small">' . __('Preview', 'mk_framework') . '</a>
+                                <a href="http://demos.artbees.net/jupiter5/' . basename($template) . '" target="_blank" class="cp-button gray small">' . __('Preview', 'mk_framework') . '</a>
                                 <a id="delete" class="cp-button red small mk-delete-template-btn">' . __('Delete', 'mk_framework') . '</a>
                             </div>
                         </div>
@@ -274,36 +275,43 @@ class mk_artbees_products
             wp_die();
         }
     }
-    
+
     /**
+     * Warns the customer for incorrect environment settings.
      *
-     *
-     *
-     *
-     *
+     * @copyright	ArtbeesLTD (c)
+     * @link		http://artbees.net
+     * @since		Version 5.0
+     * @last_update Version 5.0.8
+     * @package		artbees
+     * @author		Bob Ulusoy & Ugur Mirza Zeyrek
      */
     function install_template_warnings() {
         
         $max_execution_time = ini_get("max_execution_time");
         $max_input_time = ini_get("max_input_time");
         $upload_max_filesize = ini_get("upload_max_filesize");
-        
-        if ($max_execution_time < 60 || $max_input_time < 60 || $this->let_to_num(WP_MEMORY_LIMIT) < 100663296 || $this->let_to_num($upload_max_filesize) < 10485760) {
+        $incorrect_max_execution_time = ($max_execution_time < 60 && $max_execution_time > 0);
+        $incorrect_max_input_time = ($max_input_time < 60 && $max_input_time > 0);
+        $incorrect_memory_limit = (self::let_to_num(WP_MEMORY_LIMIT) < 100663296);
+        $incorrect_upload_max_filesize = (self::let_to_num($upload_max_filesize) < 10485760);
+
+        if ( $incorrect_max_execution_time || $incorrect_max_input_time || $incorrect_memory_limit || $incorrect_upload_max_filesize) {
             
             echo '<div class="error settings-error cp-messages">';
             
             echo '<br><strong>Please resolve these issues before installing any template.</strong>';
             echo '<ol>';
-            if ($max_execution_time < 60 && $max_execution_time != 0 && $max_execution_time != -1) {
+            if ($incorrect_max_execution_time) {
                 echo '<li><strong>Maximum Execution Time (max_execution_time) : </strong>' . $max_execution_time . ' seconds. <span style="color:red"> Recommended max_execution_time should be at least 60 Seconds.</span></li>';
             }
-            if ($max_input_time < 60) {
+            if ($incorrect_max_input_time) {
                 echo '<li><strong>Maximum Input Time (max_input_time) : </strong>' . $max_input_time . ' seconds. <span style="color:red"> Recommended max_input_time should be at least 60 Seconds.</span></li>';
             }
-            if (self::let_to_num(WP_MEMORY_LIMIT) < 100663296) {
+            if ($incorrect_memory_limit) {
                 echo '<li><strong>WordPress Memory Limit (WP_MEMORY_LIMIT) : </strong>' . WP_MEMORY_LIMIT . ' <span style="color:red"> Recommended memory limit should be at least 96MB. <a target="_blank" href="http://codex.wordpress.org/Editing_wp-config.php#Increasing_memory_allocated_to_PHP">Increasing memory allocated to PHP</a></span></li>';
             }
-            if (self::let_to_num($upload_max_filesize) < 10485760) {
+            if ($incorrect_upload_max_filesize) {
                 echo '<li><strong>Maximum Upload File Size (upload_max_filesize) : </strong>' . $upload_max_filesize . ' <span style="color:red"> Recommended Maximum Upload Filesize should be at least 10MB.</li>';
             }
             

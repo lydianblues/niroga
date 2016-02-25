@@ -21,7 +21,8 @@ global $mk_options;
         'sh_hover_styles' => isset($view_params['hover_styles']) ? $view_params['hover_styles'] : $mk_options['main_nav_hover'],
         'el_class' => isset($view_params['el_class']) ? $view_params['el_class'] : '',
     );
-
+    
+    $is_transparent = (isset($view_params['is_transparent'])) ? ($view_params['is_transparent'] == 'false' ? false : is_header_transparent()) : is_header_transparent();
     $is_shortcode = $header_class['is_shortcode'];
     $menu_location = isset($view_params['menu_location']) ? $view_params['menu_location'] : '';
 ?> 
@@ -75,7 +76,7 @@ global $mk_options;
         <?php endif;// End for option to disable header ?>
 
         <?php mk_get_header_view('global', 'header-sticky-padding', ['is_shortcode' => $is_shortcode]); ?>
-        <?php mk_get_view('layout', 'title', false, ['is_shortcode' => $is_shortcode]); ?>
+        <?php if(!$is_transparent) mk_get_view('layout', 'title', false, ['is_shortcode' => $is_shortcode]); ?>
         
     </header>
 <?php endif; // End to disale whole header

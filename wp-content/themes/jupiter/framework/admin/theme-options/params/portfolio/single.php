@@ -13,6 +13,13 @@ $portfolio_section[] = array(
             "type" => "text"
         ) ,
         array(
+            "name" => __("Portfolio Slug", "mk_framework") ,
+            "desc" => __("Portfolio Category Slug is the text that is displyed in the URL of your portfolio archive page. Default : portfolio_category", "mk_framework") ,
+            "id" => "portfolio_cat_slug",
+            "default" => 'portfolio_category',
+            "type" => "text"
+        ) ,
+        array(
             "name" => __("Portfolio Single Layout", "mk_framework") ,
             "desc" => __("This option allows you to define the page layout of Portfolio Single page as full width without sidebar, left sidebar or right sidebar.", "mk_framework") ,
             "id" => "portfolio_single_layout",

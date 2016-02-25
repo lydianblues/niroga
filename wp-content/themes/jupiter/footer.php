@@ -10,9 +10,6 @@ if($post_id) {
   $footer_status = in_array($show_footer, $cases);
 }
 
-
-$mk_footer_class .= mk_get_bg_cover_class($mk_options['footer_size']);
-
 if($mk_options['disable_footer'] == 'false' || ( $footer_status )) {
   $mk_footer_class .= ' mk-footer-disable';
 }
@@ -27,6 +24,9 @@ $footer_grid_status = ($boxed_footer == 'true') ? ' mk-grid' : ' fullwidth-foote
 $disable_mobile = ($mk_options['footer_disable_mobile'] == 'true' ) ? $mk_footer_class .= ' disable-on-mobile'  :  ' ';
 
 ?>
+
+<section id="mk-footer-unfold-spacer"></section>
+
 <section id="mk-footer" class="<?php echo $mk_footer_class; ?>" <?php echo get_schema_markup('footer'); ?>>
     <?php if($mk_options['disable_footer'] == 'true' && !$footer_status) : ?>
     <div class="footer-wrapper<?php echo $footer_grid_status;?>">

@@ -323,8 +323,6 @@ if (!function_exists('mk_get_body_class')) {
             $body_class[] = 'mk-boxed-enabled';
         }
         
-        $body_class[] = mk_get_bg_cover_class($mk_options['body_size']);
-        
         if ($header_style == 4) {
             $vertical_header_logo_align = (isset($mk_options['vertical_header_logo_align']) && !empty($mk_options['vertical_header_logo_align'])) ? $mk_options['vertical_header_logo_align'] : 'center';
             $header_align = !empty($mk_options['theme_header_align']) ? $mk_options['theme_header_align'] : 'left';
@@ -376,7 +374,7 @@ if (!function_exists('is_header_transparent')) {
 
 
 /*
-Checks Checks header style
+Checks header style
 */
 if (!function_exists('get_header_style')) {
     function get_header_style() {

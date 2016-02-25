@@ -4,7 +4,7 @@ $post_id = global_get_post_id();
 $layout = get_post_meta($post_id, '_layout', true);
 $layout = !empty($layout) ? $layout : 'full';
 if (isset($_REQUEST['layout']) && !empty($_REQUEST['layout'])) {
-    $layout = $_REQUEST['layout'];
+    $layout = esc_html($_REQUEST['layout']);
 }
 $padding = get_post_meta($post_id, '_padding', true );
 $padding = 

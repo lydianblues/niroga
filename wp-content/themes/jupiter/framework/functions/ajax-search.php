@@ -29,7 +29,7 @@ class Mk_Ajax_Search
     }
     
     function mk_ajax_search() {
-        
+
         check_ajax_referer('mk-ajax-search-form', 'security');
         
         $search_term = esc_html($_REQUEST['term']);
@@ -64,7 +64,7 @@ class Mk_Ajax_Search
             $suggestions[] = $suggestion;
         endforeach;
         
-        $response = $_GET["callback"] . "(" . json_encode($suggestions) . ")";
+        $response = esc_html($_GET["callback"]) . "(" . json_encode($suggestions) . ")";
         echo $response;
         
 

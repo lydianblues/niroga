@@ -8,7 +8,7 @@ wp_enqueue_script('wpb_composer_front_js');
 
 // $fullwidth_start = $output = $fullwidth_end = '';
 
-$id = !empty($id) ? (' id="' . $id . '"') : '';
+$id = !empty($el_id) ? (' id="' . $el_id . '"') : '';
 
 global $post;
 $page_layout = get_post_meta($post->ID, '_layout', true);

@@ -17,7 +17,7 @@ extract(shortcode_atts(array(
      'orderby'                => 'date',
      'order'                  => 'DESC',
      'excerpt_length'         => 200,
-     'image_quality'          => 1,
+     //'image_quality'          => 1,
      'thumbnail_align'        => 'left',
      'magazine_strcutre'      => '1',
      'el_class'               => '',

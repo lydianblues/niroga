@@ -1,7 +1,7 @@
 <li>
 	<div class="item-thumb">
-		<?php echo mk_get_shortcode_view('mk_portfolio_carousel', 'components/thumbnail', true, ['width' => 260, 'height' => 180, 'image_quality' => $view_params['image_quality']]); ?>
-		<div class="item-overlay"></div>
+		<?php echo mk_get_shortcode_view('mk_portfolio_carousel', 'components/thumbnail', true, ['width' => 260, 'height' => 180, 'image_size' => $view_params['image_size']]); ?>
+		<div class="item-overlay accent-bg-color transition-all-2"></div>
 		
 		<a class="hover-icon item-lightbox mk-lightbox" alt="<?php the_title(); ?>" data-fancybox-group="carousel-<?php echo $view_params['id']; ?>" title="<?php the_title(); ?>" href="<?php echo mk_get_portfolio_lightbox_url($view_params['post_type']); ?>">
 			<i class="mk-jupiter-icon-plus-circle"></i>

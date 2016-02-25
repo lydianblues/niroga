@@ -406,12 +406,6 @@ $options = array(
 		"id" => "_btn_url",
 		"default" => "",
 		"type" => "text",
-		"dependency" => array(
-         'element' => "_pricing_table_style",
-         'value' => array(
-             'simple',
-         )
-     ) ,
 	),
 	array(
       "name" => __("Button Style", "mk_framework"),

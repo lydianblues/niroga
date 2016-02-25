@@ -78,7 +78,7 @@ if ($dimension == 'three' || $dimension == 'two' || $dimension == 'flat') {
 		}
 	';
 	if ($dimension == 'three' || $dimension == 'two') {
-		$color = ($text_color == 'light') ? 'color: #fff;' : 'color: #585858';
+		$color = ($text_color == 'light') ? 'color: #fff!important;' : 'color: #585858!important';
 		$app_styles .= '
 			#mk-button-'.$style_id.' .mk-button {
 				background-color: '.$bg_color.';
@@ -120,11 +120,11 @@ if($dimension == 'outline' || $dimension == 'double-outline' || $dimension == 's
 		$app_styles .= '
 			#mk-button-'.$style_id.' .mk-button {
 				border-color: '.$outline_active_color.';
-				color: '.$active_text_color.';
+				color: '.$active_text_color.'!important;
 			}
 			#mk-button-'.$style_id.' .mk-button:hover {
 				background-color: '.$hover_bg_color.';
-				color: '.$outline_hover_color.';
+				color: '.$outline_hover_color.'!important;
 			}
 		';
 	}
@@ -134,13 +134,13 @@ if($dimension == 'outline' || $dimension == 'double-outline' || $dimension == 's
 		$app_styles .= '
 			#mk-button-'.$style_id.' .mk-button {
 				border-color: '.$outline_active_color.';
-				color: '.$active_text_color.';
+				color: '.$active_text_color.'!important;
 			}
 			#mk-button-'.$style_id.' .mk-button::after {
 				background-color: '.$hover_bg_color.';
 			}
 			#mk-button-'.$style_id.' .mk-button:hover {
-				color: '.$outline_hover_color.';
+				color: '.$outline_hover_color.'!important;
 			}
 		';
 	}
@@ -157,7 +157,7 @@ if($dimension == 'outline' || $dimension == 'double-outline' || $dimension == 's
 			$app_styles .= '
 			#mk-button-'.$style_id.' .mk-button {
 				border-color: '.$outline_active_color.';
-				color: '.$outline_hover_color.';
+				color: '.$outline_hover_color.'!important;
 				background-color: '.$outline_active_color.';
 			}
 			#mk-button-'.$style_id.' .mk-button .double-outline-inside {
@@ -165,14 +165,14 @@ if($dimension == 'outline' || $dimension == 'double-outline' || $dimension == 's
 			}
 			#mk-button-'.$style_id.' .mk-button:hover {
 				background-color: '.$outline_hover_color.';
-				color: '.$outline_active_color.';
+				color: '.$outline_active_color.'!important;
 			}
 		';
 		}else {
 			$app_styles .= '
 				#mk-button-'.$style_id.' .mk-button {
 					border-color: '.$outline_active_color.';
-					color: '.$outline_active_text_color.';
+					color: '.$outline_active_text_color.'!important;
 					background-color: '.$outline_active_color.';
 				}
 				#mk-button-'.$style_id.' .mk-button .double-outline-inside {
@@ -180,7 +180,7 @@ if($dimension == 'outline' || $dimension == 'double-outline' || $dimension == 's
 				}
 				#mk-button-'.$style_id.' .mk-button:hover {
 					background-color: '.$outline_hover_bg_color.';
-					color: '.$outline_hover_color.';
+					color: '.$outline_hover_color.'!important;
 				}
 			';
 		}
@@ -192,7 +192,7 @@ Mk_Static_Files::addCSS($app_styles, $style_id);
 ?>
 
 <div id="mk-button-<?php echo $style_id; ?>" class="mk-button-container _ relative <?php echo implode(' ', $class_container);?>">
-	<a <?php echo $id;?> <?php echo $url;?> <?php echo $target;?> class="mk-button <?php echo implode(' ', $class_element);?> _ relative text-center font-weight-700 no-backface <?php echo implode(' ', $class_element_atomic);?>">
+	<a <?php echo $id;?> <?php echo $url;?> <?php echo $target;?> class="mk-button js-smooth-scroll <?php echo implode(' ', $class_element);?> _ relative text-center font-weight-700 no-backface <?php echo implode(' ', $class_element_atomic);?>">
 		<?php echo ($dimension == 'double-outline') ? '<span class="double-outline-inside"></span>' : ''; ?>
 		<?php echo $icon;?> 
 		<span class="mk-button--text"><?php echo do_shortcode( strip_tags( $content ) );?></span>

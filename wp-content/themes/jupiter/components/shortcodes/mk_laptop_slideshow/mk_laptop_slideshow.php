@@ -8,7 +8,7 @@ if ( $images == '' ) return null;
 
 $id = uniqid();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $images = explode( ',', $images );
 

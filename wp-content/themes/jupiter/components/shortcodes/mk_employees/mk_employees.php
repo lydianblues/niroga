@@ -10,6 +10,7 @@ $query = mk_wp_query(array(
 	'count' => $count,
 	'offset' => $offset,
 	'posts' => $employees,
+	'categories' => $categories,
 	'orderby' => $orderby,
 	'order' => $order,
 ));

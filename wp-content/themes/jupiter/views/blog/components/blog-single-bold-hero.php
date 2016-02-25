@@ -29,7 +29,7 @@ if ( $blog_type == '' || $blog_type == 'default' ) {
 			<?php the_title(); ?>
 		</h1>
 		<div class="mk-author-avatar">
-			<?php global $user; echo get_avatar( get_the_author_meta('email'), '75',false ,get_the_author_meta('display_name', $user['ID'])); ?>
+			<?php echo get_avatar( get_the_author_meta( 'ID' ), 75 ); ?>
 		</div>
 		<div class="mk-author-name">
 			<?php echo __('By', 'mk_framework'); ?>

@@ -9,7 +9,7 @@
  */
 if (get_the_post_thumbnail() != ''):
     $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
-    require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+    require_once (THEME_INCLUDES . "/bfi_thumb.php");
     $image_src = bfi_thumb($image_src_array[0], array(
         'width' => $view_params['width'],
         'height' => $view_params['height']

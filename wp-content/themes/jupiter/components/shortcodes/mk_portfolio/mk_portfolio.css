@@ -191,6 +191,7 @@
 }
 .mk-portfolio-container {
   transition: height 0.3s 0.3s;
+  /*margin-bottom: 20px;*/
 }
 .mk-portfolio-container:after,
 .mk-portfolio-container:before {
@@ -292,7 +293,7 @@
 }
 @media handheld, only screen and (max-width: 600px) {
   .mk-portfolio-masonry-item {
-    width: 100% !important;
+    width: 100%;
   }
 }
 .mk-portfolio-masonry-item .featured-image {

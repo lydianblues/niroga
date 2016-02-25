@@ -29,7 +29,7 @@ if ( empty( $woocommerce_loop['columns'] ) ){
 	$woocommerce_loop['columns'] = apply_filters( 'loop_shop_columns', 4 );
 }
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $grid_width = $mk_options['grid_width'];
 $content_width = $mk_options['content_width'];

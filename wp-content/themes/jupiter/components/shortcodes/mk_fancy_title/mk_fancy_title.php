@@ -64,16 +64,13 @@ $class[] = ( $color_style == 'gradient_color' ) ? 'color-gradient' : 'color-sing
 </<?php echo $tag_name; ?>>
 <div class="clearboth"></div>
 
+
+
 <?php
 
 
 echo mk_get_fontfamily( "#fancy-title-", $id, $font_family, $font_type );
 
-
-// Color Styles
-if (!empty($grandient_color_fallback)) {
-	$grandient_color_fallback = 'color: '.$grandient_color_fallback.' !important;';
-}
 
 $app_styles .= '#fancy-title-'.$id.'{' .implode('', $styles).'}';
 $app_styles .= '#fancy-title-'.$id.' span{' .$span_padding.'}';
@@ -81,25 +78,28 @@ $app_styles .= '#fancy-title-'.$id.' span{' .$span_padding.'}';
 if($color_style == 'gradient_color'){
 	$style = '';
 	$gradients = mk_gradient_option_parser($grandient_color_style, $grandient_color_angle);
+	$grandient_color_fallback = (!empty($grandient_color_fallback)) ? $grandient_color_fallback : $grandient_color_from;
+
 	Mk_Static_Files::addCSS('
 		#fancy-title-'.$id.' span i {
-	    	background: '.$grandient_color_fallback.';
 			background: -webkit-'.$gradients['type'].'-gradient('.$gradients['angle_1'].''.$grandient_color_from.' 0%, '.$grandient_color_to.' 100%);
 			background: '.$gradients['type'].'-gradient('.$gradients['angle_2'].''.$grandient_color_from.' 0%, '.$grandient_color_to.' 100%);
 	    }
-	', $id);
-	$app_styles .= '
-	#fancy-title-'.$id.' span i{
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		display: inline-block;
-	}
-	@-moz-document url-prefix() {
-		#fancy-title-'.$id.' span i{
+
+		#fancy-title-'.$id.' span i {
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			display: inline-block;
+		}
+
+		.Firefox #fancy-title-'.$id.' span i,
+		.Edge #fancy-title-'.$id.' span i,
+		.IE #fancy-title-'.$id.' span i {
 			background: transparent;
+			color: '.$grandient_color_fallback.';
 	  	}
-	}
-	';
+	  	
+	', $id);
 }
 
 if ($force_font_size == 'true') {

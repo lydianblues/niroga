@@ -56,7 +56,7 @@
 
     if ($view_params['image_size'] == 'crop') {
         $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
-        $image_output_src = mk_image_generator($image_src_array[0], $width * $view_params['image_quality'], $view_params['height'] * $view_params['image_quality']);
+        $image_output_src = mk_image_generator($image_src_array[0], $width, $view_params['height']);
     } 
     else {
         $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , $view_params['image_size'], true);
@@ -78,7 +78,7 @@
 
 <article id="<?php the_ID(); ?>" class="mk-portfolio-item mk-portfolio-grid-item <?php echo implode(' ', $item_classes); ?>">
 
-    <div style="" class="item-holder">
+    <div class="item-holder">
         
         <div class="featured-image <?php if($view_params['permalink_icon'] == 'false' && $view_params['zoom_icon'] == 'false') echo 'buttons-disabled'; ?>" onclick="">
             

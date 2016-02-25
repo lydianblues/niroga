@@ -14,6 +14,13 @@ vc_map(array(
             "description" => __("", "mk_framework")
         ),
         array(
+            "heading" => __("Image Size", 'mk_framework'),
+            "description" => __("", 'mk_framework'),
+            "param_name" => "image_size",
+            "value" => mk_get_image_sizes(),
+            "type" => "dropdown",
+        ),
+        array(
             "type" => "range",
             "heading" => __("Width", "mk_framework"),
             "param_name" => "image_width",
@@ -22,7 +29,13 @@ vc_map(array(
             "max" => "1380",
             "step" => "1",
             "unit" => 'px',
-            "description" => __("", "mk_framework")
+            "description" => __("", "mk_framework"),
+            "dependency" => array(
+                'element' => "image_size",
+                'value' => array(
+                    'crop',
+                )
+            ) 
         ),
         array(
             "type" => "range",
@@ -33,7 +46,13 @@ vc_map(array(
             "max" => "1000",
             "step" => "1",
             "unit" => 'px',
-            "description" => __("", "mk_framework")
+            "description" => __("", "mk_framework"),
+            "dependency" => array(
+                'element' => "image_size",
+                'value' => array(
+                    'crop',
+                )
+            )
         ),
         array(
             "heading" => __("Slide Direction", 'mk_framework'),

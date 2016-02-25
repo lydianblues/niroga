@@ -14,7 +14,7 @@ global $post, $mk_options;
 
 if ($mk_options['enable_single_related_posts'] == 'true' && get_post_meta($post->ID, '_disable_related_posts', true) != 'false') :
 
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $backup = $post;
 $tags = wp_get_post_tags($post->ID);

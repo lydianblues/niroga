@@ -549,7 +549,7 @@ class mk_main_menu extends Walker_Nav_Menu
                 $attributes.= !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : ' href="#"';
                 
                 $item_output.= $args->before;
-                $item_output.= '<a class="menu-item-link" ' . $attributes . '>';
+                $item_output.= '<a class="menu-item-link js-smooth-scroll" ' . $attributes . '>';
                 $item_output.= $menu_icon_tag;
                 $item_output.= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
                 $item_output.= '</a>';
@@ -644,7 +644,7 @@ class mk_main_menu_responsive_walker extends Walker_Nav_Menu
             $attributes.= !empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : ' href="#"';
             
             $item_output.= $args->before;
-            $item_output.= '<a class="menu-item-link" ' . $attributes . '>';
+            $item_output.= '<a class="menu-item-link js-smooth-scroll" ' . $attributes . '>';
             $item_output.= $menu_icon_tag;
             $item_output.= $args->link_before . apply_filters('the_title', $item->title, $item->ID) . $args->link_after;
             $item_output.= '</a>';
@@ -677,7 +677,7 @@ if (!function_exists('mk_link_to_menu_editor')) {
         extract($args);
         
         if (FALSE !== stripos($items_wrap, '<ul') or FALSE !== stripos($items_wrap, '<ol')) {
-            $link = '<li class="menu-item"><a class="menu-item-link" href="' . admin_url('nav-menus.php') . '">' . $before . 'Add a menu' . $after . '</a></li>';
+            $link = '<li class="menu-item"><a class="menu-item-link js-smooth-scroll" href="' . admin_url('nav-menus.php') . '">' . $before . 'Add a menu' . $after . '</a></li>';
         }
         
         $output = sprintf($items_wrap, $menu_id, $menu_class, $link);

@@ -2,12 +2,13 @@
 /**
  * 
  * MailChimp API operations
- * 
- * @author		Mucahit Yilmaz
+ *
  * @copyright	ArtbeesLTD (c)
  * @link		http://artbees.net
- * @since		Version 1.0
+ * @since		Version 5.0
+ * @last_update Version 5.0.8
  * @package		artbees
+ * @author		Mucahit Yilmaz & Ugur Mirza Zeyrek
  */
 
 if (!defined('THEME_FRAMEWORK')) exit('No direct script access allowed');
@@ -26,7 +27,11 @@ class MailChimp
 	function __construct($api_key)
 	{
 		$this->api_key = $api_key;
-		$this->datacenter = substr($api_key, -4);
+		if ( strlen(substr( strrchr($api_key, '-'), 1 ))) {
+		$this->datacenter = substr( strrchr($api_key, '-'), 1 );
+		} else {
+		$this->datacenter = "us1";
+		}
 		$this->api_version = "2.0";
 		$this->api_endpoint = "https://".$this->datacenter.".api.mailchimp.com/".$this->api_version."/";
 		$this->format = "json";

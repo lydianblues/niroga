@@ -15,8 +15,8 @@ if ($view_params['i'] == 1) {
     if ($view_params['image_size'] == 'crop') {
         $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
         $image_output_src = bfi_thumb($image_src_array[0], array(
-            'width' => $image_width * $view_params['image_quality'],
-            'height' => $image_height * $view_params['image_quality']
+            'width' => $image_width,
+            'height' => $image_height
         ));
     } 
     else {

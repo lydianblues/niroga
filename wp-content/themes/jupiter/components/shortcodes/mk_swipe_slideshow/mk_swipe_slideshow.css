@@ -88,3 +88,7 @@
 .mk-swipe-slideshow .mk-swiper-next {
   right: 20px;
 }
+
+.mk-slider-holder-img {
+  visibility: hidden;
+}

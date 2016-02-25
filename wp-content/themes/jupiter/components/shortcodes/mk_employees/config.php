@@ -7,6 +7,7 @@ extract(shortcode_atts(array(
 	'box_border_color'=> '',
 	'box_bg_color' 	=> '',
 	'employees'			=> '',
+	'categories'             => '',
 	'animation'			=> '',
 	'description'		=> 'true',
 	'el_class'			=> '',

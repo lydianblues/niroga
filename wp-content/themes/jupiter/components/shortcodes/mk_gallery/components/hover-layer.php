@@ -20,7 +20,18 @@ if($view_params['hover_scenarios'] == 'none') {
 
 <?php if($view_params['hover_scenarios'] != 'none') { ?>
 
-    <div class="image-hover-overlay"></div>
+    <div class="image-hover-overlay">
+        <?php if($view_params['hover_scenarios'] === 'grayscale') {
+            echo mk_get_shortcode_view('mk_gallery', 'components/image', true, array(
+                        'style' => $view_params['style'], 
+                        'column' => $view_params['column'], 
+                        'height' => $view_params['height'], 
+                        //'image_quality' => $view_params['image_quality'], 
+                        'image_size' => $view_params['image_size']
+                        )
+            );   
+        } ?>
+    </div>
       
     <?php if ($view_params['hover_scenarios'] == "overlay_layer" || $view_params['disable_title'] != 'false' && !empty($image_title)) { ?>
         <div class="gallery-desc">
@@ -39,9 +50,10 @@ if($view_params['hover_scenarios'] == 'none') {
 
     <?php } else { ?>
 
-        <a href="<?php echo wp_get_attachment_image_src($post->ID, 'full', true)[0]; ?>" alt="<?php $alt; ?>" title="<?php $image_title; ?>" data-fancybox-group="gallery-<?php echo $view_params['id']; ?>" class="mk-lightbox <?php $lightbox_push_top; ?> mk-image-lightbox">
+        <a href="<?php echo wp_get_attachment_image_src($post->ID, 'full', true)[0]; ?>" alt="<?php echo $alt; ?>" title="<?php echo $image_title; ?>" data-fancybox-group="gallery-<?php echo $view_params['id']; ?>" class="mk-lightbox <?php echo $lightbox_push_top; ?> mk-image-lightbox">
             <i class="mk-jupiter-icon-plus-circle"></i>
         </a>
 
     <?php }
-}
+} ?>
+

@@ -113,7 +113,7 @@ $class[] = $layout.'mk--row';
 $class[] = $el_class;
 
 ?>
-<div id="'mk-product-loop-<?php echo $id; ?>" class="mk-product-loop grid--float <?php echo implode(' ', $class); ?>">
+<div id="mk-product-loop-<?php echo $id; ?>" class="mk-product-loop grid--float <?php echo implode(' ', $class); ?>">
 	<section class="products js-el mk--row" data-mk-component="Grid" data-grid-config='{"item":".product"}'>
 <?php
 
@@ -292,43 +292,69 @@ endif;
 /**
  * Custom CSS Output
  * ==================================================================================*/
-$app_styles = '
-	#mk-product-loop-'.$id.' .product-title,
-	#mk-product-loop-'.$id.' .product-title a,
-	#mk-product-loop-'.$id.' .mk-love-holder a,
-	#mk-product-loop-'.$id.' .mk-love-holder a i {
-		color: '.$color_product_title.';
-	}
-	#mk-product-loop-'.$id.' .product-categories a {
-		color: '.$color_product_category.';
-	}
-	#mk-product-loop-'.$id.' .product-item-rating .star-rating span:before {
-		color: '.$color_product_rating.';
-	}
-	#mk-product-loop-'.$id.' .mk-price .amount {
-		color: '.$color_product_price.';
-	}
-	#mk-product-loop-'.$id.' .mk-price del .amount {
-		color: '.$color_product_price_orginal.';
-	}
-	#mk-product-loop-'.$id.' .mk-price ins .amount {
-		color: '.$color_product_price_sale.';
-	}
-';
+if(!empty($color_product_title)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .product-title,
+		#mk-product-loop-'.$id.' .product-title a,
+		#mk-product-loop-'.$id.' .mk-love-holder a .mk-love-count,
+		#mk-product-loop-'.$id.' .mk-love-holder a i {
+			color: '.$color_product_title.';
+		}
+	', $id);
+}
+
+if(!empty($color_product_category)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .product-categories a {
+			color: '.$color_product_category.';
+		}
+	', $id);
+}
+
+if(!empty($color_product_rating)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .product-item-rating .star-rating span:before {
+			color: '.$color_product_rating.' !important;
+		}
+	', $id);
+}
+
+if(!empty($color_product_price)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .mk-price .amount {
+			color: '.$color_product_price.';
+		}
+	', $id);
+}
+
+if(!empty($color_product_price_orginal)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .mk-price del .amount {
+			color: '.$color_product_price_orginal.';
+		}
+	', $id);
+}
+
+if(!empty($color_product_price_sale)) {	
+	Mk_Static_Files::addCSS('
+		#mk-product-loop-'.$id.' .mk-price ins .amount {
+			color: '.$color_product_price_sale.';
+		}
+	', $id);
+}
+
 if($color_product_border != '') {
-	$app_styles .= '
+	Mk_Static_Files::addCSS('
 		#mk-product-loop-'.$id.' .products .mk-product-holder .product-link{
 			border: 1px solid '.$color_product_border.';
 		}
-	';
+	', $id);
 }
 
 if( $layout == 'open' ) {
-	$app_styles .= '
+	Mk_Static_Files::addCSS('
 		.product-quick-view {
 			max-width: '.$mk_options['grid_width'].'px;
 		}
-	';
+	', $id);
 }
-
-Mk_Static_Files::addCSS($app_styles, $id);

@@ -254,6 +254,13 @@ Mk_Register_custom_Post_Type('employees', $supports = array(
     ) ,
 ), $singular = false);
 
+Mk_Register_custom_taxonomy('employees_category', 'employees', array(
+        'rewrite' => array(
+            'slug' => _x('employees_category', 'URL slug', 'mk_framework') ,
+            'with_front' => FALSE
+        )
+));
+
 
 function mk_edit_employees_columns($columns) {
     $columns = array(
@@ -414,7 +421,13 @@ Mk_Register_custom_Post_Type('portfolio', $supports = array(
 /**
  * Registers Portfolio taxonomy
  */
-Mk_Register_custom_taxonomy('portfolio_category', 'portfolio');
+Mk_Register_custom_taxonomy('portfolio_category', 'portfolio', array(
+        'rewrite' => array(
+            'slug' => _x($mk_options['portfolio_cat_slug'], 'URL slug', 'mk_framework') ,
+            'with_front' => FALSE
+        )
+    ));
+
 
 function mk_edit_portfolio_columns($columns) {
     $portfolio_columns = array(
@@ -594,6 +607,15 @@ Mk_Register_custom_Post_Type('testimonial', $supports = array(
     'menu_icon' => 'dashicons-exerpt-view',
     'exclude_from_search' => true,
 ) , $singular = true);
+
+Mk_Register_custom_taxonomy('testimonial_category', 'testimonial', array(
+        'rewrite' => array(
+            'slug' => _x('testimonial_category', 'URL slug', 'mk_framework') ,
+            'with_front' => FALSE
+        )
+));
+
+
 
 function mk_edit_testimonial_columns($columns) {
     $columns = array(

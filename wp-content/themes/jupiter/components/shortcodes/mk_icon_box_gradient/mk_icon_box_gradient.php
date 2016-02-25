@@ -175,7 +175,12 @@ Mk_Static_Files::addCSS('
 	#iconBox-gr-'.$id.' .icon:hover i {
 		color: '.$icon_hover_color.'; 
 	}
-	.mk-iconBox-gradient .icon.'.$holder_shape.' {
+	.mk-iconBox-gradient .icon {
+		border-radius: 50%;
+	}
+	.Chrome .mk-iconBox-gradient .icon.'.$holder_shape.',
+	.Safari .mk-iconBox-gradient .icon.'.$holder_shape.' {
+		border-radius: initial;
 	  -webkit-mask: url('.THEME_IMAGES.'/shape/'.$holder_shape.'.svg) top right / 100% 100%;
 	}
 ', $id);
@@ -197,6 +202,12 @@ if($color_style == 'single_color') {
 			background: -webkit-'.$gradients['type'].'-gradient('.$gradients['angle_1'].''.$grandient_color_from.' 0%, '.$grandient_color_to.' 100%);
 			background: '.$gradients['type'].'-gradient('.$gradients['angle_2'].''.$grandient_color_from.' 0%, '.$grandient_color_to.' 100%);
 	    }
+
+		.Firefox #iconBox-gr-'.$id.' .icon,
+		.Edge #iconBox-gr-'.$id.' .icon,
+		.IE #iconBox-gr-'.$id.' .icon {
+	    	background: '.$grandient_color_fallback.';
+		}
 	', $id);
 }
 

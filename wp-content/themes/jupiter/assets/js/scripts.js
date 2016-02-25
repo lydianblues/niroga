@@ -493,14 +493,12 @@ window.MK = MK;
 	    // for each image, add a deferred object to the array which resolves when the image is loaded (or if loading fails)
 	    var dfds = [];  
 	    $imgs.each(function(){
-
 	        var dfd = $.Deferred();
 	        dfds.push(dfd);
 	        var img = new Image();
 	        img.onload = function(){dfd.resolve();};
 	        img.onerror = function(){dfd.resolve();};
 	        img.src = this.src;
-
 	    });
 
 	    // return a master promise object which will resolve when all the deferred objects have resolved
@@ -1868,11 +1866,43 @@ window.matchMedia || (window.matchMedia = function() {
 	
     /**
      * Check if mobile device.
-     * We consider as mobile devices with max resolution 1024px and touchscreen at the same time
      * @return {Boolean}
      */
 	MK.utils.isMobile = function() {
-		return ('ontouchstart' in document.documentElement) && matchMedia( '(max-width: 1024px)' ).matches;
+        // Problems with bigger tablets as users raport differences with behaviour. Switch to navigator sniffing
+		// return ('ontouchstart' in document.documentElement) && matchMedia( '(max-width: 1024px)' ).matches;
+     
+        // http://www.abeautifulsite.net/detecting-mobile-devices-with-javascript/
+        // if it still brings problem try to move to more sophisticated solution like
+        // apachemobilefilter.org
+        // detectright.com
+        // web.wurfl.io
+        // 
+        // Seems as best solution here:
+        // hgoebl.github.io/mobile-detect.js
+
+        function android() {
+            return navigator.userAgent.match(/Android/i);
+        }
+
+        function blackBerry() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        }
+
+        function iOS() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        }
+
+        function opera() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        }
+
+        function windows() {
+            return navigator.userAgent.match(/IEMobile/i);
+        }
+
+        return (android() || blackBerry() || iOS() || opera() || windows() || matchMedia( '(max-width: 1024px)' ).matches); 
+            
 	};
 
     /**
@@ -2462,6 +2492,7 @@ window.matchMedia || (window.matchMedia = function() {
     }());
 
 
+
 	/**
 	 * Gets header height on particular offsetY position. Use to determine logic for fullHeight, smooth scroll etc.
 	 * Takes one parameter which is offset position we're interested in.
@@ -2496,8 +2527,8 @@ window.matchMedia || (window.matchMedia = function() {
 		var headerHeight = function( offset ) {
 			var stickyOffset = MK.val.stickyOffset();
 
-			if( window.matchMedia( '( max-width: ' + mk_responsive_nav_width + 'px )' ).matches ) { // Header avaible only on top for mobile
-				var totalHeight = mobileHeight + toolbarHeight + MK.val.adminbarHeight();
+			if( MK.utils.isResponsiveMenuState() ) { // Header avaible only on top for mobile
+				var totalHeight = mobileHeight + MK.val.adminbarHeight();
 				if( offset <= totalHeight ) return totalHeight; 
 				else return MK.val.adminbarHeight();
 			} else {
@@ -3820,13 +3851,6 @@ jQuery.extend(jQuery.easing, {
     };
 
 }(jQuery));
-/*!
- * imagesLoaded PACKAGED v3.1.8
- * JavaScript is all like "You images are done yet or what?"
- * MIT License
- */
-
-(function(){function e(){}function t(e,t){for(var n=e.length;n--;)if(e[n].listener===t)return n;return-1}function n(e){return function(){return this[e].apply(this,arguments)}}var i=e.prototype,r=this,o=r.EventEmitter;i.getListeners=function(e){var t,n,i=this._getEvents();if("object"==typeof e){t={};for(n in i)i.hasOwnProperty(n)&&e.test(n)&&(t[n]=i[n])}else t=i[e]||(i[e]=[]);return t},i.flattenListeners=function(e){var t,n=[];for(t=0;e.length>t;t+=1)n.push(e[t].listener);return n},i.getListenersAsObject=function(e){var t,n=this.getListeners(e);return n instanceof Array&&(t={},t[e]=n),t||n},i.addListener=function(e,n){var i,r=this.getListenersAsObject(e),o="object"==typeof n;for(i in r)r.hasOwnProperty(i)&&-1===t(r[i],n)&&r[i].push(o?n:{listener:n,once:!1});return this},i.on=n("addListener"),i.addOnceListener=function(e,t){return this.addListener(e,{listener:t,once:!0})},i.once=n("addOnceListener"),i.defineEvent=function(e){return this.getListeners(e),this},i.defineEvents=function(e){for(var t=0;e.length>t;t+=1)this.defineEvent(e[t]);return this},i.removeListener=function(e,n){var i,r,o=this.getListenersAsObject(e);for(r in o)o.hasOwnProperty(r)&&(i=t(o[r],n),-1!==i&&o[r].splice(i,1));return this},i.off=n("removeListener"),i.addListeners=function(e,t){return this.manipulateListeners(!1,e,t)},i.removeListeners=function(e,t){return this.manipulateListeners(!0,e,t)},i.manipulateListeners=function(e,t,n){var i,r,o=e?this.removeListener:this.addListener,s=e?this.removeListeners:this.addListeners;if("object"!=typeof t||t instanceof RegExp)for(i=n.length;i--;)o.call(this,t,n[i]);else for(i in t)t.hasOwnProperty(i)&&(r=t[i])&&("function"==typeof r?o.call(this,i,r):s.call(this,i,r));return this},i.removeEvent=function(e){var t,n=typeof e,i=this._getEvents();if("string"===n)delete i[e];else if("object"===n)for(t in i)i.hasOwnProperty(t)&&e.test(t)&&delete i[t];else delete this._events;return this},i.removeAllListeners=n("removeEvent"),i.emitEvent=function(e,t){var n,i,r,o,s=this.getListenersAsObject(e);for(r in s)if(s.hasOwnProperty(r))for(i=s[r].length;i--;)n=s[r][i],n.once===!0&&this.removeListener(e,n.listener),o=n.listener.apply(this,t||[]),o===this._getOnceReturnValue()&&this.removeListener(e,n.listener);return this},i.trigger=n("emitEvent"),i.emit=function(e){var t=Array.prototype.slice.call(arguments,1);return this.emitEvent(e,t)},i.setOnceReturnValue=function(e){return this._onceReturnValue=e,this},i._getOnceReturnValue=function(){return this.hasOwnProperty("_onceReturnValue")?this._onceReturnValue:!0},i._getEvents=function(){return this._events||(this._events={})},e.noConflict=function(){return r.EventEmitter=o,e},"function"==typeof define&&define.amd?define("eventEmitter/EventEmitter",[],function(){return e}):"object"==typeof module&&module.exports?module.exports=e:this.EventEmitter=e}).call(this),function(e){function t(t){var n=e.event;return n.target=n.target||n.srcElement||t,n}var n=document.documentElement,i=function(){};n.addEventListener?i=function(e,t,n){e.addEventListener(t,n,!1)}:n.attachEvent&&(i=function(e,n,i){e[n+i]=i.handleEvent?function(){var n=t(e);i.handleEvent.call(i,n)}:function(){var n=t(e);i.call(e,n)},e.attachEvent("on"+n,e[n+i])});var r=function(){};n.removeEventListener?r=function(e,t,n){e.removeEventListener(t,n,!1)}:n.detachEvent&&(r=function(e,t,n){e.detachEvent("on"+t,e[t+n]);try{delete e[t+n]}catch(i){e[t+n]=void 0}});var o={bind:i,unbind:r};"function"==typeof define&&define.amd?define("eventie/eventie",o):e.eventie=o}(this),function(e,t){"function"==typeof define&&define.amd?define(["eventEmitter/EventEmitter","eventie/eventie"],function(n,i){return t(e,n,i)}):"object"==typeof exports?module.exports=t(e,require("wolfy87-eventemitter"),require("eventie")):e.imagesLoaded=t(e,e.EventEmitter,e.eventie)}(window,function(e,t,n){function i(e,t){for(var n in t)e[n]=t[n];return e}function r(e){return"[object Array]"===d.call(e)}function o(e){var t=[];if(r(e))t=e;else if("number"==typeof e.length)for(var n=0,i=e.length;i>n;n++)t.push(e[n]);else t.push(e);return t}function s(e,t,n){if(!(this instanceof s))return new s(e,t);"string"==typeof e&&(e=document.querySelectorAll(e)),this.elements=o(e),this.options=i({},this.options),"function"==typeof t?n=t:i(this.options,t),n&&this.on("always",n),this.getImages(),a&&(this.jqDeferred=new a.Deferred);var r=this;setTimeout(function(){r.check()})}function f(e){this.img=e}function c(e){this.src=e,v[e]=this}var a=e.jQuery,u=e.console,h=u!==void 0,d=Object.prototype.toString;s.prototype=new t,s.prototype.options={},s.prototype.getImages=function(){this.images=[];for(var e=0,t=this.elements.length;t>e;e++){var n=this.elements[e];"IMG"===n.nodeName&&this.addImage(n);var i=n.nodeType;if(i&&(1===i||9===i||11===i))for(var r=n.querySelectorAll("img"),o=0,s=r.length;s>o;o++){var f=r[o];this.addImage(f)}}},s.prototype.addImage=function(e){var t=new f(e);this.images.push(t)},s.prototype.check=function(){function e(e,r){return t.options.debug&&h&&u.log("confirm",e,r),t.progress(e),n++,n===i&&t.complete(),!0}var t=this,n=0,i=this.images.length;if(this.hasAnyBroken=!1,!i)return this.complete(),void 0;for(var r=0;i>r;r++){var o=this.images[r];o.on("confirm",e),o.check()}},s.prototype.progress=function(e){this.hasAnyBroken=this.hasAnyBroken||!e.isLoaded;var t=this;setTimeout(function(){t.emit("progress",t,e),t.jqDeferred&&t.jqDeferred.notify&&t.jqDeferred.notify(t,e)})},s.prototype.complete=function(){var e=this.hasAnyBroken?"fail":"done";this.isComplete=!0;var t=this;setTimeout(function(){if(t.emit(e,t),t.emit("always",t),t.jqDeferred){var n=t.hasAnyBroken?"reject":"resolve";t.jqDeferred[n](t)}})},a&&(a.fn.imagesLoaded=function(e,t){var n=new s(this,e,t);return n.jqDeferred.promise(a(this))}),f.prototype=new t,f.prototype.check=function(){var e=v[this.img.src]||new c(this.img.src);if(e.isConfirmed)return this.confirm(e.isLoaded,"cached was confirmed"),void 0;if(this.img.complete&&void 0!==this.img.naturalWidth)return this.confirm(0!==this.img.naturalWidth,"naturalWidth"),void 0;var t=this;e.on("confirm",function(e,n){return t.confirm(e.isLoaded,n),!0}),e.check()},f.prototype.confirm=function(e,t){this.isLoaded=e,this.emit("confirm",this,t)};var v={};return c.prototype=new t,c.prototype.check=function(){if(!this.isChecked){var e=new Image;n.bind(e,"load",this),n.bind(e,"error",this),e.src=this.src,this.isChecked=!0}},c.prototype.handleEvent=function(e){var t="on"+e.type;this[t]&&this[t](e)},c.prototype.onload=function(e){this.confirm(!0,"onload"),this.unbindProxyEvents(e)},c.prototype.onerror=function(e){this.confirm(!1,"onerror"),this.unbindProxyEvents(e)},c.prototype.confirm=function(e,t){this.isConfirmed=!0,this.isLoaded=e,this.emit("confirm",this,t)},c.prototype.unbindProxyEvents=function(e){n.unbind(e.target,"load",this),n.unbind(e.target,"error",this)},s});
 ;
 (function ($, window, document, undefined) {
 
@@ -4424,9 +4448,14 @@ function(a, b, c) {
 					'msTransition': 'MSTransitionEnd',
 					'transition': 'transitionend'
 				};
+
 			this.animEndEventName = animEndEventNames[Modernizr.prefixed('animation')] + '.dlmenu';
-			this.transEndEventName = transEndEventNames[Modernizr.prefixed('transition')] + '.dlmenu',
-			this.supportAnimations = Modernizr.cssanimations,
+			this.transEndEventName = transEndEventNames[Modernizr.prefixed('transition')] + '.dlmenu';
+
+			this.animEndEventNameUnsufixed = animEndEventNames[Modernizr.prefixed('animation')];
+			this.transEndEventNameUnsufixed = transEndEventNames[Modernizr.prefixed('transition')];
+
+			this.supportAnimations = Modernizr.cssanimations;
 			this.supportTransitions = Modernizr.csstransitions;
 
 			this._initEvents();
@@ -4443,6 +4472,10 @@ function(a, b, c) {
 		_initEvents: function() {
 
 			var self = this;
+			
+			$('.mk-vm-menuwrapper a').on('transitionend', function(event) {
+				event.stopPropagation();
+			});
 
 			this.$menuitems.on('click.dlmenu', 'a', function(event) {
 
@@ -4451,7 +4484,6 @@ function(a, b, c) {
 
 				var $item = $(event.delegateTarget),
 					$submenu = $(event.currentTarget).siblings('ul.sub-menu');
-					console.log($submenu);
 
 				if ($submenu.length > 0) {
 
@@ -4976,10 +5008,9 @@ $(document).ready(function() {
     mk_header_searchform();
     mk_click_events();
     mk_text_typer();
-    mk_tab_slider();
+    mk_tab_slider_func();
     mk_one_page_scroller();
     mk_one_pager_resposnive();
-    mk_clients_mobile();
 
     $(window).load(function() {
         mk_unfold_footer();
@@ -4994,6 +5025,8 @@ $(document).ready(function() {
         mk_header_social_resize();
         mk_page_section_social_video_bg();
         loop_audio_init();
+        // for regression testing
+        console.log("ready for rock");
     });
 
 
@@ -5069,16 +5102,18 @@ function mk_text_typer() {
 /* Tab Slider */
 /* -------------------------------------------------------------------- */
 
-function mk_tab_slider() {
+function mk_tab_slider_func() {
 
     "use strict";
 
     $('.mk-tab-slider').each(function() {
         var that = this;
+
         MK.core.loadDependencies([ MK.core.path.plugins + 'jquery.swiper.js' ], function() {
             var $this = $(that),
                 id = $this.data('id'),
-                $autoplayTime = $this.data('autoplay');
+                $autoplayTime = $this.data('autoplay'),
+                $content = $('.mk-slider-content');
 
             var mk_tab_slider = $this.swiper({
                 wrapperClass: 'mk-tab-slider-wrapper',
@@ -5092,6 +5127,15 @@ function mk_tab_slider() {
                 }
             });
 
+            // Simple repaint for firefox issue (can't handle 100% height after plugin init)
+            function repaintFirefox() {
+                $content.css('display','block');
+                setTimeout(function() {
+                    mk_tab_slider.reInit();
+                    $content.css('display','table');
+                },100);  
+            }
+
             $('.mk-tab-slider-nav[data-id="' + id + '"]').find("a").first().addClass('active');
 
             $('.mk-tab-slider-nav[data-id="' + id + '"]').find("a").on('touchstart mousedown', function(e) {
@@ -5102,8 +5146,11 @@ function mk_tab_slider() {
             });
 
             $('.mk-tab-slider-nav[data-id="' + id + '"]').find("a").click(function(e) {
-                e.preventDefault()
+                e.preventDefault();
             });
+
+            repaintFirefox();
+            $(window).on('resize', repaintFirefox);
         });
 
     });
@@ -5292,60 +5339,6 @@ function mk_edge_fullpage_pagination() {
     var style = $('#fullpage').attr('data-pagination');
     // console.log(style);
     $('#fullPage-nav').addClass('pagination-' + style);
-}
-
-
-
-/* Clients Shortcode mobile fix */
-/* -------------------------------------------------------------------- */
-function mk_clients_mobile() {
-
-    "use strict";
-
-    $('.mk-clients.column-style').each(function() {
-        var group = $(this),
-            list = group.find('li'),
-            listStyle = group.find('ul').attr('style'),
-            fullRowColumns = group.find('ul:first-of-type li').length,
-
-            viewport = $(window),
-            viewportWidth = viewport.innerWidth(),
-            breakPoint1 = 960 - 25,
-            breakPoint2 = 767 - 25,
-            breakPoint3 = 550 - 25;
-
-        function recreateGrid() {
-            if (viewportWidth > breakPoint1) {
-                list.unwrap();
-                for (var i = 0; i < list.length; i += fullRowColumns) {
-                    list.slice(i, i + fullRowColumns)
-                        .wrapAll('<ul style="' + listStyle + '"></ul>');
-                }
-            } else if (viewportWidth < breakPoint3) {
-                list.unwrap();
-                for (var i = 0; i < list.length; i += 1) {
-                    list.slice(i, i + 1).wrapAll('<ul class="mk-clients-fixed-list" style="' + listStyle + '"></ul>');
-                }
-            } else if (viewportWidth < breakPoint2) {
-                list.unwrap();
-                for (var i = 0; i < list.length; i += 2) {
-                    list.slice(i, i + 2).wrapAll('<ul class="mk-clients-fixed-list" style="' + listStyle + '"></ul>');
-                }
-            } else if (viewportWidth < breakPoint1) {
-                list.unwrap();
-                for (var i = 0; i < list.length; i += 3) {
-                    list.slice(i, i + 3).wrapAll('<ul class="mk-clients-fixed-list" style="' + listStyle + '"></ul>');
-                }
-            }
-        }
-        recreateGrid();
-
-        $(window).on('resize', function() {
-            viewportWidth = viewport.innerWidth();
-            recreateGrid();
-        });
-
-    });
 }
 
 
@@ -5625,7 +5618,7 @@ function mk_ajax_search() {
   "use strict";
 
   if ($.exists('.main-nav-side-search') && mk_ajax_search_option == "beside_nav") {
-     var security = $('#mk-ajax-search-input').siblings('input[name="security"]').val(),
+      var security = $('#mk-ajax-search-input').siblings('input[name="security"]').val(),
           _wp_http_referer = $('#mk-ajax-search-input').siblings('input[name="_wp_http_referer"]').val();
     $("#mk-ajax-search-input").autocomplete({
       delay: 40,
@@ -5854,7 +5847,8 @@ function mk_contact_form() {
               action: 'mk_contact_form',
               security : form.find('input[name="security"]').val(),
               _wp_http_referer : form.find('input[name="_wp_http_referer"]').val(),
-              to: form.find('input[name="contact_to"]').val(),
+              p_id : form.find('input[name="p_id"]').val(),
+              sh_id: form.find('input[name="sh_id"]').val(),
               name: form.find('input[name="contact_name"]').val(),
               last_name: form.find('input[name="contact_last_name"]').val(),
               phone: form.find('input[name="contact_phone"]').val(),
@@ -6312,21 +6306,23 @@ function mk_hover_events() {
 
 function mk_unfold_footer() {
   var $this = $('#mk-footer'),
-    $themePage = $('#theme-page'),
-    $footerHeight = $this.outerHeight()
-  $winWidth = $(window).outerWidth();
+      $spacer = $('#mk-footer-unfold-spacer'),
+      $footerHeight = $this.outerHeight(),
+      $winWidth = $(window).outerWidth();
+
   if ($winWidth > 767) {
-    if ($this.hasClass('mk-footer-unfold')) {
-      $themePage.css('margin-bottom', $footerHeight);
-    }
+      if ($this.hasClass('mk-footer-unfold')) {
+        $spacer.css('height', $footerHeight);
+      }
   } else {
-    $themePage.css('margin-bottom', 0);
+     $spacer.css('height', 0);
   }
 }
 /* jQuery fancybox lightbox */
 /* -------------------------------------------------------------------- */
-
 function mk_lightbox_init() {
+
+
   $(".mk-lightbox").fancybox({
             padding: 15,
             margin: 15, 
@@ -6404,6 +6400,11 @@ function mk_lightbox_init() {
                 prev: '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span><i class="mk-jupiter-icon-arrow-left"></i></span></a>',
                 loading: '<div id="fancybox-loading"><div></div></div>'
             },
+
+            afterLoad: function() {
+                $('html').addClass('fancybox-lock');
+                $('.fancybox-wrap').appendTo('.fancybox-overlay');
+            }
 
         });
 }
@@ -6704,12 +6705,24 @@ function product_loop_add_cart() {
 (function($) {
 	'use strict';
 
-    $('.mk-fullscreen-nav-close, .mk-fullscreen-nav-wrapper').on('click', function(e) {
+    $('.mk-fullscreen-nav-close, .mk-fullscreen-nav-wrapper, #fullscreen-navigation a').on('click', function(e) {
 	    e.preventDefault();
 
-	    $(this).parent().removeClass('opened');
+	    $('.mk-fullscreen-nav').removeClass('opened');
 	    $('.mk-dashboard-trigger').removeClass('fullscreen-active');
 	    $('body').removeClass('fullscreen-nav-opened'); 
+
+
+		var anchor = MK.utils.detectAnchor( this ),
+	        $this = $( this );
+
+		if( anchor.length ) {
+			e.preventDefault();
+			MK.utils.scrollToAnchor( anchor );
+
+		} else if( $this.attr( 'href' ) === '#' ) {
+	        e.preventDefault();
+	    }
     });
 
 }(jQuery));
@@ -7072,8 +7085,12 @@ function product_loop_add_cart() {
      */
     function fixedSticky() {
         var sticked = false;
-        var onScroll = function onScroll() {
-            if (MK.val.scroll() > MK.val.stickyOffset()) {
+        var scrollPos;
+
+        var toggleState = function toggleState() {
+            scrollPos = MK.val.scroll() + MK.val.adminbarHeight();
+
+            if( (scrollPos > MK.val.stickyOffset() ) && ! MK.utils.isResponsiveMenuState() ) {
                 if(sticked) return; // stop if already sticked
                 $header.addClass('a-sticky');
                 sticked = true;
@@ -7084,8 +7101,9 @@ function product_loop_add_cart() {
             }
         };
 
-        onScroll();
-        $window.on( 'scroll', onScroll );
+        toggleState();
+        $window.on( 'scroll', toggleState ); 
+        $window.on( 'resize', toggleState );
     }
 
 
@@ -7138,43 +7156,179 @@ function product_loop_add_cart() {
 	};  
 
 })( jQuery ); 
+(function($) {
+	'use strict';
+
+    var _ajaxUrl = MK.core.path.ajaxUrl;
+    var _instances = {};
+
+	MK.utils.ajaxLoader = function ajaxLoader(el) {
+		// retrun a cached instance to have control over state from within multiple places
+		// we may need for example to reset pageId when do filtering. It is really one instance that controls both filtering and pagination / load more
+		var id = '#' + ($(el).attr('id'));
+		if(typeof _instances[id] !== 'undefined') return _instances[id];
+
+		// else lets start new instance
+		this.id = id;
+		this.el = el;
+		this.isLoading = false;
+		this.xhrCounter = 0;
+	};
+
+	MK.utils.ajaxLoader.prototype = { 
+		init: function init() {
+			// prevent double initialization of we return an instance
+			if(this.initialized) return;
+
+			this.createInstance();
+			this.cacheElements();
+
+			this.initialized = true;
+		},
+
+		cacheElements: function cacheElements() {
+			this.$container = $(this.el);
+			this.id = '#' + (this.$container.attr('id'));
+	        this.categories = this.$container.data('loop-categories');
+
+			this.data = {};
+			this.data.action = 'mk_load_more';
+	        this.data.query = this.$container.data('query');
+	        this.data.atts = this.$container.data('loop-atts');
+	        this.data.loop_iterator = this.$container.data('loop-iterator');
+	        this.data.author = this.$container.data('loop-author');
+	        this.data.posts = this.$container.data('loop-posts');
+	        this.data.safe_load_more = this.$container.siblings('#safe_load_more').val();
+	        this.data._wp_http_referer = this.$container.siblings('input[name="_wp_http_referer"]').val();
+	        this.data.paged = 1;
+	        this.data.maxPages = this.$container.data('max-pages');
+	        this.data.term = this.categories;
+		},
+
+		createInstance: function() {
+			_instances[this.id] = this;
+		},
+
+		load: function load(unique) {
+			var self = this;
+			var seq = ++this.xhrCounter;
+            this.isLoading = true;
+
+            return $.when(
+	            $.ajax({
+	                url 	: _ajaxUrl,
+	                type 	: "POST",
+	                data 	: self.data
+	            })
+	        ).done(function(response) {
+	        	self.onDone(response, unique, seq);
+	        });
+		},
+
+		onDone: function(response, unique, seq) {
+	  		if(seq === this.xhrCounter) {
+				var self = this;
+
+				response = $.parseJSON(response);
+				response.unique = unique;
+				response.id = this.id;
+
+	            this.setData({
+	                maxPages: response.maxPages,
+	                loop_iterator: response.i
+	            });
+
+				// Preload images first by creating object from returned content.
+				// imagesLoaded() method will create a promise that gets resolved when all images inside are loaded.
+				// Our ajaxLoad is somehow more similar to window.onload event now.
+				$(response.content).imagesLoaded().then(function() {
+					MK.utils.eventManager.publish('ajaxLoaded', response);
+		        	self.isLoading = false;
+		        	self.initNewComponents();
+				});
+
+	        } else console.log('XHR request nr '+ seq +' aborted');
+
+        },
+
+		setData: function setData(atts) {
+			for(var att in atts) {
+				if(att === 'term' && atts[att] === '*') this.data.term = '';
+				else this.data[att] = atts[att];
+			}
+		},
+
+		getData: function getData(att) {
+			return this.data[att];
+		},
+
+		initNewComponents: function initNewComponents() {
+            // Legacy scripts reinit
+            window.ajaxInit();
+            setTimeout(window.ajaxDelayedInit, 1000);
+            // New way to init apended things
+            MK.core.initAll(this.el);
+        }
+	};
+
+}(jQuery));
 (function( $ ) {
 	'use strict';
 
-  var val = MK.val;
+	var val = MK.val;
 
 	MK.component.FullHeight = function( el ) {
-    	var $window = $( window ),
-    		  $this = $( el ),
-	        container = document.getElementById( 'mk-theme-container' ),
-          winH = null, 
-          height = null, 
-          offset = null;
+		var $window = $( window ),
+			$this = $( el ),
+			container = document.getElementById( 'mk-theme-container' ),
+			winH = null,
+			height = null,
+			update_count = 0,
+			testing = getUrlParameter('testing'),
+			offset = null;
+		var update = function() {
 
+			if(update_count == 0) {
+				winH = $window.height();
+				offset = $this.offset().top;
+				height = winH - val.offsetHeaderHeight( offset );
+				// set
+				$this.css( 'min-height', height );
+				if(testing !== undefined )
+				update_count++;
+			}
 
-    	var update = function() {
-	    		winH = $window.height();
-	    		offset = $this.offset().top;
-	    		height = winH - val.offsetHeaderHeight( offset );
-          
-	    		// set
-	    		$this.css( 'min-height', height );
-    	};
+		};
 
-      // TODO remove scroll listener by dynamic offset reader
-    	var init = function() { 
-	    	  update(); 
-          $window.on( 'resize', update );
-          $window.on( 'scroll', update ); 
-          window.addResizeListener( container, update );
-      };
+		// TODO remove scroll listener by dynamic offset reader
+		var init = function() {
+			update();
+			$window.on( 'resize', update );
+			$window.on( 'scroll', update );
+			window.addResizeListener( container, update );
+		};
 
-   		return { 
-   			  init : init 
-   		};
-    };
-	    
+		return {
+			init : init
+		};
+	};
+
 })( jQuery );
+
+var getUrlParameter = function getUrlParameter(sParam) {
+	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+	for (i = 0; i < sURLVariables.length; i++) {
+		sParameterName = sURLVariables[i].split('=');
+
+		if (sParameterName[0] === sParam) {
+			return sParameterName[1] === undefined ? true : sParameterName[1];
+		}
+	}
+};
 (function( $ ) {
 	'use strict';
 
@@ -7447,17 +7601,11 @@ function product_loop_add_cart() {
 
 	        grid(); 
 
-	        $(window).on('resize', grid);
+            $(window).off('resize', grid);
+            $(window).on('resize', grid);
 
-            // TODO throttle imgs load
             MK.utils.eventManager.subscribe('item-expanded', grid);
-            MK.utils.eventManager.subscribe('post-addition', grid);
-            MK.utils.eventManager.subscribe('img-loaded', grid);
-
-            MK.utils.eventManager.subscribe('filter', function(e, params) {
-                var term = (params.term !== '*') ? params.term : false;
-                grid(term);
-            });
+            MK.utils.eventManager.subscribe('ajaxLoaded', grid);
         };
  
 
@@ -7478,9 +7626,6 @@ function product_loop_add_cart() {
 (function($, window){
     'use strict';
 
-    // TODO rebuild as we have logic for ajax load also in pagination. Triggering load is one thing, logic of getting posts is the other
-
-    var ajaxUrl = MK.core.path.ajaxUrl;
     var scrollY = MK.val.scroll; 
     var dynamicHeight = MK.val.dynamicHeight;
 
@@ -7490,77 +7635,98 @@ function product_loop_add_cart() {
     $containers.each( pagination );
 
     function pagination() {
+        var unique = Date.now();
         var $container = $(this);
         var $superContainer = $container.parent(); // should contain clearing so it stretches with floating children
         var $loadBtn = $container.siblings('.js-loadmore-button');
-        var query = $container.data('query');
-        var atts = $container.data('loop-atts');
-        var loopIterator = $container.data('loop-iterator');
-        var maxPages = $container.data('max-pages');
+        var $loadScroll = $('.js-load-more-scroll');
         var style = $container.data('pagination-style');
-        var categories = $container.data('loop-categories');
-        var author = $container.data('loop-author');
-        var posts = $container.data('loop-posts');
-
+        var maxPages = $container.data('max-pages');
+        var id = '#' + ($container.attr('id'));
+        var ajaxLoader = new MK.utils.ajaxLoader(id);
         var isLoadBtn = (style === 2);
         var isInfiniteScroll = (style === 3); // add flag for last container
-        var isLoading = false;
-
-        var pageId  = 1;
-        var term = null;
         var scrollCheckPoint = null;
-        var loadMethod = null;
+        var isHandlerBinded = false;
 
-        // Pagination - style 1 - is controlled by MK pagination component. Move rest to load more component
-        // if(!(isLoadBtn || isInfiniteScroll)) return;
+        ajaxLoader.init();
 
         init();
 
         function init() {
-            bindEvents();
+            MK.utils.eventManager.subscribe('ajaxLoaded', onLoad);
+            bindHandlers();
             if( isInfiniteScroll ) scrollCheckPoint = spyScrollCheckPoint();
         }
 
-        function bindEvents() {
+        function bindHandlers() {
             if( isLoadBtn ) $loadBtn.on('click', handleClick);
             if( isInfiniteScroll ) $window.on('scroll', handleScroll); 
-
-            MK.utils.eventManager.subscribe('filter', handleFilter);
+            isHandlerBinded = true;
         }
 
-        function unbindEvents() {
+        function unbindHandlers() {
             if( isLoadBtn ) $loadBtn.off('click', handleClick);
             if( isInfiniteScroll ) $window.off('scroll', handleScroll);
+            isHandlerBinded = false;
         }
 
         function handleClick(e) {
             e.preventDefault();
-            if( !isLoading ) loadMore();
-            $loadBtn.addClass('is-active');
-
-            loadMethod = 'loadMore';
+            if(!ajaxLoader.isLoading) loadMore();
         }
 
         function handleScroll() {
-            if( !isLoading && (scrollY() > scrollCheckPoint()) ) loadMore();
-
-            loadMethod = 'scroll';
+            if((scrollY() > scrollCheckPoint()) && !ajaxLoader.isLoading) loadMore();
         }
 
-        function handleFilter(e, params) {
-            if( isLoading ) return;
-            pageId = 0;
-            term = params.term;
-            loadMore();
-
-            loadMethod = 'filter';
+        function loadMore() {
+            loadingIndicatorStart();
+            var page = ajaxLoader.getData('paged');
+            ajaxLoader.setData({paged: ++page});
+            ajaxLoader.load(unique);
         }
+
+        function onLoad(e, response) {
+            if(response.id === id) {
+                if( ajaxLoader.getData('paged') >= ajaxLoader.getData('maxPages')) loadingIndicatorHide();
+                else loadingIndicatorShow();
+                if(response.unique === unique) $container.append(response.content);
+                loadingIndicatorStop();
+            }
+        }
+
+        function loadingIndicatorStart() {
+            if(isLoadBtn) $loadBtn.addClass('is-active');
+            else if(isInfiniteScroll) MK.ui.loader.add('.js-load-more-scroll');
+
+        }
+
+        function loadingIndicatorStop() {
+            if(isLoadBtn) $loadBtn.removeClass('is-active');
+            else if(isInfiniteScroll) MK.ui.loader.remove('.js-load-more-scroll');
+        }
+
+        function loadingIndicatorShow() {
+            if(isHandlerBinded) return;
+            if(isLoadBtn) $loadBtn.show();
+            else if(isInfiniteScroll) $loadScroll.show();
+            bindHandlers();
+        }
+
+        function loadingIndicatorHide() {
+            if(!isHandlerBinded) return;
+            if(isLoadBtn) $loadBtn.hide();
+            else if(isInfiniteScroll) $loadScroll.hide();
+            unbindHandlers();
+        }
+
 
         function spyScrollCheckPoint() {
             var containerO = 0;
             var containerH = dynamicHeight( $superContainer );
             var winH = dynamicHeight( window );
-
+ 
             var setVals = function() {
                 containerO = $superContainer.offset().top;
             };
@@ -7572,79 +7738,7 @@ function product_loop_add_cart() {
                 return (containerH() + containerO) - (winH() * 2);
             };
         }
-
-        function initNewComponents() {
-            // Legacy scripts reinit
-            window.ajaxInit();
-            setTimeout(window.ajaxDelayedInit, 1000);
-            // New way to init apended things
-            MK.core.initAll( $container.get(0) );
-        }
-
-        function loadMore() {
-            pageId++;
-
-            isLoading = true;
-
-            var data = {
-                query: query,
-                atts: atts,
-                paged: pageId,
-                author: author,
-                posts: posts,
-                loop_iterator : loopIterator,
-                action: "mk_load_more",
-            };
-
-            data.term = (term !== '*') ? term : categories; 
-
-            $.ajax({
-                url: ajaxUrl,
-                type: "POST",
-                data: data,
-                success: success,
-                error: error
-            });
-        }
-
-        function success(response) {
-            MK.utils.eventManager.publish('post-load', {
-                method: loadMethod
-            });
-
-            isLoading = false;
-            $loadBtn.removeClass('is-active');
-
-            
-            response = $.parseJSON(response);
-            maxPages = response.maxPages;
-            
-            // Update the iterator data attribute with the new number received from server.
-            $container.attr('data-loop-iterator', response.i);
-
-            loopIterator = response.i;
-
-            $container.append(response.content);
-            
-            initNewComponents();
-
-            // Notify rest of app
-            MK.utils.eventManager.publish('post-addition');
-            // Also when images are loaded
-            var $imgs = $container.find('img');
-            $imgs.one('load', function() {
-                MK.utils.eventManager.publish('img-loaded');
-            });     
-
-            if( pageId >= maxPages) $loadBtn.hide();
-            else $loadBtn.show();
-        }
-
-        function error(response) {
-            console.log(response);
-        }
     }
-
 
 })(jQuery, window);
 (function($) {
@@ -7668,14 +7762,18 @@ function product_loop_add_cart() {
 
         	// Events
 	        $window.on('resize', onResize);
-            MK.utils.eventManager.subscribe('filter',refresh);
-            MK.utils.eventManager.subscribe('post-addition', function() {
-            	setTimeout(refresh, 200);
-            });
+            MK.utils.eventManager.subscribe('filter', resize);
+            MK.utils.eventManager.subscribe('post-addition', onPostAddition);
+            // MK.utils.eventManager.subscribe('img-loaded', resize);
         };
 
 	    var masonry = function masonry() {
-	    	var colW = $container.width() / cols;
+	    	var newCols;
+	    	if(window.matchMedia( '(max-width:600px)' ).matches) newCols = 2;
+	    	else if(window.matchMedia( '(max-width:850px)' ).matches) newCols = 4;
+	    	else newCols = cols;
+
+	    	var colW = $container.width() / newCols;
 
 	        wall = new Freewall( config.container );
 
@@ -7690,19 +7788,21 @@ function product_loop_add_cart() {
 
 	        wall.fillHoles();
 	        wall.fitWidth();
+
+	        $masonryItems.each(function() {
+	        	$(this).data('loaded', true);
+	        });
         };
 
-        var refresh = function refresh() {
-	    	if( !wall ) return;
-    		wall.destroy(); // API destroy
-    		destroyContainer();
-    		$masonryItems.each( destroyItem ); // run our deeper destroy
-	    	masonry();
-        };
 
 		// Clear attributes after the plugin. It's API method dosn't handle it properly
 		var destroyContainer = function destroyContainer() {
 			$container.removeAttr('style')
+				 .removeData('wall-height')
+				 .removeData('wall-width')
+				 .removeData('min-width')
+				 .removeData('total-col')
+				 .removeData('total-row')
 				 .removeAttr('data-wall-height')
 				 .removeAttr('data-wall-width')
 				 .removeAttr('data-min-width')
@@ -7713,15 +7813,53 @@ function product_loop_add_cart() {
 		var destroyItem = function destroyItem() {
 			var $item = $(this);
 			$item.removeAttr('style')
+				 .removeData('delay')
+				 .removeData('height')
+				 .removeData('width')
+				 .removeData('state')
 				 .removeAttr('data-delay')
 				 .removeAttr('data-height')
 				 .removeAttr('data-width')
-				 .removeAttr('data-state');
+				 .removeAttr('data-state'); 
+		};
+
+		var destroyAll = function destroyAll() {
+	    	if( !wall ) return;
+    		wall.destroy(); // API destroy
+    		destroyContainer();
+    		$masonryItems.each( destroyItem ); // run our deeper destroy
 		};
 
 		var onResize = function onResize() {
-			requestAnimationFrame(refresh);
+			requestAnimationFrame(resize);
 		};
+
+        var refresh = function refresh() {
+	    	if( !wall ) return; 
+	    	setTimeout(wall.fitWidth.bind(wall), 5);
+        };
+
+        var resize = function resize() {
+        	destroyAll();
+	    	masonry();
+        };
+
+        var onPostAddition = function onPostAddition() {
+        	$masonryItems = $container.find(config.item);
+
+        	$masonryItems.each(function() {
+        		var $item = $(this),
+        			isLoaded = $item.data('loaded');
+
+        		if(!isLoaded) $item.css('visibility', 'hidden');
+        	});
+
+        	
+        	$container.imagesLoaded().then(function() {
+        		destroyAll();
+        		masonry();
+        	});
+        };
 
         return {
          	init : init
@@ -7729,251 +7867,6 @@ function product_loop_add_cart() {
 	};
 
 }(jQuery));
-(function($) {
-	'use strict';
-
-    var ajaxUrl = MK.core.path.ajaxUrl;
-
-	MK.component.Pagination = function(el) {
-		this.el = el;
-		this.isLoading = false;
-		this.pageId = 1;
-		this.term = '*'; // states for 'All'
-	};
-
-	MK.component.Pagination.prototype = {
-		init: function init() {
-			this.cacheElements(); 
-			this.bindEvents();
-		},
-
-		cacheElements: function cacheElements() {
-			this.$pagination = $(this.el);
-			this.$container = this.$pagination.prev('.js-loop');
-			this.$pageLinks = this.$pagination.find('.js-pagination-page');
-			this.$nextLink = this.$pagination.find('.js-pagination-next');
-			this.$prevLink = this.$pagination.find('.js-pagination-prev');
-			this.$current = this.$pagination.find('.js-current-page');
-			this.$maxPages = this.$pagination.find('.pagination-max-pages'); // TODO change in DOM and here to js class
-
-	        this.query = this.$container.data('query');
-	        this.atts = this.$container.data('loop-atts');
-	        this.loopIterator = this.$container.data('loop-iterator');
-	        this.maxPages = this.$container.data('max-pages');
-		},
-
-		bindEvents: function bindEvents() {
-			var self = this;
-
-			this.$pageLinks.on('click', this.pageClick.bind(this));
-			this.$nextLink.on('click', this.nextClick.bind(this));
-			this.$prevLink.on('click', this.prevClick.bind(this)); 
-
-            MK.utils.eventManager.subscribe('filter', function(e, params) {
-                self.pageId = 1;
-                self.term = params.term;
-                self.load();
-                self.isFilter = true;
-            });
-		},
-
-		pageClick: function pageClick(e) {
-			e.preventDefault(); 
-			var $this = $(e.currentTarget);
-			var id = parseFloat($this.attr('data-page-id'));
-
-			if(this.isLoading) return;
-			if(id > this.maxPages || id < 1) return;
-
-			this.pageId = id;
-			this.load();
-			MK.ui.loader.add($this);
-		},
-
-		nextClick: function nextClick(e) {
-			e.preventDefault(); 
-			if(this.isLoading) return;
-			if(this.pageId === this.maxPages) return;
-
-			var $this = $(e.currentTarget);
-
-			this.pageId += 1;
-			this.load();
-			MK.ui.loader.add($this);
-		},
-
-		prevClick: function prevClick(e) {
-			e.preventDefault(); 
-			if(this.isLoading) return;
-			if(this.pageId === 1) return;
-
-			var $this = $(e.currentTarget);
-
-			this.pageId -= 1;
-			this.load();
-			MK.ui.loader.add($this);
-		},
-
-		load: function load() {
-			this.isLoading = true;
-
-			this.updatePagination();
-	
-            var data = {
-                paged: this.pageId,
-                query: this.query,
-                atts: this.atts,
-                loop_iterator : this.loopIterator,
-                action: "mk_load_more",
-            };
-
-            if(this.term !== '*') data.term = this.term; 
-
-            $.ajax({
-                url: ajaxUrl,
-                type: "POST",
-                data: data,
-                success: this.success.bind(this)
-            });
-		},
-
-		success: function success(response) {
-			var self = this;
-
-			MK.ui.loader.remove('.current-page, .js-pagination-next, .js-pagination-prev');
-            
-            var responseJSON = $.parseJSON(response);
-            this.maxPages = responseJSON.maxPages;
-
-			if(!this.isFilter) this.scrollPage();
-
-			this.updatePagination();
-
-			// Wait until we scrolled to point
-			var time = (this.isFilter) ? 10 : 1200;
-			setTimeout( function() {
-	            self.$container.html(responseJSON.content);
-	            self.loopIterator = responseJSON.i;
-	            self.initNewComponents();
-
-	            // Notify rest of app
-	            MK.utils.eventManager.publish('post-addition');
-	            // Also when images are loaded
-	            self.$container.find('img').one('load', function() {
-	                MK.utils.eventManager.publish('img-loaded');
-	            });   
-			}, time); 
-
-            this.isLoading = false;
-			this.isFilter = false; 
-        },
-
-        initNewComponents: function initNewComponents() {
-            // Legacy scripts reinit
-            window.ajaxInit();
-            setTimeout(window.ajaxDelayedInit, 1000);
-            // New way to init apended things
-            MK.core.initAll( this.$container.get(0) );
-        },
-
-        updatePagination: function updatePagination() {
-        	var self = this;
-
-
-
-        	// Hide / show arrows
-        	var isFirst = (this.pageId === 1);
-        	var isLast = (this.pageId === this.maxPages);
-
-        	if(isFirst) this.$prevLink.addClass('is-vis-hidden');
-        	else this.$prevLink.removeClass('is-vis-hidden');
-
-        	if(isLast) this.$nextLink.addClass('is-vis-hidden');
-        	else this.$nextLink.removeClass('is-vis-hidden');
-
-			// X of Y
-			this.$current.html(this.pageId);
-			this.$maxPages.html(this.maxPages);
-
-			// Move overfloating items
-			var displayItems = 10;
-			var centerAt = displayItems / 2;
-
-			if(this.maxPages > displayItems) {
-				this.$pageLinks.each(function(i) {
-
-					var id = self.pageId - centerAt;
-						id = Math.max(id, 1);
-						id = Math.min(id, self.maxPages - displayItems + 1);
-						id = id + i;
-
-					$(this).html( id ).attr('data-page-id', id).show();
-
-					if(i === 0 && id > 1) $(this).html('...');
-					if(i === displayItems - 1 && id < self.maxPages) $(this).html('...');
-				});
-			} 
-			else {
-				this.$pageLinks.each(function(i) {
-					var $link = $(this);
-					var id = i + 1;
-
-					$link.html(id).attr('data-page-id', id);
-
-					if( self.maxPages === 1) {
-						self.$pageLinks.hide();
-					} else {
-						if(i > self.maxPages - 1) $link.hide();
-						else $link.show();						
-					}
-
-				});
-			}
-
-        	// Highlight current only
-			this.$pageLinks.filter('[data-page-id="' + this.pageId + '"]' ).addClass('current-page')
-				 .siblings().removeClass('current-page');
-
-        },
-
-        scrollPage: function scrollPage() {
-            var containerOffset = this.$container.offset().top;
-            var offset = containerOffset - MK.val.offsetHeaderHeight( containerOffset ) - 20; 
-            MK.utils.scrollTo( offset ); 
-        }
-	};
-
-}(jQuery));
-(function( $ ) {
-	// IE / Edge fix for fixed positioned elements
-	// MS clip path doesnt redraw properly so we expirience similar bug like with background attachement fixed on Chrome
-	if (navigator.userAgent.match(/MSIE 10/i) || 
-		navigator.userAgent.match(/Trident\/7\./) || 
-		navigator.userAgent.match(/Edge\/12\./)) {
-
-	 	var redraw = function redraw() {
-	    	$(this).css('margin-top', val / 100);
-	    };
-
-	 	var $edgeClipper = $('.mk-slider-slide');
-	 	var $edgeClipperLength = $edgeClipper.length;
-	 	var $sectionClipper = $('.clipper-true');
-	 	var $sectionClipperLength = $sectionClipper.length;
-	 	var val = 1;
-
-    	var touch = function touch() {
-	    	val *= -1;
-	    	if( $edgeClipperLength ) $edgeClipper.each( redraw );
-	    	if( $sectionClipperLength ) $sectionClipper.each( redraw );
-    	};
-
-	    $(window).on("scroll", function () {	    	
-	    	window.requestAnimationFrame(touch);
-	    });
-	 }
-}(jQuery));
-
-
 (function( $ ) {
 	'use strict';
 
@@ -8128,6 +8021,7 @@ function product_loop_add_cart() {
 			if( mk_smooth_scroll === 'false' ) { return; }
 
 			update();
+			setTimeout(update, 100);
 			$window.on( 'load', update );
 			$window.on( 'resize', update );
 	        window.addResizeListener( container, update );
@@ -8142,6 +8036,157 @@ function product_loop_add_cart() {
 	};
 
 })( jQuery );
+(function($) {
+	'use strict';
+
+	MK.component.Pagination = function(el) {
+		this.el = el;
+	};
+
+	MK.component.Pagination.prototype = {
+		init: function init() {
+			this.cacheElements(); 
+			this.bindEvents();
+		},
+
+		cacheElements: function cacheElements() {
+			this.lastId = 1;
+			this.unique = Date.now();
+			this.$pagination = $(this.el);
+			this.$container = this.$pagination.prev('.js-loop');
+			this.$pageLinks = this.$pagination.find('.js-pagination-page');
+			this.$nextLink = this.$pagination.find('.js-pagination-next');
+			this.$prevLink = this.$pagination.find('.js-pagination-prev');
+			this.$current = this.$pagination.find('.js-current-page');
+			this.$maxPages = this.$pagination.find('.pagination-max-pages'); // TODO change in DOM and here to js class
+			this.containerId = '#' + this.$container.attr('id');
+			this.ajaxLoader = new MK.utils.ajaxLoader('#' + this.$container.attr('id'));
+			this.ajaxLoader.init();
+		},
+
+		bindEvents: function bindEvents() {
+			this.$pageLinks.on('click', this.pageClick.bind(this));
+			this.$nextLink.on('click', this.nextClick.bind(this));
+			this.$prevLink.on('click', this.prevClick.bind(this)); 
+			MK.utils.eventManager.subscribe('ajaxLoaded', this.onLoad.bind(this));
+		},
+
+		pageClick: function pageClick(e) {
+			e.preventDefault(); 
+			var $this = $(e.currentTarget);
+			var id = parseFloat($this.attr('data-page-id'));
+
+			if(id > this.ajaxLoader.getData('maxPages') || id < 1) return;
+			this.load(id, $this);
+		},
+
+		nextClick: function nextClick(e) {
+			e.preventDefault(); 
+			if(this.ajaxLoader.getData('paged') === this.ajaxLoader.getData('maxPages')) return;
+			this.load(++this.lastId, $(e.currentTarget));
+		},
+
+		prevClick: function prevClick(e) {
+			e.preventDefault(); 
+			if(this.ajaxLoader.getData('paged') === 1) return;
+			this.load(--this.lastId, $(e.currentTarget));
+		},
+
+		load: function load(id, $el) {
+			this.lastId = id;
+			this.ajaxLoader.setData({paged: id});
+			this.ajaxLoader.load(this.unique);
+			this.removeIndicator();
+			MK.ui.loader.add($el);
+		},
+
+		onLoad: function success(e, response) {
+			var self = this;
+			if(response.id === this.containerId) {
+				this.updatePagination();
+				this.lastId = this.ajaxLoader.getData('paged');
+
+				if(response.unique === this.unique) {
+					this.removeIndicator();
+					this.scrollPage();
+					// Wait until we scrolled to point
+					var time = (this.isFilter) ? 10 : 1200;
+					setTimeout( function() {
+			            self.$container.html(response.content);  
+					}, time); 
+				}   
+			}         
+        },
+
+        updatePagination: function updatePagination() {
+        	var self = this;
+
+        	// Hide / show arrows
+        	var isFirst = (this.ajaxLoader.getData('paged') === 1);
+        	var isLast = (this.ajaxLoader.getData('paged') === this.ajaxLoader.getData('maxPages'));
+
+        	if(isFirst) this.$prevLink.addClass('is-vis-hidden');
+        	else this.$prevLink.removeClass('is-vis-hidden');
+
+        	if(isLast) this.$nextLink.addClass('is-vis-hidden');
+        	else this.$nextLink.removeClass('is-vis-hidden');
+
+			// X of Y
+			this.$current.html(this.ajaxLoader.getData('paged'));
+			this.$maxPages.html(this.ajaxLoader.getData('maxPages'));
+
+			// Move overfloating items
+			var displayItems = 10;
+			var centerAt = displayItems / 2;
+
+			if(this.ajaxLoader.getData('maxPages') > displayItems) {
+				this.$pageLinks.each(function(i) {
+
+					var id = self.lastId - centerAt;
+						id = Math.max(id, 1);
+						id = Math.min(id, self.ajaxLoader.getData('maxPages') - displayItems + 1);
+						id = id + i;
+
+					$(this).html( id ).attr('data-page-id', id).show();
+
+					if(i === 0 && id > 1) $(this).html('...');
+					if(i === displayItems - 1 && id < self.ajaxLoader.getData('maxPages')) $(this).html('...');
+				});
+			} else {
+				this.$pageLinks.each(function(i) {
+					var $link = $(this);
+					var id = i + 1;
+
+					$link.html(id).attr('data-page-id', id);
+
+					if( self.ajaxLoader.getData('maxPages') === 1) {
+						self.$pageLinks.hide();
+					} else {
+						if(i > self.ajaxLoader.getData('maxPages') - 1) $link.hide();
+						else $link.show();						
+					}
+
+				});
+			}
+
+        	// Highlight current only
+			this.$pageLinks.filter('[data-page-id="' + this.ajaxLoader.getData('paged') + '"]' ).addClass('current-page')
+				 .siblings().removeClass('current-page');
+
+        },
+
+        scrollPage: function scrollPage() {
+            var containerOffset = this.$container.offset().top;
+            var offset = containerOffset - MK.val.offsetHeaderHeight( containerOffset ) - 20; 
+            MK.utils.scrollTo( offset ); 
+        },
+
+        removeIndicator: function removeIndicator() {
+        	MK.ui.loader.remove('.js-pagination-page, .js-pagination-next, .js-pagination-prev');
+        }
+	};
+
+}(jQuery));
 (function($) {
 	'use strict';
 
@@ -8177,6 +8222,7 @@ function product_loop_add_cart() {
 (function($) {
 	'use strict';
 
+	// Image added for proportional scaling
 	MK.ui.loader = {
 		tpl : function() {
 			return '<div class="mk-loading-indicator">' + 
@@ -8196,6 +8242,35 @@ function product_loop_add_cart() {
 		}
 	};
 
+}(jQuery));
+(function( $ ) {
+	// IE / Edge fix for fixed positioned elements
+	// MS clip path doesnt redraw properly so we expirience similar bug like with background attachement fixed on Chrome
+	if (navigator.userAgent.match(/MSIE 10/i) || 
+		navigator.userAgent.match(/Trident\/7\./) || 
+		navigator.userAgent.match(/Edge\/12\./)) {
+
+	 	var val = 1;
+
+	 	var $edgeClipper = $('.mk-slider-slide'); // edge slider
+	 	var $sectionClipper = $('.clipper-true'); // edge slider
+	 	var $bgLayer = $('.background-layer'); // page section
+
+    	var onScroll = function onScroll() {
+	    	val *= -1;
+	    	if( $edgeClipper.length ) $edgeClipper.each( redraw );
+	    	if( $sectionClipper.length ) $sectionClipper.each( redraw );
+	    	if( $bgLayer.length ) $bgLayer.each( redraw );
+    	};
+
+	 	var redraw = function redraw() {
+	    	$(this).css('margin-top', val / 100);
+	    };
+
+	    $(window).on("scroll", function () {	    	
+	    	window.requestAnimationFrame(onScroll);
+	    });
+	 }
 }(jQuery));
 (function( $ ) {
 	'use strict';
@@ -8346,8 +8421,8 @@ function product_loop_add_cart() {
 
 		setPerViewItems: function() {
 			if(window.matchMedia( '(max-width: 500px)' ).matches) { this.config.slidesPerView = 1; }
-			else if(window.matchMedia( '(max-width: 767px)' ).matches) { this.config.slidesPerView = 2; }
-			else if(window.matchMedia( '(max-width: 1024px)' ).matches) { this.config.slidesPerView = 3; }
+			else if(window.matchMedia( '(max-width: 767px)' ).matches && this.initPerView >= 2 ) { this.config.slidesPerView = 2; }
+			else if(window.matchMedia( '(max-width: 1024px)' ).matches && this.initPerView >= 3 ) { this.config.slidesPerView = 3; }
 			else { this.config.slidesPerView = this.initPerView; }
 			
         	if( typeof this.slides === 'undefined' ) return; 
@@ -9448,8 +9523,7 @@ function product_loop_add_cart() {
 	'use strict';
 
 	MK.component.Sortable = function(el) {
-		this.$filter = $(el);
-		this.config = this.$filter.data('sortable-config');
+		this.el = el; 
 	};
 
 	MK.component.Sortable.prototype = {
@@ -9459,50 +9533,51 @@ function product_loop_add_cart() {
 		},
 
 		cacheElements: function cacheElements() {
+			this.unique = Date.now();
+			this.$filter = $(this.el);
+			this.config = this.$filter.data('sortable-config');
+
+			this.ajaxLoader = new MK.utils.ajaxLoader(this.config.container);
+			this.ajaxLoader.init();
+
 			this.$container = $( this.config.container );
-			this.$filterItems = this.$container.find( this.config.item );
 			this.$navItems = this.$filter.find('a');
 		},
 
 		bindEvents: function bindEvents() {
-			var self = this;
-
 			this.$navItems.on('click', this.handleClick.bind(this));
-
-            MK.utils.eventManager.subscribe('post-load', this.filter.bind(this));
-
-            MK.utils.eventManager.subscribe('post-addition', function() {
-            	self.$filterItems = self.$container.find( self.config.item );
-            });
+			MK.utils.eventManager.subscribe('ajaxLoaded', this.onLoad.bind(this));
 		},
 
 		handleClick: function handleClick(e) {
 			e.preventDefault();
 
-			var self = this;
 			var $item = $(e.currentTarget);
 			var term = $item.data('filter');
 
+			MK.ui.loader.remove(this.$filter);
 			MK.ui.loader.add($item);
 
 			this.$navItems.removeClass('current');
 			$item.addClass('current');
 
-			MK.utils.eventManager.publish('filter', {
+			this.ajaxLoader.setData({
+				paged: 1,
 				term: term
 			});
+            this.ajaxLoader.load(this.unique);
 		},
 
-		filter: function filter(e, params) {
-			if( params.method !== 'filter' ) return;
-
-			var $current = this.$filter.find('.current');
-
-			MK.ui.loader.remove($current);
-			this.$filterItems.remove();
+		onLoad: function onLoad(e, response) {
+			if(response.id === this.config.container) {
+				MK.ui.loader.remove(this.$filter);
+				if(response.unique === this.unique) {
+		            this.$container.html(response.content);
+					this.ajaxLoader.setData({paged: 1});
+				}
+			}
 		}
 	};
-
 
 })(jQuery);
 (function($) {
@@ -9637,20 +9712,6 @@ function mk_tabs_responsive(){
   MK.utils.eventManager.subscribe('ajax-preview', assignToggle);
 
 }(jQuery));
-(function($) {
-	'use strict';
-
-	var $iframes = $('iframe');
-
-	$iframes.each(function() {
-		var $iframe = $(this);
-		var parent = $iframe.parent().get(0);
-		var tagName = parent.tagName;
-
-		if(tagName === 'P') $iframe.wrap('<div class="mk-video-container"></div>');
-	});
-
-}(jQuery));
 (function( $ ) {
     'use strict';
 
@@ -9698,6 +9759,20 @@ function mk_tabs_responsive(){
 (function($) {
 	'use strict';
 
+	var $iframes = $('iframe');
+
+	$iframes.each(function() {
+		var $iframe = $(this);
+		var parent = $iframe.parent().get(0);
+		var tagName = parent.tagName;
+
+		if(tagName === 'P') $iframe.wrap('<div class="mk-video-container"></div>');
+	});
+
+}(jQuery));
+(function($) {
+	'use strict';
+
 	$(document).on('change', '.variations_form select', moveToFirstSlide);
 
 	function moveToFirstSlide() {
@@ -9728,7 +9803,7 @@ $( window ).on( 'load', function() {
 /**
  * Assign global click handlers
  */
-$( document ).on( 'click', 'a', function( evt ) {
+$( document ).on( 'click', '.js-smooth-scroll, .js-main-nav a', function( evt ) {
 	var anchor = MK.utils.detectAnchor( this ),
         $this = $( this );
 

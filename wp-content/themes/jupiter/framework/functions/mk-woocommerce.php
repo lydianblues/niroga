@@ -79,7 +79,7 @@ function mk_woocommerce_output_content_wrapper() {
     }
     
     if (isset($_REQUEST['layout']) && !empty($_REQUEST['layout'])) {
-        $page_layout = $_REQUEST['layout'];
+        $page_layout = esc_html($_REQUEST['layout']);
     }
     $page_layout = (isset($page_layout) && !empty($page_layout)) ? $page_layout : 'full';
     

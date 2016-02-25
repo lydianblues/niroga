@@ -209,7 +209,8 @@ Sets Visual Composer as a theme
 */
 add_action('vc_before_init', 'mk_set_vc_as_theme');
 function mk_set_vc_as_theme() {
-    vc_set_as_theme($disable_updater = true);
+    vc_set_as_theme(true);
+
     
     if (defined('MODIFIED_VC_ACTIVATED')) {
         $child_dir = get_stylesheet_directory() . '/components/shortcodes';

@@ -7,6 +7,9 @@ global $wp_query;
 
 $id = uniqid();
 
+$categories = is_archive() ? $wp_query->query['news_category'] : $categories;
+$count = is_archive() ? get_option('posts_per_page') : $count;
+
 $query_options = array(
     'post_type' => 'news',
     'count' => $count,
@@ -45,22 +48,12 @@ $data_config[] = 'data-loop-iterator="'.$r->query['posts_per_page'].'"';
 
 <section id="mk-news-section-<?php echo $id; ?>" <?php echo implode(' ', $data_config); ?> class="mk-news-container js-loop clear" >
     <?php
-    if (is_archive()):
-        $r = $wp_query;
-        if (have_posts()):
-            while (have_posts()):
-                the_post();
-                echo mk_get_shortcode_view('mk_news', 'loop-styles/' . $style, true, $atts);
-            endwhile;
-        endif;
-    else:
         if ($r->have_posts()):
             while ($r->have_posts()):
                 $r->the_post();
                 echo mk_get_shortcode_view('mk_news', 'loop-styles/' . $style, true, $atts);
             endwhile;
         endif;
-    endif;
     ?>
 </section>
 
@@ -69,5 +62,7 @@ $data_config[] = 'data-loop-iterator="'.$r->query['posts_per_page'].'"';
 if( $pagination === 'true' ) {
     echo mk_get_view('global', 'loop-pagination', true, ['pagination_style' => $pagination_style, 'r' => $r]); 
 }
+
+wp_nonce_field('mk-load-more', 'safe_load_more');
 
 wp_reset_postdata();

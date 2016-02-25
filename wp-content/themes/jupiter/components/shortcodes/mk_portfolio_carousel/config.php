@@ -14,7 +14,7 @@ extract( shortcode_atts( array(
     'order'              => 'DESC',
     'orderby'            => 'date',
     'show_items'         => 4,
-    'image_quality'      => 1,
+    'image_size'      => 'crop',
     'direction_vav'      => 'false',
     'el_class'           => '',
     'meta_type'          => 'category',

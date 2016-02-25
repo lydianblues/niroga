@@ -6,7 +6,7 @@ include( $path . '/config.php' );
 
 $id = uniqid();
 
-require_once(THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 $cat = !empty($categories) ? $categories : $cat;
 $query = mk_wp_query(array(
@@ -49,7 +49,7 @@ $loop = $query['wp_query'];
                 $post_type = !empty( $post_type ) ? $post_type : 'image';
 
                 $atts = array(
-                    'image_quality' => $image_quality,
+                    'image_size' => $image_size,
                     'id' => $id,
                     'hover_scenarios' => $hover_scenarios,
                     'meta_type' => $meta_type,

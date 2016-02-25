@@ -37,7 +37,7 @@ if ($view_params['video_source'] == 'self'){
 
 		    	<?php if ($view_params['stream_host_website'] == 'youtube'){ ?>
 		    		<?php wp_enqueue_script('api-youtube'); ?>
-		        	<iframe src="https://www.youtube.com/embed/<?php echo $view_params['stream_video_id']; ?>?rel=0;enablejsapi=1;controls=0;showinfo=0;loop=1;playlist=<?php echo $view_params['stream_video_id']; ?>"></iframe>
+		        	<iframe src="https://www.youtube.com/embed/<?php echo $view_params['stream_video_id']; ?>?rel=0&amp;wmode=transparent&amp;enablejsapi=1&amp;controls=0&amp;showinfo=0&amp;loop=1&amp;playlist=<?php echo $view_params['stream_video_id']; ?>"></iframe>
 
 		    	<?php } else if ($view_params['stream_host_website'] == 'vimeo'){ ?>
 			    	<?php wp_enqueue_script('api-vimeo'); ?>

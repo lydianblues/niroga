@@ -37,6 +37,10 @@ class Mk_Ajax_Portfolio
     
     function get_view($id) {
 
+        if(method_exists('WPBMap', 'addAllMappedShortcodes')) {
+            WPBMap::addAllMappedShortcodes();
+        }
+
         if (empty($id)) return false;
         global $mk_options;
 

@@ -1,6 +1,6 @@
 <?php
 
-// TODO move variables declaration outsice. maybe include with file? for the moment it doesnt work when defined globally outside of functions
+// TODO move variables declaration outside. maybe include with file? for the moment it doesnt work when defined globally outside of functions
 
 if ((mk_theme_is_masterkey()) || mk_theme_is_post_type() || mk_is_control_panel()) {
      add_action('admin_init', 'theme_admin_add_script');

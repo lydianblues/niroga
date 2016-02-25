@@ -698,12 +698,22 @@ class mkMetaboxesGenerator
                                         </div>
                                         <div class="clearboth"></div>
                                     </div>
-                                    <div class="mk-bg-edit-option mk-bg-edit-option-stretch"> <span class="mk-bg-edit-label">
-                                        <?php  _e( 'Enable Parallax Effect', 'mk_framework' )  ?>
+                                    <div class="mk-bg-edit-option mk-bg-edit-option-stretch">
+                                        <span class="mk-bg-edit-label"><?php  _e( 'Enable Parallax Effect', 'mk_framework' )  ?></span>
+                                        <span class="mk-toggle-button">
+                                            <span class="toggle-handle"></span>
+                                            <input type="hidden" value="false" name="bg_panel_parallax" id="bg_panel_parallax"/>
                                         </span>
-                                        <span class="mk-toggle-button"><span class="toggle-handle"></span><input type="hidden" value="false" name="bg_panel_parallax" id="bg_panel_parallax"/></span>
                                         <div class="clearboth"></div>
-                                    </div>
+                                    </div>                                    
+                                    <div class="mk-bg-edit-option mk-bg-edit-option-stretch">
+                                        <span class="mk-bg-edit-label"><?php  _e( 'Cover whole background', 'mk_framework' )  ?></span>
+                                        <span class="mk-toggle-button">
+                                            <span class="toggle-handle"></span>
+                                            <input type="hidden" value="false" name="bg_panel_stretch" id="bg_panel_stretch"/>
+                                        </span>
+                                        <div class="clearboth"></div>
+                                    </div>                                    
                                     <div class="clearboth"></div>
                                 </div>
                                 <div class="clearboth"></div>

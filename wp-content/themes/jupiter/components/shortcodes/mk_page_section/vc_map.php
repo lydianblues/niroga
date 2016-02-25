@@ -54,7 +54,7 @@ vc_map(array(
                 __('Soft Light', "mk_framework") => "soft-light",
                 __('Luminosity', "mk_framework") => "luminosity"
             ) ,
-            "description" => __("", "mk_framework")
+            "description" => __("*Experimental feature. Compatible with Chrome, Opera, Firefox and partially Safari", "mk_framework")
         ) ,
         array(
             "type" => "colorpicker",

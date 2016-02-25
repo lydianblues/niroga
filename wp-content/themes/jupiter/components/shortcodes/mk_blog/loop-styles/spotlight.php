@@ -40,10 +40,7 @@ switch ($view_params['column']) {
 
 if ($view_params['image_size'] == 'crop') {
         $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
-        $image_output_src = bfi_thumb($image_src_array[0], array(
-            'width' => $image_width * $view_params['image_quality'],
-            'height' => $view_params['grid_image_height'] * $view_params['image_quality']
-        ));
+        $image_output_src = mk_image_generator($image_src_array[0], $image_width, $view_params['grid_image_height']);
     } 
     else {
         $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , $view_params['image_size'], true);
@@ -56,7 +53,7 @@ $post_type = !empty($post_type) ? $post_type : 'image';
     $output = '<article id="' . get_the_ID() . '" class="mk-blog-spotlight-item '.$post_type.'-post-type mk-isotop-item ' . $mk_column_css . ' ' . $post_type . '-post-type">' . "\n";
     
     $output.= '<div class="featured-image">';
-    $output.= '<img alt="' . get_the_title() . '" title="' . get_the_title() . '" src="' . mk_image_generator($image_output_src, $image_width, $view_params['grid_image_height']) . '" itemprop="image" />';
+    $output.= '<img alt="' . get_the_title() . '" title="' . get_the_title() . '" src="' . $image_output_src . '" itemprop="image" />';
     $output.= '<div class="image-hover-overlay"></div>';
     
     // start:[item-wrapper]

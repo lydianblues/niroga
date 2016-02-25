@@ -82,12 +82,19 @@ vc_map(array(
         ) ,
         array(
             "type" => "multiselect",
-            "heading" => __("Select specific testimonials", "mk_framework") ,
+            "heading" => __("Select specific Testimonials", "mk_framework") ,
             "param_name" => "testimonials",
             "value" => '',
             "options" => mk_get_post_enteries('testimonial', 40),
             "description" => __("", "mk_framework")
         ) ,
+        array(
+            "type" => "textfield",
+            "heading" => __("Select Specific Categories.", "mk_framework"),
+            "param_name" => "categories",
+            "value" => '',
+            "description" => __("You will need to go to Wordpress Dashboard => Testimonials => Testimonials Categories. In the right hand find Slug column. you will need to add testimonials category slugs in this option. add comma to separate them.", "mk_framework")
+        ),
         array(
             "heading" => __("Order", 'mk_framework') ,
             "description" => __("Designates the ascending or descending order of the 'orderby' parameter.", 'mk_framework') ,

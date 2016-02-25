@@ -44,8 +44,15 @@ abbr, acronym textarea, input[type=text], input[type=tel], input[type=email], in
     letter-spacing: 0 !important;
 }
 
-.main-navigation-ul > li.no-mega-menu ul.sub-menu li.menu-item a.menu-item-link {
+.main-navigation-ul > li.no-mega-menu ul.sub-menu li.menu-item a.menu-item-link,
+.mk-responsive-nav li a,
+.mk-responsive-nav li ul li a {
     text-align: right;
+}
+
+.mk-responsive-nav .mk-nav-arrow {
+    right:auto;
+    left:0;
 }
 
 .mk-contact-form-wrapper.outline-style .mk-form-row .text-input::-webkit-input-placeholder, .mk-contact-form-wrapper.outline-style .mk-form-row .mk-textarea::-webkit-input-placeholder, .mk-contact-form-wrapper.outline-style .mk-form-row .text-input:-ms-input-placeholder, .mk-contact-form-wrapper.outline-style .mk-form-row .mk-textarea:-ms-input-placeholder, .mk-contact-form-wrapper.outline-style .mk-form-row .text-input:-moz-placeholder, .mk-contact-form-wrapper.outline-style .mk-form-row .mk-textarea:-moz-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .text-input::-webkit-input-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .mk-textarea::-webkit-input-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .text-input:-ms-input-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .mk-textarea:-ms-input-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .text-input:-moz-placeholder, .mk-contact-form-wrapper.corporate-style .mk-form-row .mk-textarea:-moz-placeholder {
@@ -56,8 +63,15 @@ abbr, acronym textarea, input[type=text], input[type=tel], input[type=email], in
     padding: 15px 60px 14px 14px;
 }
 
-.mk-header-login .user-profile-box img, [class*="vc_col"] {
+.mk-header-login .user-profile-box img{
     float: right;
+}
+
+
+@media (min-width: 768px) {
+    [class*="vc_col"] {
+        float: right;
+    }
 }
 
 .mk-header-login .user-profile-box a {
@@ -350,7 +364,9 @@ abbr, acronym textarea, input[type=text], input[type=tel], input[type=email], in
     text-align: right;
 }
 
-#mk-filter-portfolio ul, #mk-filter-portfolio ul li {
+.mk-portfolio-grid-item,
+#mk-filter-portfolio ul, 
+#mk-filter-portfolio ul li {
     float: right;
 }
 
@@ -503,7 +519,7 @@ abbr, acronym textarea, input[type=text], input[type=tel], input[type=email], in
 
 .responsive-searchform .mk-icon-search {
 	left:15px;
-	right:0;
+	right:auto;
 }
 
 .header-logo img,

@@ -53,7 +53,7 @@ $post_type = !empty($post_type) ? $post_type : 'image';
                 'image_width' => $image_width,
                 'image_height' => $view_params['grid_image_height'],
                 'post_type' => $post_type,
-                'image_quality' => $view_params['image_quality']
+                //'image_quality' => $view_params['image_quality']
             );
             echo mk_get_shortcode_view('mk_blog', 'components/featured-media', true, $media_atts);
         ?>

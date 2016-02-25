@@ -7,6 +7,7 @@ extract( shortcode_atts( array(
 	'count'				=> 10,
 	'orderby'			=> 'date',
 	'testimonials' 		=> '',
+	'categories'             => '',
 	"animation_speed" 	=> 500,
 	"slideshow_speed" 	=> 7000,
 	'order'				=> 'ASC',

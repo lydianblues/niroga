@@ -7,20 +7,35 @@
     }else{
         $align_class = ' content-align-left';
     }
+
+    $image_height = $view_params['grid_image_height'];
+    $image_width = 400;
+
     
     $post_type = get_post_meta($post->ID, '_single_post_type', true);
     $post_type = !empty($post_type) ? $post_type : 'image';
 
-
-    $image_output_src = wp_get_attachment_image_src(get_post_thumbnail_id(), 'blog-thumbnail-style', true)[0];
-    $image_output_src_2x = wp_get_attachment_image_src(get_post_thumbnail_id(), 'blog-thumbnail-style-2x', true)[0];
+    if ($view_params['image_size'] == 'crop') {
+        $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , 'full', true);
+        $image_output_src = mk_image_generator($image_src_array[0], $image_width, $image_height);
+    } 
+    else {
+        if(has_post_thumbnail() && !mk_is_default_thumbnail(wp_get_attachment_image_src(get_post_thumbnail_id(), 'full', true)[0])) {
+            $image_src_array = wp_get_attachment_image_src(get_post_thumbnail_id() , $view_params['image_size'], true);
+            $image_output_src = $image_src_array[0];
+            $image_width = $image_src_array[1];
+            $image_height = $image_src_array[2];    
+        } else {
+            $image_output_src = '';
+        }
+    }
     
 
-    $output = '<article id="' . get_the_ID() . '" class="mk-blog-thumbnail-item '.$post_type.'-post-type mk-isotop-item ' . $post_type . '-post-type'.$align_class.'">' . "\n";
+    $output = '<article id="' . get_the_ID() . '" class="mk-blog-thumbnail-item '.$post_type.'-post-type mk-isotop-item ' . $post_type . '-post-type'.$align_class.' clear">' . "\n";
 
     if (has_post_thumbnail()) {
         $output .= '<div class="featured-image" ><a href="' . get_permalink() . '" title="' . get_the_title() . '">';
-        $output .= '<img alt="' . get_the_title() . '" title="' . get_the_title() . '" data-src-retina="'.mk_image_generator($image_output_src_2x, 800, 350) . '" width="400" height="350" src="' . mk_image_generator($image_output_src, 400, 350) . '" itemprop="image" />';
+        $output .= '<img alt="' . get_the_title() . '" title="' . get_the_title() . '" width="'.$image_width.'" height="'.$image_height.'" src="' . $image_output_src . '" itemprop="image" />';
         $output .= '<div class="image-hover-overlay"></div>';
         $output .= '<div class="post-type-badge" href="' . get_permalink() . '"><i class="mk-li-' . $post_type . '"></i></div>';
         $output .= '</a></div>';

@@ -17,7 +17,7 @@ $advanced_section[] = array(
             "id" => "pagespeed-optimization",
             "default" => "false",
             "type" => "toggle"
-        ) ,
+        ),
         array(
             "name" => __("Minify Theme Javascript File", "mk_framework") ,
             "desc" => __("If you enable this option pre-minified theme Java Script files will be renderred in front-end. Minified JS is 30%-40% smaller in file size which will improve page speed.", "mk_framework") ,
@@ -60,13 +60,13 @@ $advanced_section[] = array(
             "default" => "true",
             "type" => "toggle"
         ) ,
-        array(
+       /* array(
             "name" => __("Timeline Post Type", "mk_framework") ,
             "desc" => __("If you will not use timeline post type feature simply disable this option.", "mk_framework") ,
             "id" => "timeline-post-type",
             "default" => "true",
             "type" => "toggle"
-        ) ,
+        ) ,*/
 
         array(
             "name" => __("Photo Album Post Type", "mk_framework") ,
@@ -132,14 +132,24 @@ $advanced_section[] = array(
             "id" => "tab_slider-post-type",
             "default" => "true",
             "type" => "toggle"
-        ) ,
-        
+        ),
         array(
             "name" => __("Animated Columns Post Type", "mk_framework") ,
             "desc" => __("If you will not use Animated Columns post type feature simply disable this option.", "mk_framework") ,
             "id" => "animated-columns-post-type",
             "default" => "true",
             "type" => "toggle"
-        ) ,
+        ),
+        array(
+            "name" => __("Disable Dynamic Assets", "mk_framework") ,
+            "desc" => __("If you disable this option your web site will serve all assets even it's not needed. In some exceptional cases dynamic assets can cause problems with your hosting such as:  <br />
+            1- Unproperly customised asset files. <br />
+            2- Unsufficient shared hosting resources.  <br />
+            3- Weird caching settings by hosting environment. <br />
+            ", "mk_framework") ,
+            "id" => "disable-dynamic-assets",
+            "default" => "false",
+            "type" => "toggle"
+        ),
     ) ,
 );

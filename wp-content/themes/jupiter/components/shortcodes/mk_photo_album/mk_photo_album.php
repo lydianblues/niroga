@@ -5,7 +5,7 @@ include ($path . '/config.php');
 
 global $mk_options, $wp_query;
 
-require_once (THEME_FUNCTIONS . "/bfi_cropping.php");
+require_once (THEME_INCLUDES . "/bfi_thumb.php");
 
 
 $id = Mk_Static_Files::shortcode_id();
@@ -32,7 +32,7 @@ $atts = array(
     'column'                        => $column,
     'height'                        => $album_height,
     'image_size'                    => $image_size,
-    'image_quality'                 => $image_quality,
+    //'image_quality'                 => $image_quality,
     'description_preview'           => $description_preview,
     'thumbnail_preview'             => $thumbnail_preview,
     'overlay_preview'               => $overlay_preview,
@@ -104,6 +104,9 @@ $data_config[] = 'data-style="'.$style.'"';
     if( $pagination === 'true' ) {
         echo mk_get_view('global', 'loop-pagination', true, ['pagination_style' => $pagination_style, 'r' => $r]); 
     }
+
+    wp_nonce_field('mk-load-more', 'safe_load_more');
+    
     wp_reset_postdata();
 ?>
 

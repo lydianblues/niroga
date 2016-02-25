@@ -11,8 +11,10 @@ class Artbees_Widget_Contact_Form extends WP_Widget {
 
 	function widget( $args, $instance ) {
 		extract( $args );
-		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? 'Contact Us' : $instance['title'], $instance, $this->id_base );
-		$email= $instance['email'];
+		$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? 'Contact Us' : $instance['title'], $instance, $this->id_base );		
+		
+		mk_update_contact_form_email(2342, $args['id'], $instance['email']);
+
 		$phone = !empty( $instance['phone'] )?$instance['phone']:false;
 		$captcha = !empty( $instance['captcha'] )?$instance['captcha']:false;
 		
@@ -52,8 +54,8 @@ class Artbees_Widget_Contact_Form extends WP_Widget {
                     <span class="state-error"><i class="mk-moon-close"></i></span>
                 </button>
             </div>
-			<input type="hidden" value="<?php echo antispambot($email); ?>" name="contact_to"/>
 			<?php wp_nonce_field('mk-contact-form-security', 'security'); ?>
+			<?php echo mk_contact_form_hidden_values($args['id'], 2342); ?>
 	</form>
 <?php
 		echo $after_widget;

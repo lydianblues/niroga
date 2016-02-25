@@ -59,9 +59,7 @@
       -ms-transform: scale(1.05);
           transform: scale(1.05);
 }
-.mk-blog-newspaper-item .featured-image:hover .post-type-badge {
-  opacity: 1;
-}
+
 .mk-blog-newspaper-item .audio-iframe {
   margin-bottom: 0;
 }

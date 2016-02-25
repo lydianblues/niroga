@@ -23,8 +23,8 @@ $id = 'background-layer--'.$view_params['id'];
 
 $class[] = 'background-layer';
 $class[] = mk_get_bg_cover_class($view_params['bg_stretch']);
-// $class[] = $view_params['blend_mode'].'-blend-effect';
-$class[] = $has_blend_mode ? 'js-blend-mode' : '';
+$class[] = $view_params['blend_mode'].'-blend-effect';
+// $class[] = $has_blend_mode ? 'js-blend-mode' : '';
 $class[] = 'js-el';
 $class[] = ($view_params['top_shadow'] == 'true') ? 'drop-top-shadow' : '';
 

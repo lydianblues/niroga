@@ -1,24 +1,33 @@
 <?php
 
+// Add padding to header stretcher which is enabled when header becomes fixed. 
+// Fills the gap that is created by taking element out of layout
+
 global $mk_options;
 
-if(!is_header_show()) return false;
+// Flags. 
+$is_sticky = !empty($mk_options['header_sticky_style']);
+$has_header = is_header_show(); // don't like gramma here
+$has_header_toolbar = (is_header_toolbar_show() === 'true'); // make bool
+$is_style_2 = (get_header_style() === '2');
 
-$toolbar_toggle_height = (is_header_toolbar_show() == 'true') ? 32 : 0;
-$header_padding_holder = $mk_options['header_height'] + $toolbar_toggle_height;
+// Quit if no need to fill the gap
+if(!$has_header || !$is_sticky || is_header_transparent()) return false;
 
-$sticky_style = !empty($mk_options['header_sticky_style']) ? $mk_options['header_sticky_style'] : 'false';
 
-if($sticky_style == 'false') return false;
+$header_components_height = $mk_options['header_height'];
+$header_components_height += 1; // border-bottom of mk-header-inner
+if($has_header_toolbar) $header_components_height += 35;
+if($is_style_2) $header_components_height += 50; // comes directly from css 
 
-if(is_header_transparent()) return false;
+
 
 Mk_Static_Files::addLocalStyle("
 
 	.header-style-1 .mk-header-padding-wrapper,
 	.header-style-2 .mk-header-padding-wrapper,
 	.header-style-3 .mk-header-padding-wrapper {
-		padding-top:{$header_padding_holder}px;
+		padding-top:{$header_components_height}px;
 	}
 
 ");

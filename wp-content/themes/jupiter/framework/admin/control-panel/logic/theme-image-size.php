@@ -42,7 +42,7 @@ class Mk_Image_Sizes
 
 			<h3><?php _e('Image Size Settings', 'mk_framework'); ?></h3>
 			<p><?php _e('In this page you can add custom image sizes to be used in various locations such as shortcodes as well as theme options.', 'mk_framework'); ?></p>
-			<p><?php _e('The tool below helps you to set your own image sizes using WordPress image resizer instead of third party libraries. One benefits of using WP Image Resizer is that you will be able to optimise images and get higher scores in google. Other solutions like BFI_Thumb (Which we use for hard corping images) generate only temporary images and tools like WP Smush will not optmise.', 'mk_framework'); ?></p>
+			<p><?php _e('The tool below helps you to set your own image sizes using WordPress image resizer instead of third party libraries. One benefits of using WP Image Resizer is that you will be able to optimise images and get higher scores in google. Other solutions like BFI_Thumb (Which we use for hard corping images) generate only temporary images and tools like WP Smush will not optimize.', 'mk_framework'); ?></p>
 			<form action="mk_image_sizes" id="mk_image_sizes" name="mk_image_sizes">
 					
 			<?php 

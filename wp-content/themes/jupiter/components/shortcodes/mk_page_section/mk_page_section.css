@@ -8,11 +8,7 @@
 
 .mk-page-section {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-/*.mk-page-section
-.mk-page-section-inner {
+  /*overflow: hidden; */ /*do not add it back as it will bring issues with intentionally overflowing elements like dropdowns */
   width: 100%;
 }
 
@@ -21,7 +17,9 @@
   height: 100%;
   position: absolute;
   overflow: hidden;
-}*/
+  top: 0;
+  left: 0;
+}
 .background-layer.drop-top-shadow {
   box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.3);
 }
@@ -88,9 +86,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  clip: rect(auto, auto, auto, auto);
+  clip: rect(auto auto auto auto);
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .mk-page-section .mk-skip-to-next {
   z-index: 10;
